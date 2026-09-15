@@ -15,15 +15,17 @@ const {
 const router = express.Router();
 
 // ============================================================
-// PUBLIC / STUDENT ACCESS
+// ADMIN READ ACCESS (student catalogue uses /api/student/catalogue)
 // ============================================================
 
 // Get all tests
-router.get("/", getTests);
+router.get("/", protect, adminOnly, getTests);
 
 // Get tests by chapter
 router.get(
   "/chapter/:chapterId",
+  protect,
+  adminOnly,
   getTestsByChapter
 );
 

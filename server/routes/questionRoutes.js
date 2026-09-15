@@ -23,24 +23,30 @@ const {
 const router = express.Router();
 
 // ============================================================
-// PUBLIC / STUDENT ACCESS
+// ADMIN READ ACCESS (student catalogue uses /api/student/catalogue)
 // ============================================================
 
 // Get all questions
 router.get(
   "/",
+  protect,
+  adminOnly,
   getQuestions
 );
 
 // Get questions by test
 router.get(
   "/test/:testId",
+  protect,
+  adminOnly,
   getQuestionsByTest
 );
 
 // Get questions by chapter
 router.get(
   "/chapter/:chapterId",
+  protect,
+  adminOnly,
   getQuestionsByChapter
 );
 

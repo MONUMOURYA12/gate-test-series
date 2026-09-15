@@ -8,8 +8,8 @@ function AuthRedirect() {
     return <div className="loader-page">Loading...</div>;
   }
 
-  if (isAuthenticated && isAdmin) {
-    return <Navigate to="/admin/dashboard" replace />;
+  if (isAuthenticated) {
+    return <Navigate to={isAdmin ? "/admin/dashboard" : "/student/dashboard"} replace />;
   }
 
   return <Navigate to="/login" replace />;

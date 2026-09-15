@@ -11,6 +11,8 @@ const testRoutes = require("./routes/testRoutes");
 const questionRoutes = require("./routes/questionRoutes");
 const authRoutes = require("./routes/authRoutes");
 
+const studentRoutes = require("./routes/studentRoutes");
+
 const app = express();
 
 // ============================================================
@@ -64,6 +66,8 @@ app.use(
 // ============================================================
 // ROOT ROUTE
 // ============================================================
+
+app.use("/api/student", studentRoutes);
 
 app.get("/", (req, res) => {
   res.json({

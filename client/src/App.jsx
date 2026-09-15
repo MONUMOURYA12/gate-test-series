@@ -16,6 +16,10 @@ import UnauthorizedPage from "./pages/UnauthorizedPage.jsx";
 import TestManagementPage from "./pages/TestManagementPage.jsx";
 import QuestionManagementPage from "./pages/QuestionManagementPage.jsx";
 
+import RegisterPage from "./pages/RegisterPage.jsx";
+import StudentLayout from "./components/StudentLayout.jsx";
+import StudentTestsPage from "./pages/StudentTestsPage.jsx";
+import StudentTestDetailsPage from "./pages/StudentTestDetailsPage.jsx";
 import StudentDashboard from "./components/StudentDashboard.jsx";
 
 function App() {
@@ -33,15 +37,7 @@ function App() {
 
       <Route path="/login" element={<LoginPage />} />
 
-      <Route
-        path="/register"
-        element={
-          <PlaceholderPage
-            title="Student Registration"
-            description="Registration is available through the existing backend API. The full student UI will be added in a later phase."
-          />
-        }
-      />
+      <Route path="/register" element={<RegisterPage />} />
 
       <Route
         path="/unauthorized"
@@ -108,15 +104,12 @@ function App() {
           ===================================================== */}
 
       <Route element={<StudentProtectedRoute />}>
-        <Route
-          path="/student"
-          element={<StudentDashboard />}
-        />
-
-        <Route
-          path="/student/dashboard"
-          element={<StudentDashboard />}
-        />
+        <Route path="/student" element={<StudentLayout />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="tests" element={<StudentTestsPage />} />
+          <Route path="tests/:testId" element={<StudentTestDetailsPage />} />
+        </Route>
       </Route>
 
       {/* =====================================================
