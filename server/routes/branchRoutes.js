@@ -5,12 +5,31 @@ const {
   getBranches,
 } = require("../controllers/branchController");
 
+const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-// POST /api/branches
-router.post("/", createBranch);
+// ============================================================
+// GET ALL BRANCHES
+// ============================================================
 
-// GET /api/branches
-router.get("/", getBranches);
+router.get(
+  "/",
+  getBranches
+);
+
+// ============================================================
+// CREATE BRANCH - ADMIN ONLY
+// ============================================================
+
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  createBranch
+);
 
 module.exports = router;

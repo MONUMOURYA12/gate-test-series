@@ -217,12 +217,6 @@ questionSchema.index({
   difficulty: 1,
 });
 
-// Fast test loading
-questionSchema.index({
-  test: 1,
-  questionNumber: 1,
-});
-
 // Prevent duplicate question numbers inside same test
 questionSchema.index(
   {

@@ -8,52 +8,75 @@ const {
   bulkUploadQuestions,
 } = require("../controllers/questionController");
 
+const {
+  updateQuestion,
+  deleteQuestion,
+} = require("../controllers/questionAdminController");
+
 const upload = require("../middleware/uploadMiddleware");
+
+const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// =====================================================
-// CREATE SINGLE QUESTION
-// =====================================================
+// ============================================================
+// PUBLIC / STUDENT ACCESS
+// ============================================================
 
-router.post(
-  "/",
-  createQuestion
-);
-
-// =====================================================
-// GET ALL QUESTIONS + FILTERS + PAGINATION
-// =====================================================
-
+// Get all questions
 router.get(
   "/",
   getQuestions
 );
 
-// =====================================================
-// GET QUESTIONS BY TEST
-// =====================================================
-
+// Get questions by test
 router.get(
   "/test/:testId",
   getQuestionsByTest
 );
 
-// =====================================================
-// GET QUESTIONS BY CHAPTER
-// =====================================================
-
+// Get questions by chapter
 router.get(
   "/chapter/:chapterId",
   getQuestionsByChapter
 );
 
-// =====================================================
-// BULK UPLOAD QUESTIONS FROM EXCEL
-// =====================================================
+// ============================================================
+// ADMIN ONLY
+// ============================================================
 
+// Create single question
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  createQuestion
+);
+
+// Update single question
+router.put(
+  "/:questionId",
+  protect,
+  adminOnly,
+  updateQuestion
+);
+
+// Delete / deactivate single question
+router.delete(
+  "/:questionId",
+  protect,
+  adminOnly,
+  deleteQuestion
+);
+
+// Bulk upload questions
 router.post(
   "/bulk-upload/:testId",
+  protect,
+  adminOnly,
   upload.single("file"),
   bulkUploadQuestions
 );

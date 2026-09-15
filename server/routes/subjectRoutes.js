@@ -6,15 +6,36 @@ const {
   getSubjectsByBranch,
 } = require("../controllers/subjectController");
 
+const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-// Create subject
-router.post("/", createSubject);
+// ============================================================
+// PUBLIC / STUDENT ACCESS
+// ============================================================
 
 // Get all subjects
 router.get("/", getSubjects);
 
 // Get subjects by branch
-router.get("/branch/:branchId", getSubjectsByBranch);
+router.get(
+  "/branch/:branchId",
+  getSubjectsByBranch
+);
+
+// ============================================================
+// ADMIN ONLY
+// ============================================================
+
+// Create subject
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  createSubject
+);
 
 module.exports = router;

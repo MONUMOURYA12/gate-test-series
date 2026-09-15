@@ -6,15 +6,36 @@ const {
   getChaptersBySubject,
 } = require("../controllers/chapterController");
 
+const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-// Create chapter
-router.post("/", createChapter);
+// ============================================================
+// PUBLIC / STUDENT ACCESS
+// ============================================================
 
 // Get all chapters
 router.get("/", getChapters);
 
 // Get chapters by subject
-router.get("/subject/:subjectId", getChaptersBySubject);
+router.get(
+  "/subject/:subjectId",
+  getChaptersBySubject
+);
+
+// ============================================================
+// ADMIN ONLY
+// ============================================================
+
+// Create chapter
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  createChapter
+);
 
 module.exports = router;
