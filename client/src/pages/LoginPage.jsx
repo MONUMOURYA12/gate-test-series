@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+
+function loginDestination(isAdmin, from) {
+  const prefix = isAdmin ? "/admin" : "/student";
+  return from?.pathname?.startsWith(`${prefix}/`)
+    ? `${from.pathname}${from.search || ""}`
+    : `${prefix}/dashboard`;
+}
 
 function LoginPage() {
   const { isAuthenticated, isAdmin, isLoading, login } = useAuth();
@@ -13,8 +20,8 @@ function LoginPage() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!isLoading && isAuthenticated && isAdmin) {
-    return <Navigate to="/admin/dashboard" replace />;
+  if (!isLoading && isAuthenticated) {
+    return <Navigate to={loginDestination(isAdmin, location.state?.from)} replace />;
   }
 
   const handleChange = (event) => {
@@ -33,16 +40,7 @@ function LoginPage() {
     try {
       const user = await login(formData);
 
-      if (user.role !== "admin") {
-        navigate("/unauthorized", { replace: true });
-        return;
-      }
-
-      const destination =
-        location.state?.from?.pathname &&
-        location.state.from.pathname.startsWith("/admin")
-          ? location.state.from.pathname
-          : "/admin/dashboard";
+      const destination = loginDestination(user.role === "admin", location.state?.from);
 
       navigate(destination, { replace: true });
     } catch (loginError) {
@@ -56,13 +54,14 @@ function LoginPage() {
     <main className="auth-page">
       <section className="auth-panel" aria-labelledby="login-title">
         <p className="auth-brand">GATE Test Series</p>
-        <h1 id="login-title">Admin Login</h1>
+        <h1 id="login-title">Welcome back</h1>
         <p className="auth-copy">
-          Sign in with an existing admin account to manage the test series.
+          Sign in to explore your GATE test series.
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          {error ? <div className="alert alert-error">{error}</div> : null}
+          {location.state?.registered ? <p role="status">Account created. Sign in to continue.</p> : null}
+          {error ? <div role="alert" className="alert alert-error">{error}</div> : null}
 
           <div className="field">
             <label htmlFor="email">Email</label>
@@ -98,6 +97,7 @@ function LoginPage() {
             {isSubmitting ? "Signing in..." : "Login"}
           </button>
         </form>
+        <p className="auth-copy">New here? <Link to="/register">Create a student account</Link></p>
       </section>
     </main>
   );
