@@ -28,6 +28,7 @@ function attemptResponse(attempt) {
       marks: question.marks,
       negativeMarks: question.negativeMarks,
       answer: question.answer,
+      answerSubmitted: question.answerSubmitted || false,
       markedForReview: question.markedForReview,
       ...(submitted ? {
         correctAnswer: question.correctAnswer,
@@ -47,7 +48,7 @@ async function ownedAttempt(req) {
 
 async function finalizeAttempt(attempt) {
   // Optimistic concurrency prevents an answer save racing with grading.
-  while (attempt.status === "in_progress") {
+  while (attempt?.status === "in_progress") {
     const submittedAt = new Date(Math.min(Date.now(), new Date(attempt.expiresAt).getTime()));
     const updated = await TestAttempt.findOneAndUpdate({
       _id: attempt._id, student: attempt.student, status: "in_progress", __v: attempt.__v,
@@ -97,6 +98,7 @@ async function startAttempt(req, res) {
           questionId: question._id,
           negativeMarks: test.negativeMarking && question.questionType === "mcq" ? question.negativeMarks : 0,
           answer: null,
+          answerSubmitted: false,
           markedForReview: false,
         })),
       });
@@ -133,10 +135,12 @@ async function saveAnswer(req, res) {
       if (attempt.status !== "submitted") attempt = await finalizeAttempt(attempt);
       return res.status(409).json({ message: "This attempt has ended.", attempt: attemptResponse(attempt) });
     }
-    const { questionId, answer, markedForReview } = req.body || {};
+    const { questionId, answer, markedForReview, answerSubmitted = false } = req.body || {};
     const question = attempt.questions.find(item => String(item.questionId) === questionId);
     if (!question) return res.status(400).json({ message: "Question does not belong to this attempt." });
     if (typeof markedForReview !== "boolean") return res.status(400).json({ message: "Review status must be true or false." });
+    if (question.answerSubmitted && !answerSubmitted) return res.status(409).json({ message: "This question has already been submitted." });
+    if (typeof answerSubmitted !== "boolean") return res.status(400).json({ message: "Question submit status must be true or false." });
     const normalized = normalizeAnswer(question, answer);
     const saved = await TestAttempt.findOneAndUpdate({
       _id: attempt._id,
@@ -145,11 +149,12 @@ async function saveAnswer(req, res) {
       expiresAt: { $gt: new Date() },
       "questions.questionId": question.questionId,
     }, {
-      $set: { "questions.$.answer": normalized, "questions.$.markedForReview": markedForReview },
+      $set: { "questions.$.answer": normalized, "questions.$.markedForReview": markedForReview, "questions.$.answerSubmitted": answerSubmitted || question.answerSubmitted || false },
       $inc: { __v: 1 },
     }, { new: true }).select("_id").lean();
     if (!saved) {
       attempt = await finalizeAttempt(await ownedAttempt(req));
+      if (!attempt) return res.status(404).json({ message: "Attempt not found." });
       return res.status(409).json({ message: "This attempt has ended.", attempt: attemptResponse(attempt) });
     }
     return res.json({ saved: true, serverTime: new Date() });

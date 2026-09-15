@@ -201,6 +201,12 @@ const questionSchema = new mongoose.Schema(
       trim: true,
     },
 
+    aiSolution: {
+      type: String,
+      trim: true,
+      maxlength: 12000,
+    },
+
     // ============================================
     // STATUS
     // ============================================

@@ -19,6 +19,11 @@ const upload = multer({
   storage,
   limits: {
     fileSize: 5 * 1024 * 1024,
+    files: 1,
+    fields: 0,
+    // Busboy raises partsLimit when it reaches the limit, including the file.
+    parts: 2,
+    headerPairs: 20,
   },
   fileFilter,
 });

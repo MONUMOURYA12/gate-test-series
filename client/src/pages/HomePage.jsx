@@ -1,21 +1,26 @@
 import { Link } from "react-router-dom";
+import Seo from "../components/Seo.jsx";
 import "../home.css";
 
 const studyRoute = [
-  { label: "Choose a subject", value: "Follow your GATE path", tone: "mint" },
-  { label: "Focus on one concept", value: "Learn at your pace", tone: "amber" },
+  { label: "Choose your exam", value: "SSC, JEE, NEET or GATE", tone: "mint" },
+  { label: "Focus on one subject", value: "Learn at your pace", tone: "amber" },
   { label: "Build your confidence", value: "Keep moving forward", tone: "coral" },
 ];
 
 export default function HomePage() {
   return (
     <div className="home-shell">
+      <Seo
+        title="All India Test Series | SSC, JEE, NEET and GATE Practice"
+        description="Focused subject practice, timed exams, and performance insights for SSC, JEE, NEET, and GATE preparation."
+      />
       <header className="home-header">
         <div className="home-container home-header-inner">
-          <Link className="home-brand" to="/" aria-label="GATE Test Series home">
+          <Link className="home-brand" to="/" aria-label="All India Test Series home">
             <span className="home-logo">G</span>
             <span>
-              GATE <strong>Test Series</strong>
+              All India <strong>Test Series</strong>
             </span>
           </Link>
 
@@ -29,13 +34,13 @@ export default function HomePage() {
         <section className="home-hero" aria-labelledby="home-title">
           <div className="home-container home-hero-grid">
             <div className="home-hero-copy">
-              <p className="home-eyebrow">GATE PREPARATION, MADE CLEAR</p>
+              <p className="home-eyebrow">SSC / JEE / NEET / GATE PREPARATION</p>
               <h1 id="home-title">
-                Practice with purpose.
-                <span>Perform with confidence.</span>
+                One place for every goal.
+                <span>Practice with confidence.</span>
               </h1>
               <p className="home-hero-description">
-                Build a steady preparation habit with chapter-wise tests, timed
+                Build a steady preparation habit with focused practice, timed
                 exams, and feedback that helps you know what to work on next.
               </p>
               <div className="home-actions">
@@ -47,9 +52,9 @@ export default function HomePage() {
                 </a>
               </div>
               <div className="home-proof" aria-label="Platform highlights">
-                <span><i aria-hidden="true">✓</i> Chapter-wise practice</span>
+                <span><i aria-hidden="true">✓</i> Exam-focused practice</span>
                 <span><i aria-hidden="true">✓</i> Timed attempts</span>
-                <span><i aria-hidden="true">✓</i> Clear results</span>
+                <span><i aria-hidden="true">✓</i> Clear performance insights</span>
               </div>
             </div>
 
@@ -60,8 +65,8 @@ export default function HomePage() {
               </div>
               <div className="home-visual-title-row">
                 <div>
-                  <p>Personal study route</p>
-                  <h2>Make today count</h2>
+                  <p>Personal preparation route</p>
+                  <h2>Make your next session count</h2>
                 </div>
                 <span className="home-round-mark">G</span>
               </div>
@@ -88,9 +93,9 @@ export default function HomePage() {
 
         <section className="home-metrics" aria-label="Platform benefits">
           <div className="home-container home-metrics-grid">
-            <div><strong>YOUR PATH</strong><span>Choose a branch and find the subjects that matter to you.</span></div>
-            <div><strong>YOUR PACE</strong><span>Move from focused learning to timed practice when ready.</span></div>
-            <div><strong>YOUR NEXT STEP</strong><span>Return to the exact subject or test that needs attention.</span></div>
+          <div><strong>YOUR EXAM</strong><span>Choose the exam and subjects that match your goal.</span></div>
+          <div><strong>YOUR PACE</strong><span>Move from focused learning to timed practice when ready.</span></div>
+          <div><strong>YOUR NEXT STEP</strong><span>Use performance feedback to decide what to practise next.</span></div>
           </div>
         </section>
 
@@ -98,19 +103,19 @@ export default function HomePage() {
           <div className="home-container">
             <div className="home-section-heading">
               <p className="home-eyebrow">A SIMPLE RHYTHM</p>
-              <h2 id="how-title">Small sessions. Better understanding.</h2>
+              <h2 id="how-title">A clear rhythm for serious preparation.</h2>
               <p>Everything you need to turn preparation into a routine that lasts.</p>
             </div>
             <div className="home-feature-grid">
               <article className="home-feature-card">
                 <span className="home-feature-number">START</span>
-                <h3>Choose your subject</h3>
-                <p>Browse by branch, subject, and chapter so your learning stays focused.</p>
+                <h3>Choose your exam</h3>
+                <p>Start with the exam that matters to you and find the right subject path.</p>
               </article>
               <article className="home-feature-card featured">
                 <span className="home-feature-number">FOCUS</span>
                 <h3>Learn with intention</h3>
-                <p>Move from concept practice to timed preparation when you feel ready.</p>
+                <p>Move from concept practice to timed preparation when your foundation is ready.</p>
               </article>
               <article className="home-feature-card">
                 <span className="home-feature-number">REVIEW</span>
@@ -124,7 +129,7 @@ export default function HomePage() {
 
       <footer className="home-footer">
         <div className="home-container home-footer-inner">
-          <span>GATE Test Series</span>
+          <span>All India Test Series</span>
           <span>Build your understanding, one chapter at a time.</span>
         </div>
       </footer>

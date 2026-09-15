@@ -13,7 +13,8 @@ async function findPublishedTest(testId, branchId) {
   if (!chapter) return null;
   const subject = await Subject.findOne({ _id: chapter.subject, isActive: true }).select("name branch").lean();
   if (!subject) return null;
-  if (branchId && String(subject.branch) !== String(branchId)) return null;
+  const commonSubject = ["General Aptitude", "Engineering Mathematics"].includes(subject.name);
+  if (branchId && String(subject.branch) !== String(branchId) && !commonSubject) return null;
   const branchFilter = { _id: subject.branch, isActive: true };
   const branch = await Branch.findOne(branchFilter).select("name code").lean();
   return branch ? { ...test, chapter, subject, branch } : null;

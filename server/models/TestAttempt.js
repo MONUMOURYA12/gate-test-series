@@ -14,6 +14,7 @@ const attemptQuestionSchema = new mongoose.Schema({
   marks: { type: Number, required: true },
   negativeMarks: { type: Number, default: 0 },
   answer: { type: mongoose.Schema.Types.Mixed, default: null },
+  answerSubmitted: { type: Boolean, default: false },
   markedForReview: { type: Boolean, default: false },
 }, { _id: false });
 

@@ -140,9 +140,15 @@
 }
 
 .primary-button {
-  background: #2457c5;
-  border: 1px solid #2457c5;
+  background: var(--teal);
+  border: 1px solid var(--teal);
   color: #ffffff;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: var(--teal-dark);
+  border-color: var(--teal-dark);
+  box-shadow: 0 8px 18px rgba(8, 127, 120, .18);
 }
 
 .primary-button:disabled {
@@ -152,9 +158,15 @@
 }
 
 .secondary-button {
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  color: #344054;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: var(--teal);
+  color: var(--teal-dark);
+  box-shadow: 0 6px 16px rgba(23, 42, 58, .08);
 }
 
 .alert {

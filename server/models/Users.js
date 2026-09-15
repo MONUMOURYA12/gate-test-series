@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      maxlength: 254,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       index: true,
     },
 
@@ -51,6 +53,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
+      select: false,
+    },
+
+    tokenVersion: {
+      type: Number,
+      default: 0,
+      min: 0,
+      select: false,
     },
 
     // ============================================

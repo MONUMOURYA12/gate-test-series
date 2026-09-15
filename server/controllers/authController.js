@@ -1,461 +1,183 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const crypto = require("node:crypto");
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Branch = require("../models/Branch");
+const {
+  NEW_PASSWORD_MESSAGE,
+  normalizeEmail,
+  validPassword,
+  trimmedText,
+  publicUser,
+  setSessionCookie,
+  clearSessionCookie,
+} = require("../services/authSecurity");
 
-function publicUser(user) {
-  return {
-    id: user._id,
-    name: user.name,
-    email: user.email,
-    mobileNumber: user.mobileNumber,
-    collegeName: user.collegeName,
-    passingYear: user.passingYear,
-    branch: user.branch,
-    role: user.role,
-    isActive: user.isActive,
-    isEmailVerified: user.isEmailVerified,
-    subscription: user.subscription,
-    createdAt: user.createdAt,
-  };
-}
-
-// ============================================================
-// REGISTER USER
-// ============================================================
+const PASSWORD_COST = 12;
+// Missing accounts still perform a password comparison and receive the same error.
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(crypto.randomBytes(32).toString("hex"), PASSWORD_COST);
+const invalidLogin = res => res.status(401).json({ message: "Invalid email or password" });
+const serverError = res => res.status(500).json({ message: "Unable to complete this request. Please try again." });
+const duplicateAccount = res => res.status(409).json({ message: "Unable to create an account with these details" });
 
 const registerUser = async (req, res) => {
   try {
-    const {
-      name,
-      mobileNumber,
-      branch,
-      collegeName,
-      passingYear,
-      email,
-      password,
-    } = req.body;
-
-    if (!name || !mobileNumber || !branch || !collegeName || !passingYear || !email || !password) {
-      return res.status(400).json({
-        message: "Full name, mobile number, branch, college name, passing year, email and password are required",
-      });
+    const input = req.body || {};
+    const name = trimmedText(input.name, 2, 100);
+    const collegeName = trimmedText(input.collegeName, 2, 150);
+    const email = normalizeEmail(input.email);
+    if (!name || !collegeName || !email) {
+      return res.status(400).json({ message: "Enter a valid full name, college name and email address" });
     }
-
-    if (name.trim().length < 2) {
-      return res.status(400).json({
-        message:
-          "Name must be at least 2 characters long",
-      });
+    if (!validPassword(input.password)) {
+      return res.status(400).json({ message: NEW_PASSWORD_MESSAGE });
     }
-
-    if (password.length < 6) {
-      return res.status(400).json({
-        message: "Password must be at least 6 characters long",
-      });
-    }
-
-    const normalizedMobile = String(mobileNumber).replace(/[\s()-]/g, "");
-    if (!/^\+?\d{10,15}$/.test(normalizedMobile)) {
+    const mobileNumber = typeof input.mobileNumber === "string" && input.mobileNumber.length <= 30
+      ? input.mobileNumber.replace(/[\s()-]/g, "") : "";
+    if (!/^\+?\d{10,15}$/.test(mobileNumber)) {
       return res.status(400).json({ message: "Enter a valid mobile number" });
     }
-
-    if (collegeName.trim().length < 2) {
-      return res.status(400).json({ message: "College name must be at least 2 characters long" });
-    }
-
-    const normalizedPassingYear = Number(passingYear);
-    const latestPassingYear = new Date().getFullYear() + 10;
-    if (!Number.isInteger(normalizedPassingYear) || normalizedPassingYear < 1950 || normalizedPassingYear > latestPassingYear) {
+    const yearInput = input.passingYear;
+    const passingYear = (typeof yearInput === "number" || (typeof yearInput === "string" && /^\d{4}$/.test(yearInput)))
+      ? Number(yearInput) : NaN;
+    const latestPassingYear = Math.min(2100, new Date().getFullYear() + 10);
+    if (!Number.isInteger(passingYear) || passingYear < 1950 || passingYear > latestPassingYear) {
       return res.status(400).json({ message: `Passing year must be between 1950 and ${latestPassingYear}` });
     }
-
-    if (!mongoose.isObjectIdOrHexString(branch)) {
+    if (typeof input.branch !== "string" || !mongoose.isObjectIdOrHexString(input.branch)) {
       return res.status(400).json({ message: "Select a valid branch" });
     }
-
-    const selectedBranch = await Branch.findOne({ _id: branch, isActive: true }).select("name code");
-    if (!selectedBranch) {
-      return res.status(400).json({ message: "Selected branch is unavailable" });
-    }
-
-    const normalizedEmail =
-      email.trim().toLowerCase();
-
-    const existingUser =
-      await User.findOne({
-        email: normalizedEmail,
-      });
-
-    if (existingUser) {
-      return res.status(409).json({
-        message:
-          "An account with this email already exists",
-      });
-    }
-
-    const salt =
-      await bcrypt.genSalt(10);
-
-    const hashedPassword =
-      await bcrypt.hash(
-        password,
-        salt
-      );
+    const selectedBranch = await Branch.findOne({ _id: input.branch, isActive: true }).select("name code");
+    if (!selectedBranch) return res.status(400).json({ message: "Selected branch is unavailable" });
+    if (await User.exists({ email })) return duplicateAccount(res);
 
     const user = await User.create({
-      name: name.trim(),
-      email: normalizedEmail,
-      mobileNumber: normalizedMobile,
-      collegeName: collegeName.trim(),
-      passingYear: normalizedPassingYear,
+      name,
+      email,
+      mobileNumber,
+      collegeName,
+      passingYear,
       branch: selectedBranch._id,
-      password: hashedPassword,
+      password: await bcrypt.hash(input.password, PASSWORD_COST),
       role: "student",
       isActive: true,
       isEmailVerified: false,
-
-      subscription: {
-        plan: "free",
-        status: "inactive",
-      },
+      subscription: { plan: "free", status: "inactive" },
     });
-
-    res.status(201).json({
-      message:
-        "User registered successfully",
-
-      user: publicUser({ ...user.toObject(), branch: selectedBranch.toObject() }),
+    res.set("Cache-Control", "no-store");
+    return res.status(201).json({
+      message: "User registered successfully",
+      user: publicUser({ ...user.toObject(), branch: selectedBranch }),
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(409).json({
-        message:
-          "An account with this email already exists",
-      });
-    }
-
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    if (error.code === 11000) return duplicateAccount(res);
+    return serverError(res);
   }
 };
-
-// ============================================================
-// LOGIN USER
-// ============================================================
 
 const loginUser = async (req, res) => {
   try {
-    const {
-      email,
-      password,
-    } = req.body;
+    const { email: rawEmail, password } = req.body || {};
+    const email = normalizeEmail(rawEmail);
+    // Existing short passwords continue to work, but all new passwords use the stronger policy.
+    if (!email || !validPassword(password, { isNew: false })) return invalidLogin(res);
+    const user = await User.findOne({ email }).select("+password +tokenVersion").populate("branch", "name code");
+    const isPasswordCorrect = await bcrypt.compare(password, user?.password || DUMMY_PASSWORD_HASH);
+    if (!user || !user.isActive || !isPasswordCorrect) return invalidLogin(res);
 
-    if (!email || !password) {
-      return res.status(400).json({
-        message:
-          "Email and password are required",
-      });
-    }
-
-    const normalizedEmail =
-      email.trim().toLowerCase();
-
-    const user = await User.findOne({ email: normalizedEmail }).populate("branch", "name code");
-
-    if (!user) {
-      return res.status(401).json({
-        message:
-          "Invalid email or password",
-      });
-    }
-
-    if (!user.isActive) {
-      return res.status(403).json({
-        message:
-          "Your account has been deactivated",
-      });
-    }
-
-    const isPasswordCorrect =
-      await bcrypt.compare(
-        password,
-        user.password
-      );
-
-    if (!isPasswordCorrect) {
-      return res.status(401).json({
-        message:
-          "Invalid email or password",
-      });
-    }
-
-    const token =
-      jwt.sign(
-        {
-          userId: user._id,
-          role: user.role,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "7d",
-        }
-      );
-
-    res.status(200).json({
-      message:
-        "Login successful",
-
-      token,
-
-      user: publicUser(user),
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    setSessionCookie(res, user);
+    res.set("Cache-Control", "no-store");
+    return res.status(200).json({ message: "Login successful", user: publicUser(user) });
+  } catch {
+    return serverError(res);
   }
 };
 
-// ============================================================
-// GET CURRENT LOGGED-IN USER
-// ============================================================
+const logoutUser = (req, res) => {
+  clearSessionCookie(res);
+  res.set("Cache-Control", "no-store");
+  return res.status(200).json({ message: "Logged out successfully" });
+};
 
-const getCurrentUser = async (
-  req,
-  res
-) => {
+const getCurrentUser = (req, res) => {
+  res.set("Cache-Control", "no-store");
+  return res.status(200).json({ message: "Current user fetched successfully", user: publicUser(req.user) });
+};
+
+const updateCurrentUser = async (req, res) => {
   try {
-    res.status(200).json({
-      message:
-        "Current user fetched successfully",
-
-      user: req.user,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    const input = req.body || {};
+    const name = trimmedText(input.name, 2, 100);
+    const collegeName = trimmedText(input.collegeName, 2, 150);
+    const mobileNumber = typeof input.mobileNumber === "string" && input.mobileNumber.length <= 30
+      ? input.mobileNumber.replace(/[\s()-]/g, "") : "";
+    const passingYear = (typeof input.passingYear === "number" || (typeof input.passingYear === "string" && /^\d{4}$/.test(input.passingYear)))
+      ? Number(input.passingYear) : NaN;
+    const latestPassingYear = Math.min(2100, new Date().getFullYear() + 10);
+    if (!name || !collegeName || !/^\+?\d{10,15}$/.test(mobileNumber) || !Number.isInteger(passingYear) || passingYear < 1950 || passingYear > latestPassingYear) {
+      return res.status(400).json({ message: "Enter valid profile details." });
+    }
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      $set: { name, collegeName, mobileNumber, passingYear },
+    }, { new: true, runValidators: true }).populate("branch", "name code");
+    if (!user) return res.status(404).json({ message: "Profile not found." });
+    res.set("Cache-Control", "no-store");
+    return res.json({ message: "Profile updated successfully", user: publicUser(user) });
+  } catch {
+    return serverError(res);
   }
 };
 
-// ============================================================
-// ADMIN TEST CONTROLLER
-// ============================================================
-
-const adminTest = async (
-  req,
-  res
-) => {
-  try {
-    res.status(200).json({
-      message:
-        "Admin access granted",
-
-      user: {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
-  }
-};
-
-// ============================================================
-// CREATE ADMIN USER
-// ============================================================
+const adminTest = (req, res) => res.status(200).json({
+  message: "Admin access granted",
+  user: { id: req.user._id, name: req.user.name, email: req.user.email, role: req.user.role },
+});
 
 const createAdmin = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-    } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({
-        message:
-          "Name, email and password are required",
-      });
-    }
-
-    if (name.trim().length < 2) {
-      return res.status(400).json({
-        message:
-          "Name must be at least 2 characters long",
-      });
-    }
-
-    if (password.length < 6) {
-      return res.status(400).json({
-        message:
-          "Password must be at least 6 characters long",
-      });
-    }
-
-    const normalizedEmail =
-      email.trim().toLowerCase();
-
-    const existingUser =
-      await User.findOne({
-        email: normalizedEmail,
-      });
-
-    if (existingUser) {
-      return res.status(409).json({
-        message:
-          "An account with this email already exists",
-      });
-    }
-
-    const salt =
-      await bcrypt.genSalt(10);
-
-    const hashedPassword =
-      await bcrypt.hash(
-        password,
-        salt
-      );
+    const input = req.body || {};
+    const name = trimmedText(input.name, 2, 100);
+    const email = normalizeEmail(input.email);
+    if (!name || !email) return res.status(400).json({ message: "Enter a valid name and email address" });
+    if (!validPassword(input.password)) return res.status(400).json({ message: NEW_PASSWORD_MESSAGE });
+    if (await User.exists({ email })) return duplicateAccount(res);
 
     const admin = await User.create({
-      name: name.trim(),
-      email: normalizedEmail,
-      password: hashedPassword,
+      name,
+      email,
+      password: await bcrypt.hash(input.password, PASSWORD_COST),
       role: "admin",
       isActive: true,
       isEmailVerified: false,
-
-      subscription: {
-        plan: "free",
-        status: "inactive",
-      },
+      subscription: { plan: "free", status: "inactive" },
     });
-
-    res.status(201).json({
-      message:
-        "Admin created successfully",
-
-      user: {
-        id: admin._id,
-        name: admin.name,
-        email: admin.email,
-        role: admin.role,
-        isActive: admin.isActive,
-        isEmailVerified:
-          admin.isEmailVerified,
-        subscription:
-          admin.subscription,
-        createdAt:
-          admin.createdAt,
-      },
-    });
+    res.set("Cache-Control", "no-store");
+    return res.status(201).json({ message: "Admin created successfully", user: publicUser(admin) });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(409).json({
-        message:
-          "An account with this email already exists",
-      });
-    }
-
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    if (error.code === 11000) return duplicateAccount(res);
+    return serverError(res);
   }
 };
-
-// ============================================================
-// ADMIN RESET USER PASSWORD
-// ============================================================
 
 const adminResetPassword = async (req, res) => {
   try {
-    const {
-      email,
-      newPassword,
-    } = req.body;
-
-    if (!email || !newPassword) {
-      return res.status(400).json({
-        message:
-          "Email and new password are required",
-      });
-    }
-
-    if (newPassword.length < 6) {
-      return res.status(400).json({
-        message:
-          "New password must be at least 6 characters long",
-      });
-    }
-
-    const normalizedEmail =
-      email.trim().toLowerCase();
-
-    const user =
-      await User.findOne({
-        email: normalizedEmail,
-      });
-
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-
-    if (!user.isActive) {
-      return res.status(403).json({
-        message:
-          "Target user account is deactivated",
-      });
-    }
-
-    const salt =
-      await bcrypt.genSalt(10);
-
-    const hashedPassword =
-      await bcrypt.hash(
-        newPassword,
-        salt
-      );
-
-    user.password = hashedPassword;
-
-    await user.save();
-
-    res.status(200).json({
-      message:
-        "Admin password reset successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    const { email: rawEmail, newPassword } = req.body || {};
+    const email = normalizeEmail(rawEmail);
+    if (!email) return res.status(400).json({ message: "Enter a valid email address" });
+    if (!validPassword(newPassword)) return res.status(400).json({ message: NEW_PASSWORD_MESSAGE });
+    const hashedPassword = await bcrypt.hash(newPassword, PASSWORD_COST);
+    // Atomic increment prevents concurrent resets from accidentally restoring an old session version.
+    const user = await User.findOneAndUpdate(
+      { email, isActive: true },
+      { $set: { password: hashedPassword }, $inc: { tokenVersion: 1 } },
+      { new: true, runValidators: true }
+    );
+    if (!user) return res.status(404).json({ message: "Active user not found" });
+    res.set("Cache-Control", "no-store");
+    return res.status(200).json({ message: "Password reset successfully. Existing sessions have been revoked." });
+  } catch {
+    return serverError(res);
   }
 };
 
-// ============================================================
-// EXPORTS
-// ============================================================
-
-module.exports = {
-  registerUser,
-  loginUser,
-  getCurrentUser,
-  adminTest,
-  createAdmin,
-  adminResetPassword,
-};
+module.exports = { registerUser, loginUser, logoutUser, getCurrentUser, updateCurrentUser, adminTest, createAdmin, adminResetPassword };

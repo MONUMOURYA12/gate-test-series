@@ -8,7 +8,10 @@ const Test = require("../models/Test");
 const Question = require("../models/Question");
 
 const serverDir = path.resolve(__dirname, "..");
-const input = path.join(serverDir, "data/ec-booklets.json");
+const inputFlag = process.argv.indexOf("--input");
+const input = path.resolve(inputFlag >= 0 && process.argv[inputFlag + 1]
+  ? process.argv[inputFlag + 1]
+  : path.join(serverDir, "data/ec-booklets.json"));
 const branchCodes = ["EC", "ECE"];
 const batchSize = 20;
 require("dotenv").config({ path: path.join(serverDir, ".env"), quiet: true });
@@ -40,7 +43,7 @@ function questionDocument(q, book, ids, questionNumber) {
 }
 
 async function validatePayload(payload) {
-  if (payload.version !== 1 || payload.books?.length !== 7) throw new Error("Expected the seven EC booklets.");
+  if (payload.version !== 1 || !Array.isArray(payload.books) || payload.books.length === 0) throw new Error("Expected at least one configured EC booklet.");
   const seen = new Set();
   const id = new mongoose.Types.ObjectId();
   for (const book of payload.books) {

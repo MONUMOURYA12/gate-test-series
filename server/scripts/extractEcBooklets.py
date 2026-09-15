@@ -29,6 +29,10 @@ BOOKS = [
      [(3, "Amplitude Modulation"), (23, "Angle Modulation"), (30, "Shift Keying"), (35, "Pulse Code Modulation"), (41, "PAM and PWM"), (43, "Multiplexing"), (47, "Information Theory"), (53, "Delta Modulation"), (55, "Digital Communications"), (68, "GSM, CDMA and BCM"), (74, "Mixed Communications"), (77, "Random Signals and Noise")]),
     ("electromagnetics", "Electromagnetics", "Electromagnetics for EC Booklet (149 Pages).pdf", 6, 139,
      [(1, "Vector Calculus"), (19, "Electric Fields"), (44, "Magnetic Fields"), (53, "Maxwell Equations"), (66, "Plane Waves"), (92, "Transmission Lines"), (115, "Waveguides"), (127, "Antennas")]),
+    ("digital-circuits", "Digital Circuits", "Digital Circuits Booklet (149 Pages).pdf", 6, 143,
+     [(1, "Number System"), (9, "Boolean Algebra"), (24, "Logic GATES"), (40, "Combinational Digital Circuits"), (59, "Sequential Digital Circuits"), (90, "Semiconductor Memories"), (95, "Logic Gate Families"), (111, "A/D & D/A Converters"), (122, "Microprocessor 8085 Programming & Basics"), (134, "Memories & Interfacing")]),
+    ("control-systems", "Control Systems", "Control Systems Booklet (186 Pages).pdf", 8, 185,
+     [(1, "Basics of Control System"), (9, "Block Diagram"), (21, "Signal Flow Graph"), (29, "Stability / Routh Hurwitz"), (42, "Time Domain Parameters"), (66, "Steady State Errors"), (74, "Root Locus"), (99, "Bode Plot"), (117, "Nyquist / Polar Plot"), (132, "Phase & Gain Margin"), (142, "Frequency Parameter"), (146, "State Space Analysis"), (163, "Controller / Compensators"), (176, "Modelling")]),
 ]
 
 TAGGED = re.compile(r"(?P<marker>\[(?:GATE|IES|ESE)[^\[\]\r\n]*(?:\r?\n[A-Za-z][^\[\]\r\n]*)?\]?)\s*(?P<label>\(\d{1,3}\)|\d{1,3}\.)")
@@ -221,8 +225,13 @@ def main():
     parser.add_argument('--asset-dir',type=Path,required=True)
     parser.add_argument('--mode',choices=['gate','all'],default='gate')
     parser.add_argument('--no-render',action='store_true')
+    parser.add_argument('--slugs', help='Comma-separated book slugs to extract instead of every configured book')
     args=parser.parse_args()
-    payload={"version":1,"mode":args.mode,"books":[extract_book(b,args.pdf_dir,args.asset_dir,args.mode,not args.no_render) for b in BOOKS]}
+    selected_slugs={slug.strip() for slug in args.slugs.split(',')} if args.slugs else None
+    configs=[book for book in BOOKS if selected_slugs is None or book[0] in selected_slugs]
+    if not configs:
+        raise SystemExit('No configured books matched --slugs.')
+    payload={"version":1,"mode":args.mode,"books":[extract_book(b,args.pdf_dir,args.asset_dir,args.mode,not args.no_render) for b in configs]}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(payload,ensure_ascii=True,indent=2),encoding='utf8')
 

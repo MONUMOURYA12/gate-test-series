@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { studentApi } from "../services/api";
 import QuestionMedia from "../components/QuestionMedia.jsx";
+import SolutionContent from "../components/SolutionContent.jsx";
 
 function answerLabel(question, answer) {
   if (answer === null || answer === undefined || (Array.isArray(answer) && !answer.length)) return "Not answered";
@@ -22,6 +23,8 @@ export default function StudentResultPage() {
   const [attempt, setAttempt] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [solutions, setSolutions] = useState({});
+  const [solutionLoading, setSolutionLoading] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -42,6 +45,18 @@ export default function StudentResultPage() {
 
   if (loading) return <div className="learn-state" role="status">Loading your result...</div>;
   if (error || !attempt) return <div className="learn-state" role="alert"><h1>Unable to load result</h1><p>{error || "This result is unavailable."}</p><Link className="secondary-button" to="/student/tests">Back to tests</Link></div>;
+
+  async function loadSolution(questionId) {
+    setSolutionLoading(questionId);
+    try {
+      const data = await studentApi.solution(attemptId, questionId);
+      setSolutions(current => ({ ...current, [questionId]: data.solution }));
+    } catch (solutionError) {
+      setSolutions(current => ({ ...current, [questionId]: solutionError.message }));
+    } finally {
+      setSolutionLoading("");
+    }
+  }
 
   const result = attempt.result || {};
   const attempted = (result.correct || 0) + (result.incorrect || 0);
@@ -82,6 +97,8 @@ export default function StudentResultPage() {
           <dl className="result-answers"><div><dt>Your answer</dt><dd>{answerLabel(question, question.answer)}</dd></div><div><dt>Correct answer</dt><dd>{question.questionType === "nat" && question.natAnswerMin != null && question.natAnswerMax != null ? `${question.natAnswerMin} to ${question.natAnswerMax}` : answerLabel(question, question.correctAnswer)}</dd></div></dl>
           <p className="result-award">{question.awardedMarks >= 0 ? "+" : ""}{question.awardedMarks} marks</p>
           {question.explanation && <p className="result-explanation"><strong>Explanation:</strong> {question.explanation}</p>}
+          <button className="solution-button" type="button" disabled={solutionLoading === String(question.questionId)} onClick={() => loadSolution(String(question.questionId))}>{solutionLoading === String(question.questionId) ? "Loading solution..." : "Solution"}</button>
+          {solutions[question.questionId] && <div className="ai-solution-box"><strong>Solution</strong><SolutionContent text={solutions[question.questionId]} /><small>Review the verified answer key alongside this explanation. AI-generated explanations may contain mistakes.</small></div>}
         </article>)}
       </div>
     </section>

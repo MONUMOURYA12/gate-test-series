@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { calculate } from "../lib/calculator";
 
 const buttons = [
   ["sin", "cos", "tan", "log", "ln"],
@@ -8,34 +9,6 @@ const buttons = [
   ["1", "2", "3", "−", "π"],
   ["0", ".", "e", "+", "="],
 ];
-
-function calculate(expression) {
-  const normalized = expression
-    .replaceAll("×", "*")
-    .replaceAll("÷", "/")
-    .replaceAll("−", "-")
-    .replaceAll("π", "Math.PI")
-    .replaceAll("√", "sqrt(")
-    .replaceAll("x²", "**2")
-    .replaceAll("^", "**")
-    .replaceAll("e", "Math.E");
-
-  if (!/^[0-9+*/().\sA-Za-z_*]+$/.test(normalized) || /(?:constructor|prototype|__)/i.test(normalized)) {
-    throw new Error("Invalid expression");
-  }
-
-  const value = Function("sqrt", "sin", "cos", "tan", "log", "ln", `"use strict"; return (${normalized})`)(
-    Math.sqrt,
-    (input) => Math.sin((input * Math.PI) / 180),
-    (input) => Math.cos((input * Math.PI) / 180),
-    (input) => Math.tan((input * Math.PI) / 180),
-    Math.log10,
-    Math.log,
-  );
-
-  if (!Number.isFinite(value)) throw new Error("Invalid result");
-  return String(Number(value.toFixed(10)));
-}
 
 export default function ScientificCalculator() {
   const [expression, setExpression] = useState("");

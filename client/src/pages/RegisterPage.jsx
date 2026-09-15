@@ -44,6 +44,10 @@ export default function RegisterPage() {
     const collegeName = values.collegeName.trim();
     const passingYear = Number(values.passingYear);
 
+    if (values.password.length < 12 || new TextEncoder().encode(values.password).length > 72) {
+      setError("Use at least 12 characters and at most 72 bytes for your password. Some symbols use more than one byte.");
+      return;
+    }
     if (values.password !== values.confirmPassword) {
       setError("Passwords do not match.");
       return;
@@ -113,6 +117,7 @@ export default function RegisterPage() {
                 inputMode="tel"
                 autoComplete="tel"
                 placeholder="e.g. 9876543210"
+                maxLength={18}
                 required
               />
             </div>
@@ -141,18 +146,18 @@ export default function RegisterPage() {
 
             <div className="field">
               <label htmlFor="email">Email address</label>
-              <input id="email" name="email" type="email" autoComplete="email" required />
+              <input id="email" name="email" type="email" autoComplete="email" maxLength={254} required />
             </div>
 
             <div className="field">
               <label htmlFor="password">Password</label>
-              <input id="password" name="password" type="password" autoComplete="new-password" minLength={6} required />
-              <span className="field-hint">At least 6 characters</span>
+              <input id="password" name="password" type="password" autoComplete="new-password" minLength={12} maxLength={72} required />
+              <span className="field-hint">At least 12 characters. A long, unique passphrase works well.</span>
             </div>
 
             <div className="field">
               <label htmlFor="confirmPassword">Confirm password</label>
-              <input id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" minLength={6} required />
+              <input id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" minLength={12} maxLength={72} required />
             </div>
           </div>
 

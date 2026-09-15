@@ -1,19 +1,31 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-export const questionMediaUrl = path => `${API_BASE_URL.replace(/\/api\/?$/, "")}${path}`;
-const TOKEN_KEY = "gateTestSeriesToken";
+const API_BASE_URL = (import.meta.env?.VITE_API_URL || "/api").replace(/\/+$/, "");
+const QUESTION_MEDIA_PATH = /^\/question-media\/[a-z0-9-]+\/[a-f0-9-]+\.webp$/;
+let sessionRevision = 0;
 
-export const getStoredToken = () => localStorage.getItem(TOKEN_KEY);
-export const setStoredToken = token => localStorage.setItem(TOKEN_KEY, token);
-export const clearStoredToken = () => localStorage.removeItem(TOKEN_KEY);
+export const questionMediaUrl = path => typeof path === "string" && QUESTION_MEDIA_PATH.test(path)
+  ? `${API_BASE_URL.replace(/\/api$/, "")}${path}`
+  : null;
+
+// Old releases stored bearer tokens here. Cookies now hold the session, and
+// JavaScript must neither read nor keep a copy of the session credential.
+export const clearLegacyToken = () => {
+  try {
+    localStorage.removeItem("gateTestSeriesToken");
+  } catch {
+    // Browsers can disable local storage; cookie authentication still works.
+  }
+};
 
 export const apiRequest = async (path, options = {}) => {
-  const token = getStoredToken();
+  const requestRevision = sessionRevision;
   const headers = new Headers(options.headers || {});
   if (!headers.has("Content-Type") && options.body && !(options.body instanceof FormData)) {
     headers.set("Content-Type", "application/json");
   }
-  if (token) headers.set("Authorization", `Bearer ${token}`);
-  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
+  if (!["GET", "HEAD"].includes((options.method || "GET").toUpperCase())) {
+    headers.set("X-Requested-With", "XMLHttpRequest");
+  }
+  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers, credentials: "include" });
   const contentType = response.headers.get("content-type") || "";
   const data = contentType.includes("application/json") ? await response.json() : null;
   if (!response.ok) {
@@ -22,8 +34,7 @@ export const apiRequest = async (path, options = {}) => {
     error.data = data;
     if (data?.errors) error.errors = data.errors;
     if (data?.existingQuestionNumbers) error.existingQuestionNumbers = data.existingQuestionNumbers;
-    if (response.status === 401 && token && getStoredToken() === token && path !== "/auth/login") {
-      clearStoredToken();
+    if (response.status === 401 && requestRevision === sessionRevision && path !== "/auth/login") {
       window.dispatchEvent(new Event("auth-expired"));
     }
     throw error;
@@ -32,8 +43,18 @@ export const apiRequest = async (path, options = {}) => {
 };
 
 export const authApi = {
-  login: payload => apiRequest("/auth/login", { method: "POST", body: JSON.stringify(payload) }),
-  me: () => apiRequest("/auth/me"),
+  login: async payload => {
+    const data = await apiRequest("/auth/login", { method: "POST", body: JSON.stringify(payload) });
+    sessionRevision += 1;
+    return data;
+  },
+  me: signal => apiRequest("/auth/me", { signal }),
+  updateMe: payload => apiRequest("/auth/me", { method: "PATCH", body: JSON.stringify(payload) }),
+  logout: async () => {
+    const data = await apiRequest("/auth/logout", { method: "POST" });
+    sessionRevision += 1;
+    return data;
+  },
 };
 
 export const dashboardApi = {
@@ -84,6 +105,7 @@ export const questionApi = {
 
 export const studentApi = {
   catalogue: signal => apiRequest("/student/catalogue", { signal }),
+  history: signal => apiRequest("/student/profile", { signal }),
   testDetails: (testId, signal) => apiRequest(`/student/tests/${testId}`, { signal }),
   startAttempt: testId => apiRequest(`/student/tests/${testId}/attempts`, { method: "POST" }),
   attempt: (attemptId, signal) => apiRequest(`/student/attempts/${attemptId}`, { signal }),
@@ -91,6 +113,7 @@ export const studentApi = {
     method: "PUT", body: JSON.stringify(payload),
   }),
   submitAttempt: attemptId => apiRequest(`/student/attempts/${attemptId}/submit`, { method: "POST" }),
+  solution: (attemptId, questionId) => apiRequest(`/student/attempts/${attemptId}/questions/${questionId}/solution`),
 };
 
 export const registerStudent = payload => apiRequest("/auth/register", {

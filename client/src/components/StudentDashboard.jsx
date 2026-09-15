@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, NavLink, useOutletContext } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { dashboardApi } from "../services/api";
 
 const commonSubjects = [
   { key: "engineering-mathematics", code: "MATH", name: "Engineering Mathematics", description: "Common GATE foundation subject." },
@@ -15,25 +14,11 @@ function getBranchId(value) {
 export default function StudentDashboard() {
   const { branches, subjects, chapters, tests } = useOutletContext();
   const { user } = useAuth();
-  const [allBranches, setAllBranches] = useState(branches);
-  const [allSubjects, setAllSubjects] = useState(subjects);
   const [subjectQuery, setSubjectQuery] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    Promise.all([dashboardApi.branches(), dashboardApi.subjects()]).then(([branchData, subjectData]) => {
-      if (!active) return;
-      setAllBranches(branchData?.branches || branches);
-      setAllSubjects(subjectData?.subjects || subjects);
-    }).catch(() => {
-      // The protected catalogue remains the source of truth if the public library is unavailable.
-    });
-    return () => { active = false; };
-  }, [branches, subjects]);
 
   const branchId = user?.branch?._id || user?.branch;
   const branch = branchId ? branches.find(item => item._id === branchId) || branches[0] : null;
-  const branchSubjects = subjects.filter(subject => getBranchId(subject.branch) === branch?._id);
+  const branchSubjects = subjects.filter(subject => getBranchId(subject.branch) === branch?._id && !subject.isCommon);
   const visibleSubjects = useMemo(() => {
     const query = subjectQuery.trim().toLowerCase();
     return branchSubjects.filter(subject => !query || `${subject.name} ${subject.code || ""}`.toLowerCase().includes(query));
@@ -80,36 +65,13 @@ export default function StudentDashboard() {
         })}</div>}
     </section>
 
-    <section className="branch-library-section" aria-labelledby="branch-library-heading">
-      <div className="learn-section-heading">
-        <div><p className="learn-eyebrow">GATE STUDY HUB</p><h2 id="branch-library-heading">Browse every branch</h2></div>
-        <span>{allBranches.length} learning routes</span>
-      </div>
-      <p className="branch-library-intro">See the complete subject map. Your registered branch opens the full chapter and question journey.</p>
-      <div className="branch-library-grid">
-        {allBranches.map(item => {
-          const itemSubjects = allSubjects.filter(subject => getBranchId(subject.branch) === item._id);
-          const isCurrent = item._id === branch?._id;
-          return <article className={`branch-library-card${isCurrent ? " current" : ""}`} key={item._id}>
-            <div className="branch-library-topline"><span className="branch-code-mark">{item.code}</span>{isCurrent ? <span className="branch-current-label">Your branch</span> : null}</div>
-            <h3>{item.name}</h3>
-            <p>{item.description || "Explore the subject map for this GATE paper."}</p>
-            <div className="branch-subject-list" aria-label={`${item.name} subjects`}>
-              {itemSubjects.length ? itemSubjects.map(subject => <span key={subject._id}>{subject.name}</span>) : <span>Subjects coming soon</span>}
-            </div>
-            {isCurrent ? <a className="branch-library-link" href="#subjects-heading">Open your path <span aria-hidden="true">↓</span></a> : <span className="branch-library-note">Preview subject map</span>}
-          </article>;
-        })}
-      </div>
-    </section>
-
     <section className="common-subject-section" aria-labelledby="common-subjects-heading">
       <div className="learn-section-heading"><div><p className="learn-eyebrow">COMMON TO EVERY BRANCH</p><h2 id="common-subjects-heading">Foundation subjects</h2></div><span>Shared GATE practice</span></div>
       <div className="learn-grid">{commonSubjects.map(subject => {
-        const configuredSubject = branchSubjects.find(item => item.name.toLowerCase() === subject.name.toLowerCase());
+        const configuredSubject = subjects.find(item => item.name.toLowerCase() === subject.name.toLowerCase() && item.isCommon);
         return <Link className="learn-card common-subject-card" key={subject.key} to={configuredSubject ? `/student/subjects/${configuredSubject._id}` : `/student/subjects/common/${subject.key}`}>
           <span className="learn-code">{subject.code}</span><h3>{subject.name}</h3><p>{subject.description}</p>
-          <span className={configuredSubject ? "subject-ready-note" : "coming-soon-label"}>{configuredSubject ? "Open practice path" : "Coming soon"} <span aria-hidden="true">→</span></span>
+          <span className={configuredSubject ? "subject-ready-note" : "coming-soon-label"}>{configuredSubject ? "Open common practice" : "We are working on it"} <span aria-hidden="true">→</span></span>
         </Link>;
       })}</div>
     </section>

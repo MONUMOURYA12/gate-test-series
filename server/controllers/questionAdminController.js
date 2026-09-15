@@ -1,3 +1,4 @@
+const { requireId, validateQuestionBody, sendControllerError } = require("../services/apiValidation");
 const Question = require("../models/Question");
 const Test = require("../models/Test");
 const Branch = require("../models/Branch");
@@ -258,7 +259,9 @@ const validateQuestionData = ({
 
 const updateQuestion = async (req, res) => {
   try {
+    validateQuestionBody(req.body);
     const { questionId } = req.params;
+    requireId(questionId, "questionId");
 
     const existingQuestion =
       await Question.findById(questionId);
@@ -534,16 +537,14 @@ const updateQuestion = async (req, res) => {
       testStatistics,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    return sendControllerError(res, error);
   }
 };
 
 const deleteQuestion = async (req, res) => {
   try {
     const { questionId } = req.params;
+    requireId(questionId, "questionId");
 
     const question =
       await Question.findById(questionId);
@@ -571,10 +572,7 @@ const deleteQuestion = async (req, res) => {
       testStatistics,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    return sendControllerError(res, error);
   }
 };
 

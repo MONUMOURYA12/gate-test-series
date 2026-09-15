@@ -25,6 +25,7 @@ import StudentExamPage from "./pages/StudentExamPage.jsx";
 import StudentResultPage from "./pages/StudentResultPage.jsx";
 import StudentSubjectPage from "./pages/StudentSubjectPage.jsx";
 import StudentComingSoonPage from "./pages/StudentComingSoonPage.jsx";
+import StudentProfilePage from "./pages/StudentProfilePage.jsx";
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
         <Route path="/student" element={<StudentLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="profile" element={<StudentProfilePage />} />
           <Route path="tests" element={<StudentTestsPage />} />
           <Route path="tests/:testId" element={<StudentTestDetailsPage />} />
           <Route path="subjects/:subjectId" element={<StudentSubjectPage />} />

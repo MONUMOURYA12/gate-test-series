@@ -1,9 +1,13 @@
+const { validateText, sendControllerError } = require("../services/apiValidation");
 const Branch = require("../models/Branch");
 
 // Create a new branch
 const createBranch = async (req, res) => {
   try {
-    const { name, code, description } = req.body;
+    const { name, code, description } = req.body || {};
+    validateText(name, "Branch name", { required: true });
+    validateText(code, "Branch code", { required: true, max: 30 });
+    validateText(description, "Description", { max: 5000 });
 
     if (!name || !code) {
       return res.status(400).json({
@@ -32,10 +36,7 @@ const createBranch = async (req, res) => {
       branch,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -49,10 +50,7 @@ const getBranches = async (req, res) => {
       branches,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 

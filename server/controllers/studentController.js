@@ -5,6 +5,7 @@ const Test = require("../models/Test");
 const Question = require("../models/Question");
 const TestAttempt = require("../models/TestAttempt");
 const { findPublishedTest } = require("../services/studentTest");
+const { gradeQuestion } = require("../services/examScoring");
 
 // Restrict every level to active parents. Select metadata explicitly so adding
 // fields to the question model cannot accidentally expose answers to students.
@@ -15,8 +16,11 @@ async function getCatalogue(req, res) {
     if (branchId) branchFilter._id = branchId;
     const branches = await Branch.find(branchFilter)
       .select("name code description").sort({ name: 1 }).lean();
-    const subjects = await Subject.find({ isActive: true, branch: { $in: branches.map(b => b._id) } })
+    const branchSubjects = await Subject.find({ isActive: true, branch: { $in: branches.map(b => b._id) } })
       .select("name code description branch").sort({ name: 1 }).lean();
+    const commonSubjects = await Subject.find({ isActive: true, name: { $in: ["General Aptitude", "Engineering Mathematics"] } })
+      .select("name code description branch").sort({ name: 1 }).lean();
+    const subjects = [...new Map([...branchSubjects, ...commonSubjects.map(subject => ({ ...subject, isCommon: true }))].map(subject => [String(subject._id), subject])).values()];
     const chapters = await Chapter.find({ isActive: true, subject: { $in: subjects.map(s => s._id) } })
       .select("name description subject order").sort({ order: 1, name: 1 }).lean();
     const tests = await Test.find({ isPublished: true, chapter: { $in: chapters.map(c => c._id) } })
@@ -52,4 +56,39 @@ async function getTestDetails(req, res) {
   }
 }
 
-module.exports = { getCatalogue, getTestDetails };
+async function getHistory(req, res) {
+  try {
+    const attempts = await TestAttempt.find({ student: req.user._id, status: "submitted" })
+      .select("test title submittedAt result questions")
+      .sort({ submittedAt: -1 }).limit(100).lean();
+    const testIds = [...new Set(attempts.map(attempt => String(attempt.test)))];
+    const tests = await Test.find({ _id: { $in: testIds } }).select("_id chapter").lean();
+    const chapterIds = [...new Set(tests.map(test => String(test.chapter)))];
+    const chapters = await Chapter.find({ _id: { $in: chapterIds } }).select("_id name subject").lean();
+    const subjectIds = [...new Set(chapters.map(chapter => String(chapter.subject)))];
+    const subjects = await Subject.find({ _id: { $in: subjectIds } }).select("_id name").lean();
+    const testMap = new Map(tests.map(test => [String(test._id), test]));
+    const chapterMap = new Map(chapters.map(chapter => [String(chapter._id), chapter]));
+    const subjectMap = new Map(subjects.map(subject => [String(subject._id), subject]));
+    const weakTopics = new Map();
+    const history = attempts.map(attempt => {
+      const test = testMap.get(String(attempt.test));
+      const chapter = chapterMap.get(String(test?.chapter));
+      const subject = subjectMap.get(String(chapter?.subject));
+      for (const question of attempt.questions || []) {
+        if (gradeQuestion(question).outcome === "incorrect") {
+          const key = chapter?.name || "General practice";
+          weakTopics.set(key, (weakTopics.get(key) || 0) + 1);
+        }
+      }
+      return { _id: attempt._id, title: attempt.title, submittedAt: attempt.submittedAt, result: attempt.result, subject: subject?.name, chapter: chapter?.name };
+    });
+    const recommendations = [...weakTopics.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)
+      .map(([topic, incorrect]) => ({ topic, incorrect, message: `Review ${topic} and try a focused practice test.` }));
+    return res.json({ history, recommendations });
+  } catch {
+    return res.status(500).json({ message: "Unable to load your learning record." });
+  }
+}
+
+module.exports = { getCatalogue, getTestDetails, getHistory };

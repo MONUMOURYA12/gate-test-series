@@ -1,9 +1,10 @@
+const { requireId, validateQuestionBody, validateQuestionQuery, literalSearch, sendControllerError } = require("../services/apiValidation");
 const Question = require("../models/Question");
 const Test = require("../models/Test");
 const Branch = require("../models/Branch");
 const Subject = require("../models/Subject");
 const Chapter = require("../models/Chapter");
-const XLSX = require("xlsx");
+const { parseSpreadsheet } = require("../services/spreadsheetUpload");
 const mongoose = require("mongoose");
 
 const isBlankCell = value => (
@@ -81,6 +82,7 @@ const updateTestStatistics = async (testId) => {
 
 const createQuestion = async (req, res) => {
   try {
+    validateQuestionBody(req.body);
     const {
       branch,
       subject,
@@ -463,10 +465,7 @@ const createQuestion = async (req, res) => {
       testStatistics,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -476,6 +475,7 @@ const createQuestion = async (req, res) => {
 
 const getQuestions = async (req, res) => {
   try {
+    validateQuestionQuery(req.query);
     const {
       page = 1,
       limit = 20,
@@ -556,7 +556,7 @@ const getQuestions = async (req, res) => {
 
     if (search) {
       filter.questionText = {
-        $regex: search,
+        $regex: literalSearch(search),
         $options: "i",
       };
     }
@@ -606,10 +606,7 @@ const getQuestions = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -619,7 +616,9 @@ const getQuestions = async (req, res) => {
 
 const getQuestionsByTest = async (req, res) => {
   try {
+    validateQuestionQuery(req.query);
     const { testId } = req.params;
+    requireId(testId, "testId");
 
     const {
       page = 1,
@@ -695,10 +694,7 @@ const getQuestionsByTest = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -708,7 +704,9 @@ const getQuestionsByTest = async (req, res) => {
 
 const getQuestionsByChapter = async (req, res) => {
   try {
+    validateQuestionQuery(req.query);
     const { chapterId } = req.params;
+    requireId(chapterId, "chapterId");
 
     const {
       page = 1,
@@ -790,10 +788,7 @@ const getQuestionsByChapter = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -804,6 +799,7 @@ const getQuestionsByChapter = async (req, res) => {
 const bulkUploadQuestions = async (req, res) => {
   try {
     const { testId } = req.params;
+    requireId(testId, "testId");
 
     if (!mongoose.isObjectIdOrHexString(testId)) {
       return res.status(400).json({
@@ -886,34 +882,7 @@ const bulkUploadQuestions = async (req, res) => {
     // Read Excel
     // --------------------------------------------------------
 
-    let workbook;
-
-    try {
-      workbook = XLSX.read(req.file.buffer, { type: "buffer" });
-    } catch {
-      return res.status(400).json({
-        message: "The uploaded file could not be read. Use the provided template.",
-      });
-    }
-
-    const sheetName =
-      workbook.SheetNames[0];
-
-    if (!sheetName) {
-      return res.status(400).json({
-        message:
-          "Excel sheet not found",
-      });
-    }
-
-    const worksheet =
-      workbook.Sheets[sheetName];
-
-    const matrix = XLSX.utils.sheet_to_json(worksheet, {
-      header: 1,
-      defval: "",
-      blankrows: false,
-    });
+    const matrix = await parseSpreadsheet(req.file);
 
     if (!matrix.length) {
       return res.status(400).json({
@@ -1510,6 +1479,7 @@ const bulkUploadQuestions = async (req, res) => {
         testStatistics.totalMarks,
     });
   } catch (error) {
+    if ([400, 429].includes(error?.status)) return res.status(error.status).json({ message: error.message });
     if (error?.code === 11000) {
       return res.status(409).json({
         message: "One or more question numbers already exist in this test. Please refresh and try again.",
@@ -1519,7 +1489,6 @@ const bulkUploadQuestions = async (req, res) => {
     if (error?.name === "ValidationError") {
       return res.status(400).json({
         message: "The spreadsheet contains invalid question data.",
-        errors: Object.values(error.errors || {}).map(item => item.message),
       });
     }
 

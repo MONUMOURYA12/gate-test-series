@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { studentApi } from "../services/api";
 import ScientificCalculator from "../components/ScientificCalculator.jsx";
 import QuestionMedia from "../components/QuestionMedia.jsx";
+import SolutionContent from "../components/SolutionContent.jsx";
 
 function hasAnswer(question) {
   if (question.answer === null || question.answer === undefined || question.answer === "") return false;
@@ -37,6 +38,8 @@ export default function StudentExamPage() {
   const [savingQuestion, setSavingQuestion] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [calculatorOpen, setCalculatorOpen] = useState(false);
+  const [solutions, setSolutions] = useState({});
+  const [solutionLoading, setSolutionLoading] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const submitStarted = useRef(false);
 
@@ -111,7 +114,7 @@ export default function StudentExamPage() {
     }
   }
 
-  const saveAnswer = useCallback(async (questionId, answer, markedForReview) => {
+  const saveAnswer = useCallback(async (questionId, answer, markedForReview, answerSubmitted = false) => {
     setSavingQuestion(questionId);
     setError("");
     try {
@@ -119,6 +122,7 @@ export default function StudentExamPage() {
         questionId,
         answer,
         markedForReview,
+        answerSubmitted,
       });
     } catch (err) {
       const endedAttempt = err.data?.attempt;
@@ -133,15 +137,15 @@ export default function StudentExamPage() {
     }
   }, [attemptId, navigate]);
 
-  const updateQuestion = useCallback((question, answer, markedForReview = question.markedForReview) => {
+  const updateQuestion = useCallback((question, answer, markedForReview = question.markedForReview, answerSubmitted = question.answerSubmitted || false) => {
     const apiAnswer = toApiAnswer(question, answer);
     setAttempt(current => current ? {
       ...current,
       questions: current.questions.map(item => item.questionId === question.questionId
-        ? { ...item, answer: apiAnswer, markedForReview }
+        ? { ...item, answer: apiAnswer, markedForReview, answerSubmitted }
         : item),
     } : current);
-    saveAnswer(question.questionId, apiAnswer, markedForReview);
+      saveAnswer(question.questionId, apiAnswer, markedForReview, answerSubmitted);
   }, [saveAnswer]);
 
   const questions = attempt?.questions || [];
@@ -170,13 +174,31 @@ export default function StudentExamPage() {
   }
 
   function toggleReview() {
-    updateQuestion(question, question.answer, !question.markedForReview);
+    if (!question.answerSubmitted) updateQuestion(question, question.answer, !question.markedForReview);
+  }
+
+  async function showSolution() {
+    setSolutionLoading(true);
+    setError("");
+    try {
+      const result = await studentApi.solution(attemptId, String(question.questionId));
+      setSolutions(current => ({ ...current, [question.questionId]: result.solution }));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSolutionLoading(false);
+    }
+  }
+
+  function submitQuestion() {
+    if (!hasAnswer(question) || question.answerSubmitted) return;
+    updateQuestion(question, question.answer, question.markedForReview, true);
   }
 
   return <div className="student-exam-page">
     <div className="exam-topbar">
       <div>
-        <p className="learn-eyebrow">GATE / LIVE ATTEMPT</p>
+        <p className="learn-eyebrow">LIVE EXAM ATTEMPT</p>
         <h1>{attempt.title}</h1>
         <p>Question {currentIndex + 1} of {questions.length}</p>
       </div>
@@ -208,7 +230,7 @@ export default function StudentExamPage() {
 
         {question.questionType === "mcq" && <div className="exam-options" role="radiogroup" aria-label="Answer options">
           {question.options.map((option, index) => <label className={`exam-option${question.answer === index ? " is-selected" : ""}`} key={index}>
-            <input type="radio" name={`question-${question.questionId}`} checked={question.answer === index} onChange={() => chooseMcq(index)} />
+            <input disabled={question.answerSubmitted} type="radio" name={`question-${question.questionId}`} checked={question.answer === index} onChange={() => chooseMcq(index)} />
             <span className="option-letter">{String.fromCharCode(65 + index)}</span>
             <span>{option}</span>
           </label>)}
@@ -216,7 +238,7 @@ export default function StudentExamPage() {
 
         {question.questionType === "msq" && <div className="exam-options" aria-label="Answer options">
           {question.options.map((option, index) => <label className={`exam-option${question.answer?.includes(index) ? " is-selected" : ""}`} key={index}>
-            <input type="checkbox" checked={question.answer?.includes(index) || false} onChange={() => toggleMsq(index)} />
+            <input disabled={question.answerSubmitted} type="checkbox" checked={question.answer?.includes(index) || false} onChange={() => toggleMsq(index)} />
             <span className="option-letter">{String.fromCharCode(65 + index)}</span>
             <span>{option}</span>
           </label>)}
@@ -224,25 +246,37 @@ export default function StudentExamPage() {
 
         {question.questionType === "nat" && <div className="nat-answer field">
           <label htmlFor="nat-answer">Enter your numerical answer</label>
-          <input id="nat-answer" inputMode="decimal" type="number" step="any" value={question.answer ?? ""} onChange={event => setNat(event.target.value)} />
+          <input disabled={question.answerSubmitted} id="nat-answer" inputMode="decimal" type="number" step="any" value={question.answer ?? ""} onChange={event => setNat(event.target.value)} />
         </div>}
+
+        {hasAnswer(question) && <>
+          <button className={question.answerSubmitted ? "solution-button exam-solution-button" : "primary-button exam-submit-question-button"} type="button" disabled={solutionLoading || (!question.answerSubmitted && savingQuestion === question.questionId)} onClick={question.answerSubmitted ? showSolution : submitQuestion}>
+            {question.answerSubmitted ? (solutionLoading ? "Loading solution..." : "Solution") : "Submit"}
+          </button>
+          {solutions[question.questionId] && <div className="ai-solution-box"><strong>Solution</strong><SolutionContent text={solutions[question.questionId]} /><small>AI-generated explanations may contain mistakes. Verify against the answer key after submission.</small></div>}
+        </>}
 
         <div className="exam-actions">
           <button className="secondary-button" type="button" disabled={currentIndex === 0} onClick={() => setCurrentIndex(index => index - 1)}>Previous</button>
           <button className={`review-button${question.markedForReview ? " is-marked" : ""}`} type="button" onClick={toggleReview}>
             {question.markedForReview ? "Remove review mark" : "Mark for review"}
           </button>
-          <button className="primary-button" type="button" disabled={currentIndex === questions.length - 1} onClick={() => setCurrentIndex(index => index + 1)}>Next</button>
+          {currentIndex < questions.length - 1 && <button className="primary-button" type="button" onClick={() => setCurrentIndex(index => index + 1)}>Next</button>}
         </div>
         <p className="exam-save-status" aria-live="polite">{savingQuestion === question.questionId ? "Saving answer..." : "Your answer is saved automatically."}</p>
       </section>
 
       <aside className="exam-sidebar" aria-label="Exam navigation">
         <div className="exam-sidebar-heading"><h2>Question map</h2><span>{answeredCount}/{questions.length} answered</span></div>
-        <div className="exam-legend"><span><i className="legend-dot answered" />Answered</span><span><i className="legend-dot review" />Review</span></div>
+        <div className="exam-legend">
+          <span><i className="legend-dot unanswered" />Not visited</span>
+          <span><i className="legend-dot answered" />Answered</span>
+          <span><i className="legend-dot review" />Review</span>
+          <span><i className="legend-dot answered-review" />Answered + review</span>
+        </div>
         <div className="question-map">
           {questions.map((item, index) => <button
-            className={`question-map-button${index === currentIndex ? " current" : ""}${hasAnswer(item) ? " answered" : ""}${item.markedForReview ? " review" : ""}`}
+            className={`question-map-button${index === currentIndex ? " current" : ""}${hasAnswer(item) ? " answered" : ""}${item.markedForReview ? " review" : ""}${hasAnswer(item) && item.markedForReview ? " answered-review" : ""}`}
             key={item.questionId}
             type="button"
             aria-label={`Go to question ${index + 1}${hasAnswer(item) ? ", answered" : ", unanswered"}${item.markedForReview ? ", marked for review" : ""}`}

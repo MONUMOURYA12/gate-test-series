@@ -1,0 +1,23 @@
+# Deploy this repository as one web service: React + Express.
+# The free plan is for initial verification; see README.md for production media storage.
+services:
+  - type: web
+    name: gate-test-series
+    runtime: node
+    plan: free
+    branch: phase-5/student-frontend
+    buildCommand: npm ci --prefix server --omit=dev && npm ci --prefix client --include=dev && npm run build --prefix client
+    startCommand: npm start --prefix server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: VITE_API_URL
+        value: /api
+      - key: MONGO_URI
+        sync: false
+      # Generate at least 48 random bytes as hex (96 characters); do not reuse an old secret.
+      - key: JWT_SECRET
+        sync: false
