@@ -1,9 +1,98 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"; const TOKEN_KEY = "gateTestSeriesToken"; export const getStoredToken = () => localStorage.getItem(TOKEN_KEY); export const setStoredToken = (token) => { localStorage.setItem(TOKEN_KEY, token); }; export const clearStoredToken = () => { localStorage.removeItem(TOKEN_KEY); }; export const apiRequest = async (path, options = {}) => { const token = getStoredToken(); const headers = new Headers(options.headers || {}); if (!headers.has("Content-Type") && options.body && !(options.body instanceof FormData)) { headers.set("Content-Type", "application/json"); } if (token) { headers.set("Authorization", `Bearer ${token}`); } const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers, }); const contentType = response.headers.get("content-type") || ""; const data = contentType.includes("application/json") ? await response.json() : null; if (!response.ok) { const message = data?.message || "Something went wrong while contacting the server"; const error = new Error(message); if (data?.errors) { error.errors = data.errors; } if (data?.existingQuestionNumbers) { error.existingQuestionNumbers = data.existingQuestionNumbers; } throw error; } return data; }; export const authApi = { login: (payload) => apiRequest("/auth/login", { method: "POST", body: JSON.stringify(payload), }), me: () => apiRequest("/auth/me"), }; export const dashboardApi = { branches: () => apiRequest("/branches"), subjects: () => apiRequest("/subjects"), chapters: () => apiRequest("/chapters"), tests: () => apiRequest("/tests"), questions: () => apiRequest("/questions?limit=1"), }; export const branchApi = { list: () => apiRequest("/branches"), create: (payload) => apiRequest("/branches", { method: "POST", body: JSON.stringify(payload), }), }; export const subjectApi = { list: () => apiRequest("/subjects"), listByBranch: (branchId) => apiRequest(`/subjects/branch/${branchId}`), create: (payload) => apiRequest("/subjects", { method: "POST", body: JSON.stringify(payload), }), }; export const chapterApi = { list: () => apiRequest("/chapters"), listBySubject: (subjectId) => apiRequest(`/chapters/subject/${subjectId}`), create: (payload) => apiRequest("/chapters", { method: "POST", body: JSON.stringify(payload), }), }; export const testApi = { list: () => apiRequest("/tests"), listByChapter: (chapterId) => apiRequest(`/tests/chapter/${chapterId}`), create: (payload) => apiRequest("/tests", { method: "POST", body: JSON.stringify(payload), }), sync: (testId) => apiRequest(`/tests/${testId}/sync`, { method: "POST", }), }; export const questionApi = { list: (params = "") => apiRequest(`/questions${params}`), listByTest: (testId, params = "") => apiRequest(`/questions/test/${testId}${params}`), listByChapter: (chapterId, params = "") => apiRequest(`/questions/chapter/${chapterId}${params}`), create: (payload) => apiRequest("/questions", { method: "POST", body: JSON.stringify(payload), }), update: (questionId, payload) => apiRequest(`/questions/${questionId}`, { method: "PUT", body: JSON.stringify(payload), }), delete: (questionId) => apiRequest(`/questions/${questionId}`, { method: "DELETE", }), bulkUpload: (testId, file) => { const formData = new FormData(); formData.append("file", file); return apiRequest(`/questions/bulk-upload/${testId}`, { method: "POST", body: formData, }); }, };
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+export const questionMediaUrl = path => `${API_BASE_URL.replace(/\/api\/?$/, "")}${path}`;
+const TOKEN_KEY = "gateTestSeriesToken";
 
-// Student endpoints return published metadata only, never answer keys.
-export const studentApi = {
-  catalogue: (signal) => apiRequest("/student/catalogue", { signal }),
+export const getStoredToken = () => localStorage.getItem(TOKEN_KEY);
+export const setStoredToken = token => localStorage.setItem(TOKEN_KEY, token);
+export const clearStoredToken = () => localStorage.removeItem(TOKEN_KEY);
+
+export const apiRequest = async (path, options = {}) => {
+  const token = getStoredToken();
+  const headers = new Headers(options.headers || {});
+  if (!headers.has("Content-Type") && options.body && !(options.body instanceof FormData)) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
+  const contentType = response.headers.get("content-type") || "";
+  const data = contentType.includes("application/json") ? await response.json() : null;
+  if (!response.ok) {
+    const error = new Error(data?.message || "Something went wrong while contacting the server");
+    error.status = response.status;
+    error.data = data;
+    if (data?.errors) error.errors = data.errors;
+    if (data?.existingQuestionNumbers) error.existingQuestionNumbers = data.existingQuestionNumbers;
+    if (response.status === 401 && token && getStoredToken() === token && path !== "/auth/login") {
+      clearStoredToken();
+      window.dispatchEvent(new Event("auth-expired"));
+    }
+    throw error;
+  }
+  return data;
 };
-export const registerStudent = (payload) => apiRequest("/auth/register", {
+
+export const authApi = {
+  login: payload => apiRequest("/auth/login", { method: "POST", body: JSON.stringify(payload) }),
+  me: () => apiRequest("/auth/me"),
+};
+
+export const dashboardApi = {
+  branches: () => apiRequest("/branches"),
+  subjects: () => apiRequest("/subjects"),
+  chapters: () => apiRequest("/chapters"),
+  tests: () => apiRequest("/tests"),
+  questions: () => apiRequest("/questions?limit=1"),
+};
+
+export const branchApi = {
+  list: () => apiRequest("/branches"),
+  create: payload => apiRequest("/branches", { method: "POST", body: JSON.stringify(payload) }),
+};
+
+export const subjectApi = {
+  list: () => apiRequest("/subjects"),
+  listByBranch: branchId => apiRequest(`/subjects/branch/${branchId}`),
+  create: payload => apiRequest("/subjects", { method: "POST", body: JSON.stringify(payload) }),
+};
+
+export const chapterApi = {
+  list: () => apiRequest("/chapters"),
+  listBySubject: subjectId => apiRequest(`/chapters/subject/${subjectId}`),
+  create: payload => apiRequest("/chapters", { method: "POST", body: JSON.stringify(payload) }),
+};
+
+export const testApi = {
+  list: () => apiRequest("/tests"),
+  listByChapter: chapterId => apiRequest(`/tests/chapter/${chapterId}`),
+  create: payload => apiRequest("/tests", { method: "POST", body: JSON.stringify(payload) }),
+  sync: testId => apiRequest(`/tests/${testId}/sync`, { method: "POST" }),
+};
+
+export const questionApi = {
+  list: (params = "") => apiRequest(`/questions${params}`),
+  listByTest: (testId, params = "") => apiRequest(`/questions/test/${testId}${params}`),
+  listByChapter: (chapterId, params = "") => apiRequest(`/questions/chapter/${chapterId}${params}`),
+  create: payload => apiRequest("/questions", { method: "POST", body: JSON.stringify(payload) }),
+  update: (questionId, payload) => apiRequest(`/questions/${questionId}`, { method: "PUT", body: JSON.stringify(payload) }),
+  delete: questionId => apiRequest(`/questions/${questionId}`, { method: "DELETE" }),
+  bulkUpload: (testId, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return apiRequest(`/questions/bulk-upload/${testId}`, { method: "POST", body: formData });
+  },
+};
+
+export const studentApi = {
+  catalogue: signal => apiRequest("/student/catalogue", { signal }),
+  testDetails: (testId, signal) => apiRequest(`/student/tests/${testId}`, { signal }),
+  startAttempt: testId => apiRequest(`/student/tests/${testId}/attempts`, { method: "POST" }),
+  attempt: (attemptId, signal) => apiRequest(`/student/attempts/${attemptId}`, { signal }),
+  saveAnswer: (attemptId, payload) => apiRequest(`/student/attempts/${attemptId}/answers`, {
+    method: "PUT", body: JSON.stringify(payload),
+  }),
+  submitAttempt: attemptId => apiRequest(`/student/attempts/${attemptId}/submit`, { method: "POST" }),
+};
+
+export const registerStudent = payload => apiRequest("/auth/register", {
   method: "POST", body: JSON.stringify(payload),
 });

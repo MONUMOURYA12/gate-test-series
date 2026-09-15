@@ -22,6 +22,20 @@ const {
 
 const router = express.Router();
 
+const handleSpreadsheetUpload = (req, res, next) => {
+  upload.single("file")(req, res, error => {
+    if (error) {
+      return res.status(error.code === "LIMIT_FILE_SIZE" ? 413 : 400).json({
+        message: error.code === "LIMIT_FILE_SIZE"
+          ? "File is too large. Maximum upload size is 5 MB."
+          : error.message,
+      });
+    }
+
+    return next();
+  });
+};
+
 // ============================================================
 // ADMIN READ ACCESS (student catalogue uses /api/student/catalogue)
 // ============================================================
@@ -83,7 +97,7 @@ router.post(
   "/bulk-upload/:testId",
   protect,
   adminOnly,
-  upload.single("file"),
+  handleSpreadsheetUpload,
   bulkUploadQuestions
 );
 

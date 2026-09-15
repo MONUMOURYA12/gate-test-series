@@ -1,6 +1,25 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const User = require("../models/User");
+const Branch = require("../models/Branch");
+
+function publicUser(user) {
+  return {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    mobileNumber: user.mobileNumber,
+    collegeName: user.collegeName,
+    passingYear: user.passingYear,
+    branch: user.branch,
+    role: user.role,
+    isActive: user.isActive,
+    isEmailVerified: user.isEmailVerified,
+    subscription: user.subscription,
+    createdAt: user.createdAt,
+  };
+}
 
 // ============================================================
 // REGISTER USER
@@ -10,14 +29,17 @@ const registerUser = async (req, res) => {
   try {
     const {
       name,
+      mobileNumber,
+      branch,
+      collegeName,
+      passingYear,
       email,
       password,
     } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !mobileNumber || !branch || !collegeName || !passingYear || !email || !password) {
       return res.status(400).json({
-        message:
-          "Name, email and password are required",
+        message: "Full name, mobile number, branch, college name, passing year, email and password are required",
       });
     }
 
@@ -30,9 +52,32 @@ const registerUser = async (req, res) => {
 
     if (password.length < 6) {
       return res.status(400).json({
-        message:
-          "Password must be at least 6 characters long",
+        message: "Password must be at least 6 characters long",
       });
+    }
+
+    const normalizedMobile = String(mobileNumber).replace(/[\s()-]/g, "");
+    if (!/^\+?\d{10,15}$/.test(normalizedMobile)) {
+      return res.status(400).json({ message: "Enter a valid mobile number" });
+    }
+
+    if (collegeName.trim().length < 2) {
+      return res.status(400).json({ message: "College name must be at least 2 characters long" });
+    }
+
+    const normalizedPassingYear = Number(passingYear);
+    const latestPassingYear = new Date().getFullYear() + 10;
+    if (!Number.isInteger(normalizedPassingYear) || normalizedPassingYear < 1950 || normalizedPassingYear > latestPassingYear) {
+      return res.status(400).json({ message: `Passing year must be between 1950 and ${latestPassingYear}` });
+    }
+
+    if (!mongoose.isObjectIdOrHexString(branch)) {
+      return res.status(400).json({ message: "Select a valid branch" });
+    }
+
+    const selectedBranch = await Branch.findOne({ _id: branch, isActive: true }).select("name code");
+    if (!selectedBranch) {
+      return res.status(400).json({ message: "Selected branch is unavailable" });
     }
 
     const normalizedEmail =
@@ -62,6 +107,10 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name: name.trim(),
       email: normalizedEmail,
+      mobileNumber: normalizedMobile,
+      collegeName: collegeName.trim(),
+      passingYear: normalizedPassingYear,
+      branch: selectedBranch._id,
       password: hashedPassword,
       role: "student",
       isActive: true,
@@ -77,19 +126,7 @@ const registerUser = async (req, res) => {
       message:
         "User registered successfully",
 
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        isActive: user.isActive,
-        isEmailVerified:
-          user.isEmailVerified,
-        subscription:
-          user.subscription,
-        createdAt:
-          user.createdAt,
-      },
+      user: publicUser({ ...user.toObject(), branch: selectedBranch.toObject() }),
     });
   } catch (error) {
     if (error.code === 11000) {
@@ -127,10 +164,7 @@ const loginUser = async (req, res) => {
     const normalizedEmail =
       email.trim().toLowerCase();
 
-    const user =
-      await User.findOne({
-        email: normalizedEmail,
-      });
+    const user = await User.findOne({ email: normalizedEmail }).populate("branch", "name code");
 
     if (!user) {
       return res.status(401).json({
@@ -177,17 +211,7 @@ const loginUser = async (req, res) => {
 
       token,
 
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        isActive: user.isActive,
-        isEmailVerified:
-          user.isEmailVerified,
-        subscription:
-          user.subscription,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
     res.status(500).json({

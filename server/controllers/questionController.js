@@ -4,6 +4,45 @@ const Branch = require("../models/Branch");
 const Subject = require("../models/Subject");
 const Chapter = require("../models/Chapter");
 const XLSX = require("xlsx");
+const mongoose = require("mongoose");
+
+const isBlankCell = value => (
+  value === undefined || value === null || String(value).trim() === ""
+);
+
+const normalizedHeader = value => String(value || "")
+  .trim()
+  .toLowerCase()
+  .replace(/[^a-z0-9]/g, "");
+
+const headerAliases = new Map([
+  ["questionNumber", ["questionnumber", "number", "qno"]],
+  ["questionText", ["questiontext", "question", "text"]],
+  ["questionType", ["questiontype", "type"]],
+  ["optionA", ["optiona", "a"]],
+  ["optionB", ["optionb", "b"]],
+  ["optionC", ["optionc", "c"]],
+  ["optionD", ["optiond", "d"]],
+  ["correctAnswer", ["correctanswer", "answer", "correct"]],
+  ["marks", ["marks", "mark"]],
+  ["negativeMarks", ["negativemarks", "negative", "negativemark"]],
+  ["isPYQ", ["ispyq", "pyq"]],
+  ["examName", ["examname", "exam"]],
+  ["year", ["year"]],
+  ["session", ["session"]],
+  ["difficulty", ["difficulty"]],
+  ["category", ["category"]],
+  ["topic", ["topic"]],
+  ["tags", ["tags", "tag"]],
+  ["explanation", ["explanation", "solution"]],
+  ["solutionType", ["solutiontype"]],
+]);
+
+const headerFieldByKey = new Map(
+  [...headerAliases.entries()].flatMap(([field, aliases]) => (
+    aliases.map(alias => [alias, field])
+  ))
+);
 
 // ============================================================
 // HELPER: UPDATE TEST STATISTICS
@@ -287,7 +326,7 @@ const createQuestion = async (req, res) => {
     if (questionType === "nat") {
       finalCorrectAnswer = Number(correctAnswer);
 
-      if (Number.isNaN(finalCorrectAnswer)) {
+      if (!Number.isFinite(finalCorrectAnswer)) {
         return res.status(400).json({
           message:
             "NAT correctAnswer must be a number",
@@ -299,10 +338,41 @@ const createQuestion = async (req, res) => {
     // PYQ validation
     // --------------------------------------------------------
 
-    if (isPYQ && !year) {
+    const normalizedYear = year === undefined || year === null || year === ""
+      ? undefined
+      : Number(year);
+
+    if (isPYQ && (normalizedYear === undefined || !Number.isInteger(normalizedYear) || normalizedYear < 1980 || normalizedYear > 2100)) {
       return res.status(400).json({
         message:
-          "Year is required for previous year questions",
+          "Year must be an integer between 1980 and 2100 for previous year questions",
+      });
+    }
+
+    if (normalizedYear !== undefined && (!Number.isInteger(normalizedYear) || normalizedYear < 1980 || normalizedYear > 2100)) {
+      return res.status(400).json({
+        message: "Year must be an integer between 1980 and 2100",
+      });
+    }
+
+    if (!["manual", "ai", "none"].includes(solutionType)) {
+      return res.status(400).json({
+        message: "solutionType must be manual, ai or none",
+      });
+    }
+
+    const finalMarks = Number(marks);
+    const finalNegativeMarks = Number(negativeMarks);
+
+    if (!Number.isFinite(finalMarks) || finalMarks < 0) {
+      return res.status(400).json({
+        message: "Marks must be a valid non-negative number",
+      });
+    }
+
+    if (!Number.isFinite(finalNegativeMarks) || finalNegativeMarks < 0) {
+      return res.status(400).json({
+        message: "Negative marks must be a valid non-negative number",
       });
     }
 
@@ -346,12 +416,12 @@ const createQuestion = async (req, res) => {
 
       correctAnswer: finalCorrectAnswer,
 
-      marks: Number(marks),
-      negativeMarks: Number(negativeMarks),
+      marks: finalMarks,
+      negativeMarks: finalNegativeMarks,
 
       isPYQ,
       examName,
-      year: year ? Number(year) : undefined,
+      year: normalizedYear,
       session,
 
       difficulty,
@@ -735,13 +805,19 @@ const bulkUploadQuestions = async (req, res) => {
   try {
     const { testId } = req.params;
 
+    if (!mongoose.isObjectIdOrHexString(testId)) {
+      return res.status(400).json({
+        message: "A valid test id is required",
+      });
+    }
+
     // --------------------------------------------------------
     // Check file
     // --------------------------------------------------------
 
     if (!req.file) {
       return res.status(400).json({
-        message: "Excel file is required",
+        message: "A spreadsheet file is required",
       });
     }
 
@@ -810,12 +886,15 @@ const bulkUploadQuestions = async (req, res) => {
     // Read Excel
     // --------------------------------------------------------
 
-    const workbook = XLSX.read(
-      req.file.buffer,
-      {
-        type: "buffer",
-      }
-    );
+    let workbook;
+
+    try {
+      workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    } catch {
+      return res.status(400).json({
+        message: "The uploaded file could not be read. Use the provided template.",
+      });
+    }
 
     const sheetName =
       workbook.SheetNames[0];
@@ -830,20 +909,45 @@ const bulkUploadQuestions = async (req, res) => {
     const worksheet =
       workbook.Sheets[sheetName];
 
-    const rows =
-      XLSX.utils.sheet_to_json(
-        worksheet,
-        {
-          defval: "",
-        }
-      );
+    const matrix = XLSX.utils.sheet_to_json(worksheet, {
+      header: 1,
+      defval: "",
+      blankrows: false,
+    });
 
-    if (!rows.length) {
+    if (!matrix.length) {
       return res.status(400).json({
         message:
-          "Excel file is empty",
+          "The spreadsheet is empty",
       });
     }
+
+    const headerRow = matrix[0].map(normalizedHeader);
+    const missingHeaders = ["questionNumber", "questionText", "questionType", "correctAnswer"]
+      .filter(field => !headerRow.some(header => headerFieldByKey.get(header) === field));
+
+    if (missingHeaders.length) {
+      return res.status(400).json({
+        message: `Missing required columns: ${missingHeaders.join(", ")}`,
+        errors: [
+          "Required columns are questionNumber, questionText, questionType and correctAnswer.",
+        ],
+      });
+    }
+
+    const dataRows = matrix.slice(1);
+
+    if (dataRows.length > 1000) {
+      return res.status(400).json({
+        message: "A single upload can contain at most 1000 questions.",
+      });
+    }
+
+    const rows = dataRows.map(values => headerRow.reduce((row, header, index) => {
+      const field = headerFieldByKey.get(header);
+      if (field) row[field] = values[index] ?? "";
+      return row;
+    }, {}));
 
     // --------------------------------------------------------
     // Prepare
@@ -920,10 +1024,9 @@ const bulkUploadQuestions = async (req, res) => {
         isPYQValue === "yes" ||
         isPYQValue === "1";
 
-      const year =
-        row.year
-          ? Number(row.year)
-          : undefined;
+      const year = isBlankCell(row.year)
+        ? undefined
+        : Number(row.year);
 
       // ------------------------------------------------------
       // Question text
@@ -1051,8 +1154,7 @@ const bulkUploadQuestions = async (req, res) => {
       // Correct answer
       // ------------------------------------------------------
 
-      let correctAnswer =
-        row.correctAnswer;
+      let correctAnswer = row.correctAnswer;
 
       // ------------------------------------------------------
       // MCQ
@@ -1061,8 +1163,14 @@ const bulkUploadQuestions = async (req, res) => {
       if (
         questionType === "mcq"
       ) {
-        correctAnswer =
-          Number(correctAnswer);
+        if (isBlankCell(correctAnswer)) {
+          errors.push(
+            `Row ${excelRowNumber}: correctAnswer is required for MCQ`
+          );
+          continue;
+        }
+
+        correctAnswer = Number(correctAnswer);
 
         if (
           !Number.isInteger(
@@ -1087,6 +1195,13 @@ const bulkUploadQuestions = async (req, res) => {
       if (
         questionType === "msq"
       ) {
+        if (isBlankCell(correctAnswer)) {
+          errors.push(
+            `Row ${excelRowNumber}: correctAnswer is required for MSQ`
+          );
+          continue;
+        }
+
         correctAnswer =
           String(correctAnswer)
             .split(",")
@@ -1121,11 +1236,17 @@ const bulkUploadQuestions = async (req, res) => {
       if (
         questionType === "nat"
       ) {
-        correctAnswer =
-          Number(correctAnswer);
+        if (isBlankCell(correctAnswer)) {
+          errors.push(
+            `Row ${excelRowNumber}: correctAnswer is required for NAT`
+          );
+          continue;
+        }
+
+        correctAnswer = Number(correctAnswer);
 
         if (
-          Number.isNaN(
+          !Number.isFinite(
             correctAnswer
           )
         ) {
@@ -1141,12 +1262,17 @@ const bulkUploadQuestions = async (req, res) => {
       // PYQ year
       // ------------------------------------------------------
 
-      if (
-        isPYQ &&
-        !year
-      ) {
+      if (isPYQ && (year === undefined || !Number.isInteger(year) || year < 1980 || year > 2100)) {
         errors.push(
-          `Row ${excelRowNumber}: year is required for PYQ`
+          `Row ${excelRowNumber}: year must be an integer between 1980 and 2100 for PYQ`
+        );
+
+        continue;
+      }
+
+      if (year !== undefined && (!Number.isInteger(year) || year < 1980 || year > 2100)) {
+        errors.push(
+          `Row ${excelRowNumber}: year must be an integer between 1980 and 2100`
         );
 
         continue;
@@ -1156,18 +1282,12 @@ const bulkUploadQuestions = async (req, res) => {
       // Marks
       // ------------------------------------------------------
 
-      const marks =
-        Number(
-          row.marks || 1
-        );
+      const marks = Number(isBlankCell(row.marks) ? 1 : row.marks);
 
-      const negativeMarks =
-        Number(
-          row.negativeMarks || 0
-        );
+      const negativeMarks = Number(isBlankCell(row.negativeMarks) ? 0 : row.negativeMarks);
 
       if (
-        Number.isNaN(marks) ||
+        !Number.isFinite(marks) ||
         marks < 0
       ) {
         errors.push(
@@ -1178,9 +1298,7 @@ const bulkUploadQuestions = async (req, res) => {
       }
 
       if (
-        Number.isNaN(
-          negativeMarks
-        ) ||
+        !Number.isFinite(negativeMarks) ||
         negativeMarks < 0
       ) {
         errors.push(
@@ -1203,6 +1321,15 @@ const bulkUploadQuestions = async (req, res) => {
             tag.trim()
           )
           .filter(Boolean);
+
+      const solutionType = String(row.solutionType || "none").trim().toLowerCase();
+
+      if (!["manual", "ai", "none"].includes(solutionType)) {
+        errors.push(
+          `Row ${excelRowNumber}: solutionType must be manual, ai or none`
+        );
+        continue;
+      }
 
       // ------------------------------------------------------
       // Add question
@@ -1268,11 +1395,7 @@ const bulkUploadQuestions = async (req, res) => {
             row.explanation || ""
           ).trim(),
 
-        solutionType:
-          String(
-            row.solutionType ||
-              "none"
-          ).trim(),
+        solutionType,
 
         aiSolutionGenerated:
           false,
@@ -1387,11 +1510,22 @@ const bulkUploadQuestions = async (req, res) => {
         testStatistics.totalMarks,
     });
   } catch (error) {
+    if (error?.code === 11000) {
+      return res.status(409).json({
+        message: "One or more question numbers already exist in this test. Please refresh and try again.",
+      });
+    }
+
+    if (error?.name === "ValidationError") {
+      return res.status(400).json({
+        message: "The spreadsheet contains invalid question data.",
+        errors: Object.values(error.errors || {}).map(item => item.message),
+      });
+    }
+
     res.status(500).json({
       message:
         "Bulk upload failed",
-
-      error: error.message,
     });
   }
 };

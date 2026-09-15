@@ -83,6 +83,12 @@ function QuestionList({
                       )}
                     </div>
                   ) : null}
+
+                  {question.requiresReview ? (
+                    <small className="question-review-note">
+                      Source page {question.sourcePage || "needs checking"}
+                    </small>
+                  ) : null}
                 </div>
 
                 <span className="question-type">
@@ -116,12 +122,16 @@ function QuestionList({
 
                 <span
                   className={`status-pill ${
-                    question.isPublished
+                    question.requiresReview
+                      ? "review"
+                      : question.isPublished
                       ? "active"
                       : "inactive"
                   }`}
                 >
-                  {question.isPublished
+                  {question.requiresReview
+                    ? "Needs review"
+                    : question.isPublished
                     ? "Published"
                     : "Draft"}
                 </span>

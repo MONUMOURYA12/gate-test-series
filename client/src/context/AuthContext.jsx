@@ -12,6 +12,12 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const expireSession = () => setUser(null);
+    window.addEventListener("auth-expired", expireSession);
+    return () => window.removeEventListener("auth-expired", expireSession);
+  }, []);
+
+  useEffect(() => {
     const restoreUser = async () => {
       const token = getStoredToken();
 

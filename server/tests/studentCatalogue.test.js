@@ -13,7 +13,7 @@ const Question = require('../models/Question');
 // No dotenv or database connection: never use the repository's live credentials.
 test('catalogue restricts parent hierarchy and counts only visible questions', async t => {
   const cases = [
-    [Branch, { isActive: true }, [{ _id: 'b', name: 'ECE' }]],
+    [Branch, { isActive: true, _id: 'b' }, [{ _id: 'b', name: 'ECE' }]],
     [Subject, { isActive: true, branch: { $in: ['b'] } }, [{ _id: 's' }]],
     [Chapter, { isActive: true, subject: { $in: ['s'] } }, [{ _id: 'c' }]],
     [Test, { isPublished: true, chapter: { $in: ['c'] } }, [{ _id: 't', title: 'Networks' }, { _id: 'empty' }]],
@@ -25,11 +25,11 @@ test('catalogue restricts parent hierarchy and counts only visible questions', a
     });
   }
   t.mock.method(Question, 'aggregate', async pipeline => {
-    assert.deepEqual(pipeline[0].$match, { test: { $in: ['t', 'empty'] }, isActive: true, isPublished: true });
+    assert.deepEqual(pipeline[0].$match, { test: { $in: ['t', 'empty'] }, isActive: true, isPublished: true, requiresReview: { $ne: true } });
     return [{ _id: 't', totalQuestions: 2, totalMarks: 3 }];
   });
   let result;
-  await getCatalogue({}, { json(value) { result = value; } });
+  await getCatalogue({ user: { role: 'student', branch: 'b' } }, { json(value) { result = value; } });
   assert.equal(result.tests[0].totalQuestions, 2);
   assert.equal(result.tests[0].totalMarks, 3);
   assert.equal(result.tests[1].totalQuestions, 0);

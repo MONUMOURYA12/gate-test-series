@@ -42,10 +42,10 @@ const protect = async (req, res, next) => {
         process.env.JWT_SECRET
       );
 
-    const user =
-      await User.findById(
-        decoded.userId
-      ).select("-password");
+    const userQuery = User.findById(decoded.userId).select("-password");
+    const user = typeof userQuery.populate === "function"
+      ? await userQuery.populate("branch", "name code")
+      : await userQuery;
 
     if (!user) {
       return res.status(401).json({

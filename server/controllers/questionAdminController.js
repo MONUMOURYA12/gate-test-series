@@ -131,6 +131,7 @@ const validateQuestionData = ({
   difficulty,
   isPYQ,
   year,
+  solutionType,
 }) => {
   if (
     !["mcq", "msq", "nat"].includes(questionType)
@@ -217,7 +218,7 @@ const validateQuestionData = ({
   if (questionType === "nat") {
     const finalAnswer = Number(correctAnswer);
 
-    if (Number.isNaN(finalAnswer)) {
+    if (!Number.isFinite(finalAnswer)) {
       return {
         error:
           "NAT correctAnswer must be a number",
@@ -226,10 +227,28 @@ const validateQuestionData = ({
     }
   }
 
-  if (isPYQ && !year) {
+  const normalizedYear = year === undefined || year === null || year === ""
+    ? undefined
+    : Number(year);
+
+  if (isPYQ && (normalizedYear === undefined || !Number.isInteger(normalizedYear) || normalizedYear < 1980 || normalizedYear > 2100)) {
     return {
       error:
-        "Year is required for previous year questions",
+        "Year must be an integer between 1980 and 2100 for previous year questions",
+      status: 400,
+    };
+  }
+
+  if (normalizedYear !== undefined && (!Number.isInteger(normalizedYear) || normalizedYear < 1980 || normalizedYear > 2100)) {
+    return {
+      error: "Year must be an integer between 1980 and 2100",
+      status: 400,
+    };
+  }
+
+  if (solutionType && !["manual", "ai", "none"].includes(solutionType)) {
+    return {
+      error: "solutionType must be manual, ai or none",
       status: 400,
     };
   }
@@ -249,6 +268,10 @@ const updateQuestion = async (req, res) => {
         message: "Question not found",
       });
     }
+
+    const oldTestId = existingQuestion.test
+      ? existingQuestion.test.toString()
+      : null;
 
     const {
       branch,
@@ -274,6 +297,21 @@ const updateQuestion = async (req, res) => {
       solutionType = "manual",
       isPublished = true,
     } = req.body;
+
+    const requiresReview = Boolean(existingQuestion.requiresReview && req.body.reviewed !== true);
+    if (isPublished && requiresReview) {
+      return res.status(400).json({ message: "Confirm the source question and answer have been reviewed before publishing." });
+    }
+    const natAnswerMin = questionType === "nat"
+      ? (req.body.natAnswerMin === undefined ? existingQuestion.natAnswerMin : req.body.natAnswerMin)
+      : null;
+    const natAnswerMax = questionType === "nat"
+      ? (req.body.natAnswerMax === undefined ? existingQuestion.natAnswerMax : req.body.natAnswerMax)
+      : null;
+    const hasRange = natAnswerMin != null || natAnswerMax != null;
+    if (hasRange && (!Number.isFinite(natAnswerMin) || !Number.isFinite(natAnswerMax) || natAnswerMin > natAnswerMax)) {
+      return res.status(400).json({ message: "Numerical answer range requires valid minimum and maximum values." });
+    }
 
     if (
       !branch ||
@@ -323,6 +361,7 @@ const updateQuestion = async (req, res) => {
         difficulty,
         isPYQ,
         year,
+        solutionType,
       });
 
     if (validationError) {
@@ -373,7 +412,7 @@ const updateQuestion = async (req, res) => {
       Number(negativeMarks);
 
     if (
-      Number.isNaN(finalMarks) ||
+      !Number.isFinite(finalMarks) ||
       finalMarks < 0
     ) {
       return res.status(400).json({
@@ -383,7 +422,7 @@ const updateQuestion = async (req, res) => {
     }
 
     if (
-      Number.isNaN(finalNegativeMarks) ||
+      !Number.isFinite(finalNegativeMarks) ||
       finalNegativeMarks < 0
     ) {
       return res.status(400).json({
@@ -434,9 +473,9 @@ const updateQuestion = async (req, res) => {
     existingQuestion.examName =
       String(examName || "GATE").trim();
 
-    existingQuestion.year = year
-      ? Number(year)
-      : undefined;
+    existingQuestion.year = year === undefined || year === null || year === ""
+      ? undefined
+      : Number(year);
 
     existingQuestion.session =
       String(session || "").trim();
@@ -461,13 +500,14 @@ const updateQuestion = async (req, res) => {
     existingQuestion.isPublished =
       isPublished;
 
+    existingQuestion.requiresReview = requiresReview;
+    existingQuestion.natAnswerMin = hasRange ? natAnswerMin : undefined;
+    existingQuestion.natAnswerMax = hasRange ? natAnswerMax : undefined;
+    if (!requiresReview) existingQuestion.reviewReasons = [];
+    if (req.body.useOriginalImages === false) existingQuestion.questionImages = [];
+
     const updatedQuestion =
       await existingQuestion.save();
-
-    const oldTestId =
-      existingQuestion.test
-        ? existingQuestion.test.toString()
-        : null;
 
     const newTestId = test
       ? test.toString()

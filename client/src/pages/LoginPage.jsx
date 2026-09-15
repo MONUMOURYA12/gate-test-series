@@ -97,7 +97,7 @@ function LoginPage() {
             {isSubmitting ? "Signing in..." : "Login"}
           </button>
         </form>
-        <p className="auth-copy">New here? <Link to="/register">Create a student account</Link></p>
+        <p className="auth-copy">New here? <Link to="/register" state={{ from: location.state?.from }}>Create a student account</Link></p>
       </section>
     </main>
   );

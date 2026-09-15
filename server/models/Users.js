@@ -23,6 +23,30 @@ const userSchema = new mongoose.Schema(
       index: true,
     },
 
+    mobileNumber: {
+      type: String,
+      trim: true,
+      maxlength: 16,
+    },
+
+    collegeName: {
+      type: String,
+      trim: true,
+      maxlength: 150,
+    },
+
+    passingYear: {
+      type: Number,
+      min: 1950,
+      max: 2100,
+    },
+
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
+      index: true,
+    },
+
     password: {
       type: String,
       required: true,
