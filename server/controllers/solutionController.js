@@ -1,17 +1,14 @@
 const mongoose = require("mongoose");
-const fs = require("node:fs");
-const path = require("node:path");
+const { readQuestionImage } = require("../services/questionMedia");
 const TestAttempt = require("../models/TestAttempt");
 const Question = require("../models/Question");
 
-const mediaDir = path.resolve(process.env.QUESTION_MEDIA_DIR || path.join(__dirname, "../data/question-media"));
-
-function imageParts(images = []) {
-  return images.slice(0, 4).flatMap(image => {
-    const filePath = path.resolve(mediaDir, image.url.replace(/^\/question-media\//, ""));
-    if (!filePath.startsWith(`${mediaDir}${path.sep}`) || !fs.existsSync(filePath)) return [];
-    return [{ inlineData: { mimeType: "image/webp", data: fs.readFileSync(filePath).toString("base64") } }];
-  });
+async function imageParts(images = []) {
+  return (await Promise.all(images.slice(0, 4).map(async image => {
+    const data = await readQuestionImage(image.url);
+    if (!data) throw new Error("A question image is unavailable.");
+    return { inlineData: { mimeType: "image/webp", data: data.toString("base64") } };
+  })));
 }
 
 async function generateSolution(question) {
@@ -31,7 +28,7 @@ async function generateSolution(question) {
     `Correct answer from the verified exam key: ${JSON.stringify(question.correctAnswer)}`,
     question.natAnswerMin != null ? `Accepted numerical range: ${question.natAnswerMin} to ${question.natAnswerMax}` : "",
   ].filter(Boolean).join("\n");
-  const parts = [{ text: prompt }, ...imageParts(question.questionImages)];
+  const parts = [{ text: prompt }, ...await imageParts(question.questionImages)];
   const model = process.env.GEMINI_MODEL || "gemini-3.6-flash";
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`, {
     method: "POST",

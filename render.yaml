@@ -1,5 +1,5 @@
 # Deploy this repository as one web service: React + Express.
-# The free plan is for initial verification; see README.md for production media storage.
+# Question images persist in MongoDB; no Render disk is required.
 services:
   - type: web
     name: gate-test-series

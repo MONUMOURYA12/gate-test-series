@@ -56,11 +56,21 @@ run `npm run seed:catalogue --prefix server` with its configured environment,
 then create/import your questions and provision your administrator account.
 Do not run seeding against an existing catalogue without reviewing it.
 
-The Blueprint uses Render's free plan for initial verification. Local files
-on Render are ephemeral. For production with imported question images, use a
-paid service with a persistent disk, set `QUESTION_MEDIA_DIR` to its mount
-directory (for example `/var/data/question-media`), and copy your existing
-question-media subdirectories there. A Git push does not upload those images.
+Question images can persist in the existing MongoDB database's `question_media`
+collection. The app reads local images first and falls back to MongoDB, including
+when sending diagrams to the AI tutor. Image requests still require login.
+From the computer containing the imported files, run `npm run media:upload --prefix server`
+to validate every referenced WebP and preview the upload. Then run
+`npm run media:upload --prefix server -- --apply` to upload new or changed images.
+The script uses `server/.env`, or `DOTENV_CONFIG_PATH` when set, and reads files
+from `QUESTION_MEDIA_DIR` or `server/data/question-media`. It never deletes media.
+Check your database's storage quota first. Re-run after future question imports;
+a Git push does not upload images. Do not commit private image files or secrets.
+
+The Blueprint uses Render's free plan. Its local files are ephemeral, but MongoDB
+images survive redeploys. An optional persistent disk with `QUESTION_MEDIA_DIR`
+also remains supported. Free services sleep when idle and have usage limits;
+choose an appropriate paid plan before relying on uninterrupted exam availability.
 Run one instance while rate limits use the built-in memory store; multiple
 instances require a shared rate-limit store.
 

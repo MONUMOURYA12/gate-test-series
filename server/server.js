@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const { readRuntimeConfig, validateStartup } = require("./config/runtime");
 const { protect } = require("./middleware/authMiddleware");
 const security = require("./middleware/securityMiddleware");
+const { serveQuestionImage } = require("./services/questionMedia");
 
 function createApp(config = readRuntimeConfig()) {
   const app = express();
@@ -31,10 +32,7 @@ function createApp(config = readRuntimeConfig()) {
     app.use(`/api/${route}`, require(`./routes/${moduleName}Routes`));
   }
   app.use("/api", (req, res) => res.status(404).json({ message: "API route not found." }));
-  app.use("/question-media", protect, express.static(config.mediaDir, {
-    index: false, dotfiles: "deny", redirect: false,
-    setHeaders(res) { res.set("Cache-Control", "private, max-age=86400"); },
-  }));
+  app.use("/question-media", protect, serveQuestionImage(config.mediaDir));
   app.use("/question-media", (req, res) => res.status(404).json({ message: "Question image not found." }));
   app.get("/health", (req, res) => {
     const databaseReady = mongoose.connection.readyState === 1;
