@@ -1,0 +1,6 @@
+.question-media { display: grid; gap: 8px; width: 100%; min-width: 0; margin: 16px 0; }
+.question-media a { display: block; width: fit-content; max-width: 100%; }
+.question-media img { display: block; width: auto; height: auto; max-width: 100%; background: #fff; }
+.question-media p { color: #b42318; }
+.question-source-review { margin: 16px 0; padding: 16px 0; border-block: 1px solid #d0d5dd; }
+.question-source-review summary { cursor: pointer; font-weight: 700; }

@@ -1,50 +1,73 @@
-import { useEffect, useMemo, useState } from "react";
-import {
-  authApi,
-  clearStoredToken,
-  getStoredToken,
-  setStoredToken,
-} from "../services/api";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { authApi, clearLegacyToken } from "../services/api";
 import { AuthContext } from "./AuthContextValue";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState("");
+  const sessionRevision = useRef(0);
 
   useEffect(() => {
+    const expireSession = () => {
+      sessionRevision.current += 1;
+      setUser(null);
+    };
+    window.addEventListener("auth-expired", expireSession);
+    return () => window.removeEventListener("auth-expired", expireSession);
+  }, []);
+
+  useEffect(() => {
+    clearLegacyToken();
+    const controller = new AbortController();
+    const restoreRevision = sessionRevision.current;
     const restoreUser = async () => {
-      const token = getStoredToken();
-
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
-
       try {
-        const data = await authApi.me();
-        setUser(data.user);
+        const data = await authApi.me(controller.signal);
+        if (!controller.signal.aborted && restoreRevision === sessionRevision.current) setUser(data.user);
       } catch {
-        clearStoredToken();
-        setUser(null);
+        if (!controller.signal.aborted && restoreRevision === sessionRevision.current) setUser(null);
       } finally {
-        setIsLoading(false);
+        if (!controller.signal.aborted) setIsLoading(false);
       }
     };
 
     restoreUser();
+    return () => controller.abort();
   }, []);
 
-  const login = async ({ email, password }) => {
+  const login = useCallback(async ({ email, password }) => {
     const data = await authApi.login({ email, password });
-    setStoredToken(data.token);
+    sessionRevision.current += 1;
+    clearLegacyToken();
+    setLogoutError("");
     setUser(data.user);
     return data.user;
-  };
+  }, []);
 
-  const logout = () => {
-    clearStoredToken();
-    setUser(null);
-  };
+  const logout = useCallback(async () => {
+    setIsLoggingOut(true);
+    setLogoutError("");
+    try {
+      await authApi.logout();
+      sessionRevision.current += 1;
+      clearLegacyToken();
+      setUser(null);
+      return true;
+    } catch {
+      setLogoutError("Could not log out. Check your connection and try again.");
+      return false;
+    } finally {
+      setIsLoggingOut(false);
+    }
+  }, []);
+
+  const updateUser = useCallback(async payload => {
+    const data = await authApi.updateMe(payload);
+    setUser(data.user);
+    return data.user;
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -52,10 +75,13 @@ export function AuthProvider({ children }) {
       isLoading,
       isAuthenticated: Boolean(user),
       isAdmin: user?.role === "admin",
+      isLoggingOut,
+      logoutError,
       login,
       logout,
+      updateUser,
     }),
-    [user, isLoading]
+    [user, isLoading, isLoggingOut, logoutError, login, logout, updateUser]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

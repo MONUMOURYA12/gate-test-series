@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /student
+Disallow: /api
+
+# The production build replaces this origin using VITE_SITE_URL or Render's URL.
+Sitemap: https://your-domain.example/sitemap.xml

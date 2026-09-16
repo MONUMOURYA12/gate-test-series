@@ -529,14 +529,15 @@ function QuestionManagementPage() {
 
     const isValidExtension =
       fileName.endsWith(".xlsx") ||
-      fileName.endsWith(".xls");
+      fileName.endsWith(".xls") ||
+      fileName.endsWith(".csv");
 
     if (!isValidExtension) {
       setSelectedExcelFile(null);
       event.target.value = "";
 
       setError(
-        "Only Excel files (.xlsx or .xls) are allowed."
+        "Only Excel or CSV files (.xlsx, .xls or .csv) are allowed."
       );
 
       return;
@@ -968,14 +969,14 @@ function QuestionManagementPage() {
 
               <input
                 ref={fileInputRef}
-                accept=".xlsx,.xls"
+                accept=".xlsx,.xls,.csv"
                 id="question-excel-file"
                 onChange={handleExcelFileChange}
                 type="file"
               />
 
               <small>
-                Allowed files: .xlsx, .xls. Maximum
+                  Allowed files: .xlsx, .xls, .csv. Maximum
                 file size: 5 MB.
               </small>
             </div>

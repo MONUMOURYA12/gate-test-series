@@ -7,7 +7,7 @@ export default function StudentTestsPage() {
   const subject = params.get("subject") || "";
   const chapter = params.get("chapter") || "";
   const query = params.get("q") || "";
-  const availableSubjects = subjects.filter(s => !branch || s.branch === branch);
+  const availableSubjects = subjects.filter(s => !branch || s.branch === branch || s.isCommon);
   const subjectIds = new Set(availableSubjects.filter(s => !subject || s._id === subject).map(s => s._id));
   const availableChapters = chapters.filter(c => subjectIds.has(c.subject));
   const chapterIds = new Set(availableChapters.filter(c => !chapter || c._id === chapter).map(c => c._id));
