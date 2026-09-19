@@ -67,6 +67,40 @@ from `QUESTION_MEDIA_DIR` or `server/data/question-media`. It never deletes medi
 Check your database's storage quota first. Re-run after future question imports;
 a Git push does not upload images. Do not commit private image files or secrets.
 
+### Refresh imported booklet artwork
+
+The EC extractor omits visually verified publisher-logo image objects before
+rendering question crops. It matches exact PDF image-stream hashes; it does not
+erase grey pixels, rewrite equations, or remove arbitrary diagrams. Source
+metadata remains available to administrators. This visual cleanup does not
+grant publication rights: use content you own or have permission to republish.
+
+To refresh an existing import without changing questions, answers, crop sizes,
+or media URLs, run the following from the repository root (Python requires
+`pypdfium2` with `FPDFPageObj_SetIsActive` and Pillow):
+
+```powershell
+python server/scripts/refreshBookletMedia.py --input server/data/ec-booklets.json --input server/data/digital-control-booklets.json --pdf-dir "C:/path/to/source-pdfs" --output-dir server/data/branding-cleanup
+```
+
+This validates the source PDF checksums and all existing crop dimensions, then
+writes changed previews under the output directory. Inspect them and rerun
+with `--apply` to replace the local images; changed originals are backed up
+under `originals/`. Source PDFs and question datasets remain unchanged.
+Upload the replacements with `npm run media:upload --prefix server -- --apply`.
+The client media URL revision refreshes browser caches after the client build
+is deployed; increment it again for future replacements at the same URLs.
+
+Run `node server/scripts/refreshBookletLabels.js` to preview cleaning the
+importer's default test labels and saved attempt titles. Add `--apply` to save
+the changes with a local metadata backup. Custom test labels and question
+source attribution are preserved. Both database scripts use `server/.env`,
+or `DOTENV_CONFIG_PATH` when set.
+
+The source-object matching checks run with
+`python -m unittest discover -s server/tests -p "*_test.py"`; label cleanup
+checks are included in `npm test --prefix server`.
+
 The Blueprint uses Render's free plan. Its local files are ephemeral, but MongoDB
 images survive redeploys. An optional persistent disk with `QUESTION_MEDIA_DIR`
 also remains supported. Free services sleep when idle and have usage limits;
@@ -82,6 +116,52 @@ Render references: [Blueprints](https://render.com/docs/blueprint-spec),
 [environment variables](https://render.com/docs/environment-variables),
 [Node version](https://render.com/docs/node-version),
 [persistent disks](https://render.com/docs/disks).
+
+## Importing free-source Chemical / CSE / IT questions
+
+You can add public-domain or open-licence question sets from external learning platforms by placing a JSON file in a supported shape and running the import script.
+
+Example payload:
+
+```json
+{
+  "branchCode": "CS",
+  "branchName": "Computer Science and Information Technology",
+  "subjectName": "Algorithms",
+  "chapterName": "Dynamic Programming",
+  "testTitle": "Free platform sample",
+  "sourceName": "NPTEL / Open educational resources",
+  "questions": [
+    {
+      "questionNumber": 1,
+      "questionText": "What is the time complexity of merge sort?",
+      "questionType": "mcq",
+      "options": ["O(n)", "O(log n)", "O(n log n)", "O(n^2)"],
+      "correctAnswer": 2,
+      "marks": 1,
+      "negativeMarks": 0.33,
+      "tags": ["sorting", "algorithms"],
+      "difficulty": "medium"
+    },
+    {
+      "questionNumber": 2,
+      "questionText": "Find the sum of the first 10 natural numbers.",
+      "questionType": "nat",
+      "natAnswerMin": 55,
+      "natAnswerMax": 55,
+      "marks": 1
+    }
+  ]
+}
+```
+
+Then run:
+
+```powershell
+npm run import:public --prefix server -- data/free-platform-sample.json
+```
+
+Use the same pattern for Chemical Engineering and IT sets by changing the `branchCode`, `branchName`, `subjectName`, and `chapterName` values. For licence-sensitive sources, check attribution and publication rights before importing.
 
 ## Hostinger deployment
 

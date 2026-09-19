@@ -10,7 +10,8 @@
     "media:upload": "node scripts/uploadQuestionMedia.js",
     "seed:catalogue": "node scripts/seedGateCatalogue.js",
     "import:aptitude": "node scripts/importAptitudeQuestions.js",
-    "import:ec": "node scripts/importEcBooklets.js"
+    "import:ec": "node scripts/importEcBooklets.js",
+    "import:public": "node scripts/importPublicQuestions.js"
   },
   "keywords": [],
   "author": "",

@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pypdfium2 as pdfium
 
+from bookletArtwork import omit_booklet_extras
+
 
 BOOKS = [
     ("signals-systems", "Signals and Systems", "Signals and Systems Booklet (124 Pages).pdf", 6, 118,
@@ -202,7 +204,9 @@ def extract_book(config, pdf_dir, asset_dir, mode, render):
             for index,segment in enumerate(q['segments']):
                 jobs.setdefault(segment['page'],[]).append((q,index,segment))
         for pn,page_jobs in jobs.items():
-            page=doc[pn-1]; bitmap=page.render(scale=2.5); full=bitmap.to_pil()
+            page=doc[pn-1]
+            omit_booklet_extras(page)
+            bitmap=page.render(scale=2.5); full=bitmap.to_pil()
             for q,index,segment in page_jobs:
                 box=tuple(round(v*2.5) for v in segment['box'])
                 cropped=full.crop(box)

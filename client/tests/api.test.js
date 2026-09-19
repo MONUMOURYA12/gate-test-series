@@ -74,7 +74,7 @@ test("an older unauthenticated response cannot expire a newly signed-in session"
 
 test("question image URLs accept only the stored WebP media path format", () => {
   const path = "/question-media/networks/0123456789abcdef-1.webp";
-  assert.equal(questionMediaUrl(path), path);
+  assert.equal(questionMediaUrl(path), `${path}?v=3`);
   for (const value of ["javascript:alert(1)", "//example.com/pixel.webp", "https://example.com/pixel.webp",
     "/question-media/../secret", "/question-media/networks/image.svg", "/question-media/networks/a.webp?redirect=x", null]) {
     assert.equal(questionMediaUrl(value), null);

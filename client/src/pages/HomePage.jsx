@@ -20,7 +20,7 @@ export default function HomePage() {
           <Link className="home-brand" to="/" aria-label="All India Test Series home">
             <span className="home-logo">G</span>
             <span>
-              All India <strong>Test Series</strong>
+              <strong>ParikshaSarthi</strong>
             </span>
           </Link>
 

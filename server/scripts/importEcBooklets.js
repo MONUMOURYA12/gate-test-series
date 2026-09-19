@@ -6,6 +6,7 @@ const Subject = require("../models/Subject");
 const Chapter = require("../models/Chapter");
 const Test = require("../models/Test");
 const Question = require("../models/Question");
+const { bookletTitle, DESCRIPTION } = require("./refreshBookletLabels");
 
 const serverDir = path.resolve(__dirname, "..");
 const inputFlag = process.argv.indexOf("--input");
@@ -134,8 +135,8 @@ async function run() {
           let test = await Test.findOne({ sourceBatchId });
           const created = !test;
           if (!test) test = await Test.create({
-            sourceBatchId, chapter: chapter._id, title: `GATE PYQs - TARGATE Set ${set}`,
-            description: "Subject practice: 1 mark per question, no negative marking. Source: TARGATE EDUCATION.",
+            sourceBatchId, chapter: chapter._id, title: bookletTitle(set),
+            description: DESCRIPTION,
             duration: Math.max(10, batch.length * 2), negativeMarking: false, isPublished: false,
           });
           const operations = batch.map((q, index) => ({ updateOne: {

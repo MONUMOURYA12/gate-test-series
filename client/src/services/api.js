@@ -1,9 +1,11 @@
 const API_BASE_URL = (import.meta.env?.VITE_API_URL || "/api").replace(/\/+$/, "");
 const QUESTION_MEDIA_PATH = /^\/question-media\/[a-z0-9-]+\/[a-f0-9-]+\.webp$/;
+// Refresh browser caches after re-exporting the booklet artwork at the same URLs.
+const QUESTION_MEDIA_REVISION = "3";
 let sessionRevision = 0;
 
 export const questionMediaUrl = path => typeof path === "string" && QUESTION_MEDIA_PATH.test(path)
-  ? `${API_BASE_URL.replace(/\/api$/, "")}${path}`
+  ? `${API_BASE_URL.replace(/\/api$/, "")}${path}?v=${QUESTION_MEDIA_REVISION}`
   : null;
 
 // Old releases stored bearer tokens here. Cookies now hold the session, and

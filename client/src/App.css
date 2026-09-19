@@ -4,9 +4,7 @@
 
 .auth-page {
   align-items: center;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.9), rgba(245, 247, 251, 0.95)),
-    url("/icons.svg");
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(245, 247, 251, 0.95));
   background-position: center;
   background-size: 360px;
   display: flex;
