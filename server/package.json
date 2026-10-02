@@ -11,6 +11,7 @@
     "seed:catalogue": "node scripts/seedGateCatalogue.js",
     "import:aptitude": "node scripts/importAptitudeQuestions.js",
     "import:ec": "node scripts/importEcBooklets.js",
+    "import:made-easy-cs": "node scripts/importMadeEasyCs.js",
     "import:public": "node scripts/importPublicQuestions.js"
   },
   "keywords": [],

@@ -163,6 +163,40 @@ npm run import:public --prefix server -- data/free-platform-sample.json
 
 Use the same pattern for Chemical Engineering and IT sets by changing the `branchCode`, `branchName`, `subjectName`, and `chapterName` values. For licence-sensitive sources, check attribution and publication rights before importing.
 
+## Importing the supplied MADE EASY CS sample
+
+The supplied GATE 2026 CS/IT PDF is an **18-page sample**, although its contents
+list an 805-page book. It contains Theory of Computation / Finite Automata and
+Regular Languages questions 1.1-1.57, part of 1.58, and an answer table. Other
+chapters and printed question pages 140-147 are absent.
+
+The reviewed extractor preserves original diagrams and option artwork, joins
+questions continued across columns/pages, and repeats common data where needed.
+It checks the source checksum before using its reviewed crop coordinates.
+Do not use this sample page map for a different PDF or the full book.
+
+```powershell
+python server/scripts/extractMadeEasyCs.py --pdf "C:/path/to/document_book_GATE-2026+Computer+Science+and+IT+Previous+Year+Solved+Papers.pdf"
+npm run import:made-easy-cs --prefix server -- --validate-only
+npm run import:made-easy-cs --prefix server
+npm run import:made-easy-cs --prefix server -- --apply
+```
+
+The database command defaults to a read-only preview. Applying it reuses the
+existing CS subject/chapter and creates three ECE-style `GATE PYQs - Set NN`
+tests. Printed 1/2 marks are retained, with no negative marking for practice.
+Question 1.7 (two printed answers for an MCQ) and question 1.58 (missing
+continuation) remain unpublished review drafts. The other 56 questions publish.
+Question 1.48 retains all five original answer options.
+
+The importer validates every local crop, uploads its persistent MongoDB media,
+and reads the bytes back before publishing tests. Source identities are stable
+within the edition; repeat imports insert no duplicates and preserve existing
+question edits. It refuses conflicting media and test ownership. Backups and
+`import-report.json` are saved in ignored `server/data/made-easy-cs/`, alongside
+the extracted dataset and crop review sheets. Source PDFs and private images
+must remain outside Git. This content-only upload needs no frontend deployment.
+
 ## Hostinger deployment
 
 This application is deployed as one Node.js app. Build the React client first,
