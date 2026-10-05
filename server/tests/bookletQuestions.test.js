@@ -19,6 +19,28 @@ test("an imported test cannot be opened from a different branch", async t => {
   assert.equal(await findPublishedTest(new mongoose.Types.ObjectId().toString(), "mechanical"), null);
 });
 
+test("competitive exam students cannot open shared GATE tests by direct URL", async t => {
+  t.mock.method(Test, "findOne", () => query({ _id: "test", chapter: "chapter" }));
+  t.mock.method(Chapter, "findOne", () => query({ _id: "chapter", subject: "subject" }));
+  t.mock.method(Subject, "findOne", () => query({ _id: "subject", name: "Engineering Mathematics", branch: "gate" }));
+  let code = "SSC";
+  t.mock.method(Branch, "findOne", filter => query({ _id: filter._id, code: filter._id === "gate" ? "EC" : code }));
+  for (code of ["SSC", "RAILWAYS", "BANKING"]) {
+    assert.equal(await findPublishedTest(new mongoose.Types.ObjectId().toString(), "competitive"), null);
+  }
+  code = "CS";
+  assert.ok(await findPublishedTest(new mongoose.Types.ObjectId().toString(), "computer-science"));
+});
+
+test("each competitive exam branch can open its own imported maths tests", async t => {
+  t.mock.method(Test, "findOne", () => query({ _id: "test", chapter: "chapter" }));
+  t.mock.method(Chapter, "findOne", () => query({ _id: "chapter", subject: "subject" }));
+  t.mock.method(Subject, "findOne", () => query({ _id: "subject", name: "Mathematics", branch: "competitive" }));
+  t.mock.method(Branch, "findOne", () => query({ _id: "competitive", code: "SSC" }));
+  assert.ok(await findPublishedTest(new mongoose.Types.ObjectId().toString(), "competitive"));
+  assert.equal(await findPublishedTest(new mongoose.Types.ObjectId().toString(), "other"), null);
+});
+
 test("attempt snapshots preserve images and keep annotations and answer ranges private until submission", async t => {
   const id = new mongoose.Types.ObjectId();
   const question = { questionId: id, questionNumber: 1, questionText: "Extracted text may contain a hidden answer annotation",

@@ -197,6 +197,39 @@ question edits. It refuses conflicting media and test ownership. Backups and
 the extracted dataset and crop review sheets. Source PDFs and private images
 must remain outside Git. This content-only upload needs no frontend deployment.
 
+## SSC, Railways and Banking maths practice
+
+Registration includes separate SSC, Railways and Banking exam choices. Each
+has its own Mathematics subject, 29 chapters and 84 practice sets (up to 20
+questions per set). The supplied 248-page Railway Maths Smart Book contains
+1,404 questions. These are Railway PYQs offered as maths practice for all three
+exam choices, with one mark per question and no negative marking. Existing
+GATE branches keep their own catalogue and shared GATE foundation subjects.
+
+The extractor is bound to the reviewed PDF checksum. It retains the original
+English/Hindi artwork, formulas and diagrams, joins 71 questions across
+columns/pages, and extracts the printed answer tables separately. Some Hindi
+lettering is already distorted in the source PDF; it is preserved rather than
+replaced with guessed text. The fourth option of Algebra Q11 is printed `(s)`;
+its answer control is labelled as the fourth option. Answer correctness follows
+the printed keys. Solutions are not imported.
+
+```powershell
+python server/scripts/extractRailwayMaths.py --pdf "C:/path/to/Railway-MATHS-Smart-Book-1400-Chapterwise-PYQs-Aditya-Ranjan-Sir-Bilngual.pdf" --output server/data/railway-maths/questions.json --media-dir server/data/question-media
+npm run import:railway-maths --prefix server -- --validate-only
+npm run import:railway-maths --prefix server
+npm run import:railway-maths --prefix server -- --apply
+```
+
+Python needs pypdfium2 and Pillow. The importer defaults to a read-only plan,
+checks source identity, all question/answer counts, and all image files before
+writing. It reads `server/.env` (or `DOTENV_CONFIG_PATH`) without printing secrets.
+The same 1,404 images are stored once in MongoDB and verified by checksum before
+tests are published; each exam choice gets its own question records to preserve
+branch isolation. Repeat imports preserve existing question edits and publication
+choices. Source files, backups and the import report remain in ignored
+`server/data/`. Deploy the frontend/server update as well as applying the import.
+
 ## Hostinger deployment
 
 This application is deployed as one Node.js app. Build the React client first,

@@ -6,6 +6,7 @@ const Question = require("../models/Question");
 const TestAttempt = require("../models/TestAttempt");
 const { findPublishedTest } = require("../services/studentTest");
 const { gradeQuestion } = require("../services/examScoring");
+const { isCompetitiveBranch } = require("../services/examTrack");
 
 // Restrict every level to active parents. Select metadata explicitly so adding
 // fields to the question model cannot accidentally expose answers to students.
@@ -18,8 +19,9 @@ async function getCatalogue(req, res) {
       .select("name code description").sort({ name: 1 }).lean();
     const branchSubjects = await Subject.find({ isActive: true, branch: { $in: branches.map(b => b._id) } })
       .select("name code description branch").sort({ name: 1 }).lean();
-    const commonSubjects = await Subject.find({ isActive: true, name: { $in: ["General Aptitude", "Engineering Mathematics"] } })
-      .select("name code description branch").sort({ name: 1 }).lean();
+    const commonSubjects = branches.some(branch => isCompetitiveBranch(branch.code)) ? [] :
+      await Subject.find({ isActive: true, name: { $in: ["General Aptitude", "Engineering Mathematics"] } })
+        .select("name code description branch").sort({ name: 1 }).lean();
     const subjects = [...new Map([...branchSubjects, ...commonSubjects.map(subject => ({ ...subject, isCommon: true }))].map(subject => [String(subject._id), subject])).values()];
     const chapters = await Chapter.find({ isActive: true, subject: { $in: subjects.map(s => s._id) } })
       .select("name description subject order").sort({ order: 1, name: 1 }).lean();

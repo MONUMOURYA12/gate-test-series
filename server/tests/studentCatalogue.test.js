@@ -50,6 +50,27 @@ test('catalogue database failures return a recoverable error without internal de
   assert.ok(!JSON.stringify(body).includes('private database'));
 });
 
+for (const code of ['SSC', 'RAILWAYS', 'BANKING']) {
+  test(`${code} catalogue includes its maths tests without GATE foundation subjects`, async t => {
+    const query = rows => ({ select() { return this; }, sort() { return this; }, lean: async () => rows });
+    t.mock.method(Branch, 'find', filter => {
+      assert.deepEqual(filter, { isActive: true, _id: 'competitive' });
+      return query([{ _id: 'competitive', code }]);
+    });
+    t.mock.method(Subject, 'find', filter => {
+      assert.deepEqual(filter, { isActive: true, branch: { $in: ['competitive'] } });
+      return query([{ _id: 'maths', name: 'Mathematics', branch: 'competitive' }]);
+    });
+    t.mock.method(Chapter, 'find', () => query([{ _id: 'percentage', subject: 'maths' }]));
+    t.mock.method(Test, 'find', () => query([{ _id: 'railway-pyqs', chapter: 'percentage' }]));
+    t.mock.method(Question, 'aggregate', async () => [{ _id: 'railway-pyqs', totalQuestions: 20, totalMarks: 20 }]);
+    let result;
+    await getCatalogue({ user: { branch: 'competitive' } }, { json(value) { result = value; } });
+    assert.deepEqual(result.subjects.map(s => s.name), ['Mathematics']);
+    assert.equal(result.tests[0].totalQuestions, 20);
+  });
+}
+
 test('student history derives weak-topic recommendations from the student-owned attempts', async t => {
   t.mock.method(TestAttempt, 'find', () => ({
     select() { return this; },

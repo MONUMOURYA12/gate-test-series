@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, NavLink, useOutletContext } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { isCompetitiveBranch } from "../lib/examTrack";
 
 const commonSubjects = [
   { key: "engineering-mathematics", code: "MATH", name: "Engineering Mathematics", description: "Common GATE foundation subject." },
@@ -18,6 +19,7 @@ export default function StudentDashboard() {
 
   const branchId = user?.branch?._id || user?.branch;
   const branch = branchId ? branches.find(item => item._id === branchId) || branches[0] : null;
+  const competitiveTrack = isCompetitiveBranch(branch?.code);
   const branchSubjects = subjects.filter(subject => getBranchId(subject.branch) === branch?._id && !subject.isCommon);
   const visibleSubjects = useMemo(() => {
     const query = subjectQuery.trim().toLowerCase();
@@ -27,7 +29,7 @@ export default function StudentDashboard() {
   return <>
     <section className="learn-hero student-dashboard-hero">
       <div>
-        <p className="learn-eyebrow">{branch ? `${branch.code} PREPARATION` : "YOUR GATE PREPARATION"}</p>
+        <p className="learn-eyebrow">{branch ? `${branch.code} PREPARATION` : "YOUR PREPARATION"}</p>
         <h1>Welcome back, {user?.name}.</h1>
         <p>{branch ? `Your ${branch.name} learning path is ready. Pick one subject and make a focused start.` : "Choose a subject and find your next chapter to work on."}</p>
       </div>
@@ -65,7 +67,7 @@ export default function StudentDashboard() {
         })}</div>}
     </section>
 
-    <section className="common-subject-section" aria-labelledby="common-subjects-heading">
+    {!competitiveTrack && <section className="common-subject-section" aria-labelledby="common-subjects-heading">
       <div className="learn-section-heading"><div><p className="learn-eyebrow">COMMON TO EVERY BRANCH</p><h2 id="common-subjects-heading">Foundation subjects</h2></div><span>Shared GATE practice</span></div>
       <div className="learn-grid">{commonSubjects.map(subject => {
         const configuredSubject = subjects.find(item => item.name.toLowerCase() === subject.name.toLowerCase() && item.isCommon);
@@ -74,6 +76,6 @@ export default function StudentDashboard() {
           <span className={configuredSubject ? "subject-ready-note" : "coming-soon-label"}>{configuredSubject ? "Open common practice" : "We are working on it"} <span aria-hidden="true">→</span></span>
         </Link>;
       })}</div>
-    </section>
+    </section>}
   </>;
 }

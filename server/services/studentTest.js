@@ -3,6 +3,7 @@ const Test = require("../models/Test");
 const Chapter = require("../models/Chapter");
 const Subject = require("../models/Subject");
 const Branch = require("../models/Branch");
+const { isCompetitiveBranch } = require("./examTrack");
 
 async function findPublishedTest(testId, branchId) {
   if (!mongoose.isObjectIdOrHexString(testId)) return null;
@@ -14,7 +15,11 @@ async function findPublishedTest(testId, branchId) {
   const subject = await Subject.findOne({ _id: chapter.subject, isActive: true }).select("name branch").lean();
   if (!subject) return null;
   const commonSubject = ["General Aptitude", "Engineering Mathematics"].includes(subject.name);
-  if (branchId && String(subject.branch) !== String(branchId) && !commonSubject) return null;
+  if (branchId && String(subject.branch) !== String(branchId)) {
+    if (!commonSubject) return null;
+    const studentBranch = await Branch.findOne({ _id: branchId, isActive: true }).select("code").lean();
+    if (!studentBranch || isCompetitiveBranch(studentBranch.code)) return null;
+  }
   const branchFilter = { _id: subject.branch, isActive: true };
   const branch = await Branch.findOne(branchFilter).select("name code").lean();
   return branch ? { ...test, chapter, subject, branch } : null;

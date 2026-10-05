@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { branchApi, registerStudent } from "../services/api";
+import { competitiveBranchCodes, isCompetitiveBranch } from "../lib/examTrack";
 
 const currentYear = new Date().getFullYear();
 
@@ -92,10 +93,10 @@ export default function RegisterPage() {
   return (
     <main className="auth-page">
       <section className="auth-panel register-panel" aria-labelledby="register-title">
-        <p className="auth-brand">GATE Test Series</p>
+        <p className="auth-brand">ParikshaSarthi</p>
         <h1 id="register-title">Create your candidate profile</h1>
         <p className="auth-copy">
-          Choose your branch once. Your subjects and tests will be ready after you log in.
+          Choose SSC, Railways, Banking, or your GATE branch. Your subjects and tests will be ready after you log in.
         </p>
 
         <form className="auth-form register-form" onSubmit={submit}>
@@ -123,19 +124,27 @@ export default function RegisterPage() {
             </div>
 
             <div className="field">
-              <label htmlFor="branch">GATE branch</label>
+              <label htmlFor="branch">Exam / branch</label>
               <select id="branch" name="branch" defaultValue="" disabled={branchLoading || !branches.length} required>
-                <option value="">{branchLoading ? "Loading branches..." : "Select your branch"}</option>
-                {branches.map((branch) => (
+                <option value="">{branchLoading ? "Loading exams and branches..." : "Select your exam or branch"}</option>
+                <optgroup label="SSC / Railways / Banking">
+                  {competitiveBranchCodes.flatMap(code => branches.filter(branch => branch.code === code)).map(branch => (
+                    <option key={branch._id} value={branch._id}>{branch.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="GATE branches">
+                {branches.filter(branch => !isCompetitiveBranch(branch.code)).map((branch) => (
                   <option key={branch._id} value={branch._id}>
                     {branch.name} ({branch.code})
                   </option>
                 ))}
+                </optgroup>
               </select>
+              <span className="field-hint">SSC, Railways, and Banking include chapter-wise bilingual maths practice.</span>
             </div>
 
             <div className="field register-full-field">
-              <label htmlFor="collegeName">College name</label>
+              <label htmlFor="collegeName">School / college name</label>
               <input id="collegeName" name="collegeName" autoComplete="organization" maxLength={150} required />
             </div>
 
