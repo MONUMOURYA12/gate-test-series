@@ -12,6 +12,7 @@ const testSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    sourceBatchId: { type: String },
 
     chapter: {
       type: mongoose.Schema.Types.ObjectId,

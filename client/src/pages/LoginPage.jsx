@@ -53,10 +53,10 @@ function LoginPage() {
   return (
     <main className="auth-page">
       <section className="auth-panel" aria-labelledby="login-title">
-        <p className="auth-brand">GATE Test Series</p>
+        <p className="auth-brand">ParikshaSarthi</p>
         <h1 id="login-title">Welcome back</h1>
         <p className="auth-copy">
-          Sign in to explore your GATE test series.
+          Sign in to explore your subjects and chapter-wise tests.
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ function LoginPage() {
             {isSubmitting ? "Signing in..." : "Login"}
           </button>
         </form>
-        <p className="auth-copy">New here? <Link to="/register">Create a student account</Link></p>
+        <p className="auth-copy">New here? <Link to="/register" state={{ from: location.state?.from }}>Create a student account</Link></p>
       </section>
     </main>
   );

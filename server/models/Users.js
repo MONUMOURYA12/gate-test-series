@@ -20,6 +20,32 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      maxlength: 254,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      index: true,
+    },
+
+    mobileNumber: {
+      type: String,
+      trim: true,
+      maxlength: 16,
+    },
+
+    collegeName: {
+      type: String,
+      trim: true,
+      maxlength: 150,
+    },
+
+    passingYear: {
+      type: Number,
+      min: 1950,
+      max: 2100,
+    },
+
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
       index: true,
     },
 
@@ -27,6 +53,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
+      select: false,
+    },
+
+    tokenVersion: {
+      type: Number,
+      default: 0,
+      min: 0,
+      select: false,
     },
 
     // ============================================

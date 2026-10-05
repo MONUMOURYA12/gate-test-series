@@ -69,7 +69,17 @@ const questionSchema = new mongoose.Schema(
 
     correctAnswer: {
       type: mongoose.Schema.Types.Mixed,
-      required: true,
+      required: function requiredAnswer() {
+        return !this.requiresReview && !(this.natAnswerMin != null && this.natAnswerMax != null);
+      },
+    },
+
+    natAnswerMin: {
+      type: Number,
+    },
+
+    natAnswerMax: {
+      type: Number,
     },
 
     // ============================================
@@ -113,6 +123,27 @@ const questionSchema = new mongoose.Schema(
     },
 
     session: {
+      type: String,
+      trim: true,
+    },
+
+    questionImages: { type: [require("./questionImageSchema")], default: [] },
+    sourceId: { type: String },
+    sourceQuestionNumber: Number,
+    sourceAnswer: String,
+    reviewReasons: { type: [String], default: [] },
+
+    sourceName: {
+      type: String,
+      trim: true,
+    },
+
+    sourcePage: {
+      type: Number,
+      min: 1,
+    },
+
+    sourceMarker: {
       type: String,
       trim: true,
     },
@@ -170,6 +201,12 @@ const questionSchema = new mongoose.Schema(
       trim: true,
     },
 
+    aiSolution: {
+      type: String,
+      trim: true,
+      maxlength: 12000,
+    },
+
     // ============================================
     // STATUS
     // ============================================
@@ -183,6 +220,12 @@ const questionSchema = new mongoose.Schema(
     isPublished: {
       type: Boolean,
       default: true,
+      index: true,
+    },
+
+    requiresReview: {
+      type: Boolean,
+      default: false,
       index: true,
     },
   },
@@ -224,6 +267,7 @@ questionSchema.index(
     questionNumber: 1,
   },
   {
+    name: "question_test_number_unique",
     unique: true,
     partialFilterExpression: {
       test: {
@@ -232,6 +276,11 @@ questionSchema.index(
     },
   }
 );
+
+questionSchema.index({ branch: 1, sourceId: 1 }, {
+  unique: true,
+  partialFilterExpression: { sourceId: { $type: "string" } },
+});
 
 const Question = mongoose.model(
   "Question",

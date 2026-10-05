@@ -1,3 +1,4 @@
+const { requireId, validateHierarchyIds, validateText, sendControllerError } = require("../services/apiValidation");
 const Test = require("../models/Test");
 const Chapter = require("../models/Chapter");
 const Question = require("../models/Question");
@@ -51,7 +52,16 @@ const createTest = async (req, res) => {
       totalMarks,
       negativeMarking,
       isPublished,
-    } = req.body;
+    } = req.body || {};
+    validateHierarchyIds(req.body);
+    validateText(title, "Test title", { required: true });
+    validateText(description, "Description", { max: 5000 });
+    if (!Number.isFinite(Number(duration)) || Number(duration) < 1 || Number(duration) > 1440) {
+      return res.status(400).json({ message: "Duration must be between 1 and 1440 minutes." });
+    }
+    if ([negativeMarking, isPublished].some(value => value !== undefined && typeof value !== "boolean")) {
+      return res.status(400).json({ message: "Publication and negative marking settings must be true or false." });
+    }
 
     if (!title || !chapter || !duration) {
       return res.status(400).json({
@@ -104,10 +114,7 @@ const createTest = async (req, res) => {
       test,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -134,10 +141,7 @@ const getTests = async (req, res) => {
       tests,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -148,6 +152,7 @@ const getTests = async (req, res) => {
 const getTestsByChapter = async (req, res) => {
   try {
     const { chapterId } = req.params;
+    requireId(chapterId, "chapterId");
 
     const tests = await Test.find({
       chapter: chapterId,
@@ -159,10 +164,7 @@ const getTestsByChapter = async (req, res) => {
       tests,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -173,6 +175,7 @@ const getTestsByChapter = async (req, res) => {
 const syncTestStatistics = async (req, res) => {
   try {
     const { testId } = req.params;
+    requireId(testId, "testId");
 
     const existingTest = await Test.findById(
       testId
@@ -194,10 +197,7 @@ const syncTestStatistics = async (req, res) => {
       test: updatedTest,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 

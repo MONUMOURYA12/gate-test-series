@@ -12,7 +12,7 @@ const navItems = [
 ];
 
 function AdminLayout() {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoggingOut, logoutError } = useAuth();
 
   return (
     <div className="admin-layout">
@@ -37,12 +37,13 @@ function AdminLayout() {
             <strong>{user?.name || "Admin"}</strong>
             <span>{user?.email}</span>
           </div>
-          <button className="secondary-button" type="button" onClick={logout}>
-            Logout
+          <button className="secondary-button" type="button" onClick={logout} disabled={isLoggingOut}>
+            {isLoggingOut ? "Logging out..." : "Logout"}
           </button>
         </header>
 
         <section className="admin-content">
+          {logoutError ? <p className="alert alert-error" role="alert">{logoutError}</p> : null}
           <Outlet />
         </section>
       </main>

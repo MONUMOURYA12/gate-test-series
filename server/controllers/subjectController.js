@@ -1,10 +1,14 @@
+const { requireId, validateHierarchyIds, validateText, sendControllerError } = require("../services/apiValidation");
 const Subject = require("../models/Subject");
 const Branch = require("../models/Branch");
 
 // Create a new subject
 const createSubject = async (req, res) => {
   try {
-    const { name, code, description, branch } = req.body;
+    const { name, code, description, branch } = req.body || {};
+    validateHierarchyIds(req.body);
+    validateText(name, "Name", { required: true });
+    validateText(description, "Description", { max: 5000 });
 
     // Validate required fields
     if (!name || !branch) {
@@ -46,10 +50,7 @@ const createSubject = async (req, res) => {
       subject,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -64,10 +65,7 @@ const getSubjects = async (req, res) => {
       subjects,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -75,6 +73,7 @@ const getSubjects = async (req, res) => {
 const getSubjectsByBranch = async (req, res) => {
   try {
     const { branchId } = req.params;
+    requireId(branchId, "branchId");
 
     const subjects = await Subject.find({
       branch: branchId,
@@ -85,10 +84,7 @@ const getSubjectsByBranch = async (req, res) => {
       subjects,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 

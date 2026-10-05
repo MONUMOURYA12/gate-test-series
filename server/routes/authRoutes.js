@@ -3,7 +3,9 @@ const express = require("express");
 const {
   registerUser,
   loginUser,
+  logoutUser,
   getCurrentUser,
+  updateCurrentUser,
   adminTest,
   createAdmin,
   adminResetPassword,
@@ -32,6 +34,8 @@ router.post(
   loginUser
 );
 
+router.post("/logout", logoutUser);
+
 // ============================================================
 // PROTECTED ROUTES
 // ============================================================
@@ -42,6 +46,8 @@ router.get(
   protect,
   getCurrentUser
 );
+
+router.patch("/me", protect, updateCurrentUser);
 
 // ============================================================
 // ADMIN ONLY ROUTES

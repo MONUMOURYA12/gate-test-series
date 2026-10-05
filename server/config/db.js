@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
+  if (!process.env.MONGO_URI) {
+    throw new Error("MONGO_URI is not configured");
+  }
+
   try {
-    const connection = await mongoose.connect(process.env.MONGO_URI);
+    const connection = await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 15000, maxPoolSize: 20,
+      autoIndex: process.env.NODE_ENV !== "production",
+    });
 
     console.log("MongoDB connected successfully");
-    console.log("Database:", connection.connection.name);
-    console.log("Host:", connection.connection.host);
+    return connection;
   } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1);
+    throw new Error("MongoDB connection failed. Check the database credential, TLS, and network access settings.");
   }
 };
 

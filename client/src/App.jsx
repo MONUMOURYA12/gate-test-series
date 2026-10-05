@@ -10,7 +10,7 @@ import BranchManagementPage from "./pages/BranchManagementPage.jsx";
 import ChapterManagementPage from "./pages/ChapterManagementPage.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import PlaceholderPage from "./pages/PlaceholderPage.jsx";
+import BulkUploadPage from "./pages/BulkUploadPage.jsx";
 import SubjectManagementPage from "./pages/SubjectManagementPage.jsx";
 import UnauthorizedPage from "./pages/UnauthorizedPage.jsx";
 import TestManagementPage from "./pages/TestManagementPage.jsx";
@@ -21,6 +21,11 @@ import StudentLayout from "./components/StudentLayout.jsx";
 import StudentTestsPage from "./pages/StudentTestsPage.jsx";
 import StudentTestDetailsPage from "./pages/StudentTestDetailsPage.jsx";
 import StudentDashboard from "./components/StudentDashboard.jsx";
+import StudentExamPage from "./pages/StudentExamPage.jsx";
+import StudentResultPage from "./pages/StudentResultPage.jsx";
+import StudentSubjectPage from "./pages/StudentSubjectPage.jsx";
+import StudentComingSoonPage from "./pages/StudentComingSoonPage.jsx";
+import StudentProfilePage from "./pages/StudentProfilePage.jsx";
 
 function App() {
   return (
@@ -92,9 +97,7 @@ function App() {
 
           <Route
             path="bulk-upload"
-            element={
-              <PlaceholderPage title="Bulk Upload" />
-            }
+            element={<BulkUploadPage />}
           />
         </Route>
       </Route>
@@ -107,8 +110,13 @@ function App() {
         <Route path="/student" element={<StudentLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="profile" element={<StudentProfilePage />} />
           <Route path="tests" element={<StudentTestsPage />} />
           <Route path="tests/:testId" element={<StudentTestDetailsPage />} />
+          <Route path="subjects/:subjectId" element={<StudentSubjectPage />} />
+          <Route path="subjects/common/:commonKey" element={<StudentComingSoonPage />} />
+          <Route path="attempts/:attemptId" element={<StudentExamPage />} />
+          <Route path="attempts/:attemptId/result" element={<StudentResultPage />} />
         </Route>
       </Route>
 

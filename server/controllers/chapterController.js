@@ -1,10 +1,14 @@
+const { requireId, validateHierarchyIds, validateText, sendControllerError } = require("../services/apiValidation");
 const Chapter = require("../models/Chapter");
 const Subject = require("../models/Subject");
 
 // Create a new chapter
 const createChapter = async (req, res) => {
   try {
-    const { name, description, subject, order } = req.body;
+    const { name, description, subject, order } = req.body || {};
+    validateHierarchyIds(req.body);
+    validateText(name, "Name", { required: true });
+    validateText(description, "Description", { max: 5000 });
 
     if (!name || !subject) {
       return res.status(400).json({
@@ -45,10 +49,7 @@ const createChapter = async (req, res) => {
       chapter,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -63,10 +64,7 @@ const getChapters = async (req, res) => {
       chapters,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 
@@ -74,6 +72,7 @@ const getChapters = async (req, res) => {
 const getChaptersBySubject = async (req, res) => {
   try {
     const { subjectId } = req.params;
+    requireId(subjectId, "subjectId");
 
     const chapters = await Chapter.find({
       subject: subjectId,
@@ -84,10 +83,7 @@ const getChaptersBySubject = async (req, res) => {
       chapters,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    sendControllerError(res, error);
   }
 };
 

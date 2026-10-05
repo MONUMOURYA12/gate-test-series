@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import QuestionMedia from "./QuestionMedia.jsx";
 
 const initialFormData = {
   questionNumber: "",
@@ -11,6 +12,10 @@ const initialFormData = {
   mcqCorrectAnswer: "",
   msqCorrectAnswers: [],
   natCorrectAnswer: "",
+  natAnswerMin: "",
+  natAnswerMax: "",
+  reviewed: false,
+  useOriginalImages: true,
   marks: "1",
   negativeMarks: "0",
   isPYQ: false,
@@ -89,6 +94,10 @@ function QuestionForm({
       mcqCorrectAnswer,
       msqCorrectAnswers,
       natCorrectAnswer,
+      natAnswerMin: question.natAnswerMin == null ? "" : String(question.natAnswerMin),
+      natAnswerMax: question.natAnswerMax == null ? "" : String(question.natAnswerMax),
+      reviewed: !question.requiresReview,
+      useOriginalImages: true,
       marks:
         question.marks !== undefined
           ? String(question.marks)
@@ -138,6 +147,8 @@ function QuestionForm({
       mcqCorrectAnswer: "",
       msqCorrectAnswers: [],
       natCorrectAnswer: "",
+      natAnswerMin: "",
+      natAnswerMax: "",
     }));
 
     setValidationError("");
@@ -312,6 +323,17 @@ function QuestionForm({
       .map((tag) => tag.trim())
       .filter(Boolean);
 
+    const hasRange = isEditMode && formData.questionType === "nat" && (formData.natAnswerMin !== "" || formData.natAnswerMax !== "");
+    if (hasRange && (formData.natAnswerMin === "" || formData.natAnswerMax === "" ||
+      !Number.isFinite(Number(formData.natAnswerMin)) || !Number.isFinite(Number(formData.natAnswerMax)) ||
+      Number(formData.natAnswerMin) > Number(formData.natAnswerMax))) {
+      setValidationError("Enter both range limits, with minimum no greater than maximum.");
+      return;
+    }
+    if (question?.requiresReview && formData.isPublished && !formData.reviewed) {
+      setValidationError("Review the original question and answer before publishing.");
+      return;
+    }
     const payload = {
       branch: branch._id,
       subject: subject._id,
@@ -328,6 +350,12 @@ function QuestionForm({
           : options,
 
       correctAnswer,
+      ...(isEditMode ? {
+        natAnswerMin: hasRange ? Number(formData.natAnswerMin) : null,
+        natAnswerMax: hasRange ? Number(formData.natAnswerMax) : null,
+        reviewed: formData.reviewed,
+        useOriginalImages: formData.useOriginalImages,
+      } : {}),
 
       marks,
       negativeMarks,
@@ -413,6 +441,18 @@ function QuestionForm({
           Editing Question #{question.questionNumber}
         </div>
       ) : null}
+
+      {question?.sourceName && <details className="question-source-review" open={question.requiresReview || undefined}>
+        <summary>{question.sourceName} | Page {question.sourcePage}</summary>
+        <p>{question.sourceMarker} | Source question {question.sourceQuestionNumber || question.questionNumber}</p>
+        {question.sourceAnswer && <p>Booklet answer annotation: {question.sourceAnswer}</p>}
+        {question.reviewReasons?.length > 0 && <ul>{question.reviewReasons.map(reason => <li key={reason}>{reason}</li>)}</ul>}
+        <QuestionMedia images={question.questionImages} />
+        {question.questionImages?.length > 0 && <label className="check-field">
+          <input type="checkbox" name="useOriginalImages" checked={formData.useOriginalImages} onChange={handleChange} disabled={isSubmitting} />
+          <span>Use original question images</span>
+        </label>}
+      </details>}
 
       <div className="form-grid">
         <div className="field">
@@ -621,6 +661,11 @@ function QuestionForm({
         </div>
       ) : null}
 
+      {isEditMode && formData.questionType === "nat" && <div className="form-grid">
+        <div className="field"><label htmlFor="nat-min">Accepted minimum (optional)</label><input id="nat-min" name="natAnswerMin" type="number" step="any" value={formData.natAnswerMin} onChange={handleChange} disabled={isSubmitting} /></div>
+        <div className="field"><label htmlFor="nat-max">Accepted maximum (optional)</label><input id="nat-max" name="natAnswerMax" type="number" step="any" value={formData.natAnswerMax} onChange={handleChange} disabled={isSubmitting} /></div>
+      </div>}
+
       <div className="form-grid">
         <div className="field">
           <label htmlFor="question-marks">
@@ -819,10 +864,11 @@ function QuestionForm({
         />
       </div>
 
-      <label
-        className="check-field"
-        htmlFor="question-published"
-      >
+      {question?.requiresReview && <label className="check-field">
+        <input type="checkbox" name="reviewed" checked={formData.reviewed} onChange={handleChange} disabled={isSubmitting} />
+        <span>Original question, diagrams and answer verified</span>
+      </label>}
+      <label className="check-field" htmlFor="question-published">
         <input
           checked={formData.isPublished}
           disabled={isSubmitting}

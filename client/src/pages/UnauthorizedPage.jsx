@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 function UnauthorizedPage() {
-  const { logout } = useAuth();
+  const { logout, isLoggingOut, logoutError } = useAuth();
+  const navigate = useNavigate();
+
+  const returnToLogin = async () => {
+    if (await logout()) navigate("/login", { replace: true });
+  };
 
   return (
     <main className="auth-page">
@@ -15,9 +20,10 @@ function UnauthorizedPage() {
         </p>
 
         <div className="auth-form">
-          <Link className="primary-button" to="/login" onClick={logout}>
-            Back to Login
-          </Link>
+          {logoutError ? <p className="alert alert-error" role="alert">{logoutError}</p> : null}
+          <button className="primary-button" type="button" disabled={isLoggingOut} onClick={returnToLogin}>
+            {isLoggingOut ? "Logging out..." : "Back to Login"}
+          </button>
         </div>
       </section>
     </main>
