@@ -27,7 +27,7 @@ function createApp(config = readRuntimeConfig()) {
     express.json({ limit: "256kb", strict: true, inflate: false }), security.rejectUnsafeKeys);
   app.post("/api/auth/login", rateLimits.loginIp, rateLimits.loginAccount);
   app.post("/api/auth/register", rateLimits.register);
-  for (const route of ["branches", "subjects", "chapters", "tests", "questions", "auth", "student"]) {
+  for (const route of ["branches", "subjects", "chapters", "tests", "questions", "auth", "student", "explore"]) {
     const moduleName = { branches: "branch", subjects: "subject", chapters: "chapter", tests: "test", questions: "question" }[route] || route;
     app.use(`/api/${route}`, require(`./routes/${moduleName}Routes`));
   }

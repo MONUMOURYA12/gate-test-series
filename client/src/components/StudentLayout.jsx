@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { studentApi } from "../services/api";
 import "../student.css";
+import PublicHeader from "./PublicHeader";
 
 export default function StudentLayout() {
   const { user, logout, isLoggingOut, logoutError } = useAuth();
@@ -20,6 +21,7 @@ export default function StudentLayout() {
   }, [revision]);
   useEffect(() => { window.scrollTo(0, 0); }, [location.pathname]);
   return <div className="learn-shell">
+    <PublicHeader key={`${location.pathname}${location.search}`} />
     <a className="learn-skip" href="#student-content">Skip to content</a>
     <header className="learn-header">
       <NavLink to="/student/dashboard" className="learn-brand"><span className="learn-logo">P</span><span><strong>ParikshaSarthi</strong></span></NavLink>

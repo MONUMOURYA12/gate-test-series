@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { branchApi, registerStudent } from "../services/api";
 import { competitiveBranchCodes, isCompetitiveBranch } from "../lib/examTrack";
+import Seo from "../components/Seo";
 
 const currentYear = new Date().getFullYear();
 
@@ -15,6 +16,7 @@ export default function RegisterPage() {
   const [branchError, setBranchError] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState(location.state?.branchId || "");
 
   useEffect(() => {
     let active = true;
@@ -92,6 +94,7 @@ export default function RegisterPage() {
 
   return (
     <main className="auth-page">
+      <Seo title="Create account | ParikshaSarthi" path="/register" />
       <section className="auth-panel register-panel" aria-labelledby="register-title">
         <p className="auth-brand">ParikshaSarthi</p>
         <h1 id="register-title">Create your candidate profile</h1>
@@ -125,7 +128,7 @@ export default function RegisterPage() {
 
             <div className="field">
               <label htmlFor="branch">Exam / branch</label>
-              <select id="branch" name="branch" defaultValue="" disabled={branchLoading || !branches.length} required>
+              <select id="branch" name="branch" value={selectedBranch} onChange={event => setSelectedBranch(event.target.value)} disabled={branchLoading || !branches.length} required>
                 <option value="">{branchLoading ? "Loading exams and branches..." : "Select your exam or branch"}</option>
                 <optgroup label="SSC / Railways / Banking">
                   {competitiveBranchCodes.flatMap(code => branches.filter(branch => branch.code === code)).map(branch => (

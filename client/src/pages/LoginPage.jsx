@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Seo from "../components/Seo";
 
 function loginDestination(isAdmin, from) {
   const prefix = isAdmin ? "/admin" : "/student";
@@ -52,11 +53,12 @@ function LoginPage() {
 
   return (
     <main className="auth-page">
+      <Seo title="Login | ParikshaSarthi" path="/login" />
       <section className="auth-panel" aria-labelledby="login-title">
         <p className="auth-brand">ParikshaSarthi</p>
         <h1 id="login-title">Welcome back</h1>
         <p className="auth-copy">
-          Sign in to explore your subjects and chapter-wise tests.
+          {location.state?.from?.pathname?.startsWith('/student/tests/') ? 'Sign in to take your selected test and save your progress.' : 'Sign in to take tests and track your progress.'}
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -97,7 +99,8 @@ function LoginPage() {
             {isSubmitting ? "Signing in..." : "Login"}
           </button>
         </form>
-        <p className="auth-copy">New here? <Link to="/register" state={{ from: location.state?.from }}>Create a student account</Link></p>
+        <p className="auth-copy">New here? <Link to="/register" state={{ from: location.state?.from, branchId: location.state?.branchId }}>Create a student account</Link></p>
+        <p className="auth-copy"><Link to="/">← Continue exploring exams</Link></p>
       </section>
     </main>
   );

@@ -3,7 +3,9 @@ import "./App.css";
 
 import AdminLayout from "./components/AdminLayout.jsx";
 import AdminProtectedRoute from "./components/AdminProtectedRoute.jsx";
-import AuthRedirect from "./components/AuthRedirect.jsx";
+import PublicLayout from "./components/PublicLayout.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import ExamExplorePage from "./pages/ExamExplorePage.jsx";
 import StudentProtectedRoute from "./components/StudentProtectedRoute.jsx";
 
 import BranchManagementPage from "./pages/BranchManagementPage.jsx";
@@ -34,7 +36,10 @@ function App() {
           ROOT
           ===================================================== */}
 
-      <Route path="/" element={<AuthRedirect />} />
+      <Route element={<PublicLayout />}>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/exams/:family" element={<ExamExplorePage />} />
+      <Route path="/exams/:family/:examId" element={<ExamExplorePage />} />
 
       {/* =====================================================
           AUTH
@@ -43,6 +48,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/register" element={<RegisterPage />} />
+      </Route>
 
       <Route
         path="/unauthorized"

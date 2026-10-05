@@ -10,7 +10,8 @@ export default function StudentTestDetailsPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [revision, setRevision] = useState(0);
-  const back = `/student/tests?${params.toString()}`;
+  const fromExam = params.get('fromExam');
+  const back = /^[a-z-]+\/[a-z0-9-]+$/.test(fromExam || '') ? `/exams/${fromExam}` : `/student/tests?${params.toString()}`;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -45,7 +46,7 @@ export default function StudentTestDetailsPage() {
   return <>
     <Link className="learn-back" to={back}>Back to catalogue</Link>
     <section className="learn-detail">
-      <p className="learn-eyebrow">GATE / {test.branch.code}</p>
+      <p className="learn-eyebrow">{test.branch.code} / PRACTICE</p>
       <h1 className="learn-title">{test.title}</h1>
       <p className="learn-intro">{test.subject.name} / {test.chapter.name}</p>
       {test.description && <p className="learn-description">{test.description}</p>}

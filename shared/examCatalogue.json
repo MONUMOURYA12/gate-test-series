@@ -1,0 +1,4401 @@
+[
+  {
+    "id": "ssc",
+    "label": "SSC",
+    "icon": "🏛️",
+    "description": "Government careers, one focused step at a time.",
+    "source": "https://ssc.gov.in/for-candidates/examination-calendar",
+    "exams": [
+      {
+        "id": "cgl",
+        "name": "SSC CGL",
+        "subtitle": "Combined Graduate Level",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          },
+          {
+            "id": "statistics",
+            "name": "Statistics",
+            "icon": "📊",
+            "matches": [
+              "Statistics"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for SSC CGL. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "chsl",
+        "name": "SSC CHSL",
+        "subtitle": "Combined Higher Secondary Level",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Explore the key study areas for SSC CHSL. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "mts",
+        "name": "SSC MTS & Havaldar",
+        "subtitle": "Multi-Tasking Staff and Havaldar",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Explore the key study areas for SSC MTS & Havaldar. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "gd",
+        "name": "SSC GD Constable",
+        "subtitle": "CAPFs, SSF and Assam Rifles",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "hindi",
+            "name": "Hindi",
+            "icon": "अ",
+            "matches": [
+              "Hindi"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for SSC GD Constable. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "cpo",
+        "name": "SSC CPO",
+        "subtitle": "Sub-Inspector in Delhi Police and CAPFs",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          }
+        ],
+        "overview": "Explore the key study areas for SSC CPO. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "je",
+        "name": "SSC JE",
+        "subtitle": "Junior Engineer · Civil, Mechanical, Electrical",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "civil-engineering",
+            "name": "Civil Engineering",
+            "icon": "🏗️",
+            "matches": [
+              "Civil Engineering"
+            ],
+            "topics": ""
+          },
+          {
+            "id": "mechanical-engineering",
+            "name": "Mechanical Engineering",
+            "icon": "⚙️",
+            "matches": [
+              "Mechanical Engineering"
+            ],
+            "topics": ""
+          },
+          {
+            "id": "electrical-engineering",
+            "name": "Electrical Engineering",
+            "icon": "⚡",
+            "matches": [
+              "Electrical Engineering"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for SSC JE. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "stenographer",
+        "name": "SSC Stenographer",
+        "subtitle": "Grade C and D",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          }
+        ],
+        "overview": "Explore the key study areas for SSC Stenographer. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "hindi-translator",
+        "name": "SSC Hindi Translators",
+        "subtitle": "Combined Hindi Translators Examination",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "hindi",
+            "name": "Hindi",
+            "icon": "अ",
+            "matches": [
+              "Hindi"
+            ],
+            "topics": ""
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "translation-essay",
+            "name": "Translation & Essay",
+            "icon": "✍️",
+            "matches": [
+              "Translation & Essay"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for SSC Hindi Translators. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "selection-post",
+        "name": "SSC Selection Post",
+        "subtitle": "Matriculation, Higher Secondary and Graduate levels",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Explore the key study areas for SSC Selection Post. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "delhi-police-constable",
+        "name": "Delhi Police Constable",
+        "subtitle": "Executive · Male and Female",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Explore the key study areas for Delhi Police Constable. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "delhi-police-driver",
+        "name": "Delhi Police Driver",
+        "subtitle": "Constable Driver",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "road-safety-vehicle-knowledge",
+            "name": "Road Safety & Vehicle Knowledge",
+            "icon": "🚦",
+            "matches": [
+              "Road Safety & Vehicle Knowledge"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for Delhi Police Driver. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "head-constable-ministerial",
+        "name": "Delhi Police Head Constable",
+        "subtitle": "Ministerial",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Explore the key study areas for Delhi Police Head Constable. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "head-constable-awo-tpo",
+        "name": "Delhi Police AWO / TPO",
+        "subtitle": "Head Constable · Wireless and tele-printer",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Explore the key study areas for Delhi Police AWO / TPO. Choose a subject to see the practice currently available."
+      },
+      {
+        "id": "jsa-ldc",
+        "name": "JSA / LDC Departmental",
+        "subtitle": "Limited Departmental Competitive Examination",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "office-procedure",
+            "name": "Office Procedure",
+            "icon": "📋",
+            "matches": [
+              "Office Procedure"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for JSA / LDC Departmental. Choose a subject to see the practice currently available.",
+        "section": "Departmental exams"
+      },
+      {
+        "id": "ssa-udc",
+        "name": "SSA / UDC Departmental",
+        "subtitle": "Limited Departmental Competitive Examination",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "office-procedure",
+            "name": "Office Procedure",
+            "icon": "📋",
+            "matches": [
+              "Office Procedure"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for SSA / UDC Departmental. Choose a subject to see the practice currently available.",
+        "section": "Departmental exams"
+      },
+      {
+        "id": "aso",
+        "name": "ASO Departmental",
+        "subtitle": "Limited Departmental Competitive Examination",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "noting-drafting",
+            "name": "Noting & Drafting",
+            "icon": "✍️",
+            "matches": [
+              "Noting & Drafting"
+            ],
+            "topics": ""
+          },
+          {
+            "id": "office-procedure",
+            "name": "Office Procedure",
+            "icon": "📋",
+            "matches": [
+              "Office Procedure"
+            ],
+            "topics": ""
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Explore the key study areas for ASO Departmental. Choose a subject to see the practice currently available.",
+        "section": "Departmental exams"
+      },
+      {
+        "id": "stenographer-departmental",
+        "name": "Grade C Stenographer Departmental",
+        "subtitle": "Limited Departmental Competitive Examination",
+        "branchCodes": [
+          "SSC"
+        ],
+        "subjects": [
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "stenography",
+            "name": "Stenography",
+            "icon": "⌨️",
+            "matches": [
+              "Stenography"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Explore the key study areas for Grade C Stenographer Departmental. Choose a subject to see the practice currently available.",
+        "section": "Departmental exams"
+      }
+    ]
+  },
+  {
+    "id": "railway",
+    "label": "Railway",
+    "icon": "🚆",
+    "description": "Get your railway preparation on track.",
+    "source": "https://www.rrbcdg.gov.in/employment-notices.php",
+    "exams": [
+      {
+        "id": "ntpc-graduate",
+        "name": "RRB NTPC Graduate",
+        "subtitle": "Non-Technical Popular Categories",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Build your RRB NTPC Graduate study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "ntpc-undergraduate",
+        "name": "RRB NTPC Undergraduate",
+        "subtitle": "Non-Technical Popular Categories",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Build your RRB NTPC Undergraduate study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "group-d",
+        "name": "RRB Group D",
+        "subtitle": "Level 1 posts",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Build your RRB Group D study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "alp",
+        "name": "RRB ALP",
+        "subtitle": "Assistant Loco Pilot",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "basic-science-engineering",
+            "name": "Basic Science & Engineering",
+            "icon": "⚙️",
+            "matches": [
+              "Basic Science & Engineering"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Build your RRB ALP study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "technician",
+        "name": "RRB Technician",
+        "subtitle": "Technician recruitment",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Build your RRB Technician study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "je",
+        "name": "RRB JE",
+        "subtitle": "Junior Engineer and allied technical posts",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "technical-ability",
+            "name": "Technical Ability",
+            "icon": "⚙️",
+            "matches": [
+              "Technical Ability"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Build your RRB JE study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "section-controller",
+        "name": "RRB Section Controller",
+        "subtitle": "Section Controller recruitment",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          }
+        ],
+        "overview": "Build your RRB Section Controller study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "paramedical",
+        "name": "RRB Paramedical",
+        "subtitle": "Healthcare and allied posts",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "professional-ability",
+            "name": "Professional Ability",
+            "icon": "🩺",
+            "matches": [
+              "Professional Ability"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Build your RRB Paramedical study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "ministerial",
+        "name": "RRB Ministerial & Isolated",
+        "subtitle": "Specialist and isolated categories",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-science",
+            "name": "General Science",
+            "icon": "🔬",
+            "matches": [
+              "General Science"
+            ],
+            "topics": "Physics, chemistry and life science fundamentals"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "professional-ability",
+            "name": "Professional Ability",
+            "icon": "📋",
+            "matches": [
+              "Professional Ability"
+            ],
+            "topics": ""
+          }
+        ],
+        "overview": "Build your RRB Ministerial & Isolated study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "rpf-constable",
+        "name": "RPF Constable",
+        "subtitle": "Railway Protection Force",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Build your RPF Constable study plan. Explore the subjects below and start with the practice that is ready."
+      },
+      {
+        "id": "rpf-si",
+        "name": "RPF Sub-Inspector",
+        "subtitle": "Railway Protection Force",
+        "branchCodes": [
+          "RAILWAYS"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          }
+        ],
+        "overview": "Build your RPF Sub-Inspector study plan. Explore the subjects below and start with the practice that is ready."
+      }
+    ]
+  },
+  {
+    "id": "gate",
+    "label": "GATE",
+    "icon": "⚙️",
+    "description": "Find your paper. Build your subject knowledge.",
+    "source": "https://gate2026.iitg.ac.in/exam-papers-and-syllabus.html",
+    "exams": [
+      {
+        "id": "ae",
+        "name": "Aerospace Engineering",
+        "subtitle": "GATE AE",
+        "branchCodes": [
+          "AE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "aerodynamics",
+            "name": "Aerodynamics",
+            "icon": "📘",
+            "matches": [
+              "Aerodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "flight-mechanics",
+            "name": "Flight Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Flight Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "propulsion",
+            "name": "Propulsion",
+            "icon": "📘",
+            "matches": [
+              "Propulsion"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "aerospace-structures",
+            "name": "Aerospace Structures",
+            "icon": "📘",
+            "matches": [
+              "Aerospace Structures"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE AE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "AE"
+      },
+      {
+        "id": "ag",
+        "name": "Agricultural Engineering",
+        "subtitle": "GATE AG",
+        "branchCodes": [
+          "AG"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "farm-machinery",
+            "name": "Farm Machinery",
+            "icon": "📘",
+            "matches": [
+              "Farm Machinery"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "soil-and-water-resources",
+            "name": "Soil and Water Resources",
+            "icon": "📘",
+            "matches": [
+              "Soil and Water Resources"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "agricultural-processing",
+            "name": "Agricultural Processing",
+            "icon": "📘",
+            "matches": [
+              "Agricultural Processing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "irrigation-and-drainage",
+            "name": "Irrigation and Drainage",
+            "icon": "📘",
+            "matches": [
+              "Irrigation and Drainage"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE AG preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "AG"
+      },
+      {
+        "id": "ar",
+        "name": "Architecture and Planning",
+        "subtitle": "GATE AR",
+        "branchCodes": [
+          "AR"
+        ],
+        "subjects": [
+          {
+            "id": "architecture-and-design",
+            "name": "Architecture and Design",
+            "icon": "📘",
+            "matches": [
+              "Architecture and Design"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "building-materials-and-construction",
+            "name": "Building Materials and Construction",
+            "icon": "📘",
+            "matches": [
+              "Building Materials and Construction"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "building-services",
+            "name": "Building Services",
+            "icon": "📘",
+            "matches": [
+              "Building Services"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "planning-and-housing",
+            "name": "Planning and Housing",
+            "icon": "📘",
+            "matches": [
+              "Planning and Housing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE AR preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "AR"
+      },
+      {
+        "id": "bm",
+        "name": "Biomedical Engineering",
+        "subtitle": "GATE BM",
+        "branchCodes": [
+          "BM"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "biomedical-signals-and-systems",
+            "name": "Biomedical Signals and Systems",
+            "icon": "📘",
+            "matches": [
+              "Biomedical Signals and Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "medical-imaging",
+            "name": "Medical Imaging",
+            "icon": "📘",
+            "matches": [
+              "Medical Imaging"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "biomaterials",
+            "name": "Biomaterials",
+            "icon": "📘",
+            "matches": [
+              "Biomaterials"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "anatomy-and-physiology",
+            "name": "Anatomy and Physiology",
+            "icon": "📘",
+            "matches": [
+              "Anatomy and Physiology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE BM preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "BM"
+      },
+      {
+        "id": "bt",
+        "name": "Biotechnology",
+        "subtitle": "GATE BT",
+        "branchCodes": [
+          "BT"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "biochemistry",
+            "name": "Biochemistry",
+            "icon": "📘",
+            "matches": [
+              "Biochemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "cell-biology",
+            "name": "Cell Biology",
+            "icon": "📘",
+            "matches": [
+              "Cell Biology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "genetics-and-evolution",
+            "name": "Genetics and Evolution",
+            "icon": "📘",
+            "matches": [
+              "Genetics and Evolution"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "molecular-biology",
+            "name": "Molecular Biology",
+            "icon": "📘",
+            "matches": [
+              "Molecular Biology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "bioprocess-engineering",
+            "name": "Bioprocess Engineering",
+            "icon": "📘",
+            "matches": [
+              "Bioprocess Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE BT preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "BT"
+      },
+      {
+        "id": "ce",
+        "name": "Civil Engineering",
+        "subtitle": "GATE CE",
+        "branchCodes": [
+          "CE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "structural-engineering",
+            "name": "Structural Engineering",
+            "icon": "📘",
+            "matches": [
+              "Structural Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geotechnical-engineering",
+            "name": "Geotechnical Engineering",
+            "icon": "📘",
+            "matches": [
+              "Geotechnical Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "water-resources",
+            "name": "Water Resources",
+            "icon": "📘",
+            "matches": [
+              "Water Resources"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "environmental-engineering",
+            "name": "Environmental Engineering",
+            "icon": "📘",
+            "matches": [
+              "Environmental Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "transportation-engineering",
+            "name": "Transportation Engineering",
+            "icon": "📘",
+            "matches": [
+              "Transportation Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geomatics",
+            "name": "Geomatics",
+            "icon": "📘",
+            "matches": [
+              "Geomatics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE CE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "CE"
+      },
+      {
+        "id": "ch",
+        "name": "Chemical Engineering",
+        "subtitle": "GATE CH",
+        "branchCodes": [
+          "CH"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "process-calculations",
+            "name": "Process Calculations",
+            "icon": "📘",
+            "matches": [
+              "Process Calculations"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics",
+            "name": "Thermodynamics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "fluid-mechanics",
+            "name": "Fluid Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Fluid Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "heat-and-mass-transfer",
+            "name": "Heat and Mass Transfer",
+            "icon": "📘",
+            "matches": [
+              "Heat and Mass Transfer"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "chemical-reaction-engineering",
+            "name": "Chemical Reaction Engineering",
+            "icon": "📘",
+            "matches": [
+              "Chemical Reaction Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "process-control",
+            "name": "Process Control",
+            "icon": "📘",
+            "matches": [
+              "Process Control"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE CH preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "CH"
+      },
+      {
+        "id": "cs",
+        "name": "Computer Science and Information Technology",
+        "subtitle": "GATE CS",
+        "branchCodes": [
+          "CS"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "digital-logic",
+            "name": "Digital Logic",
+            "icon": "📘",
+            "matches": [
+              "Digital Logic"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "computer-organization",
+            "name": "Computer Organization",
+            "icon": "📘",
+            "matches": [
+              "Computer Organization"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "programming-and-data-structures",
+            "name": "Programming and Data Structures",
+            "icon": "📘",
+            "matches": [
+              "Programming and Data Structures"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "algorithms",
+            "name": "Algorithms",
+            "icon": "📘",
+            "matches": [
+              "Algorithms"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "theory-of-computation",
+            "name": "Theory of Computation",
+            "icon": "📘",
+            "matches": [
+              "Theory of Computation"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "compiler-design",
+            "name": "Compiler Design",
+            "icon": "📘",
+            "matches": [
+              "Compiler Design"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "operating-systems",
+            "name": "Operating Systems",
+            "icon": "📘",
+            "matches": [
+              "Operating Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "databases",
+            "name": "Databases",
+            "icon": "📘",
+            "matches": [
+              "Databases"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "computer-networks",
+            "name": "Computer Networks",
+            "icon": "📘",
+            "matches": [
+              "Computer Networks"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE CS preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "CS"
+      },
+      {
+        "id": "cy",
+        "name": "Chemistry",
+        "subtitle": "GATE CY",
+        "branchCodes": [
+          "CY"
+        ],
+        "subjects": [
+          {
+            "id": "physical-chemistry",
+            "name": "Physical Chemistry",
+            "icon": "📘",
+            "matches": [
+              "Physical Chemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "organic-chemistry",
+            "name": "Organic Chemistry",
+            "icon": "📘",
+            "matches": [
+              "Organic Chemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "inorganic-chemistry",
+            "name": "Inorganic Chemistry",
+            "icon": "📘",
+            "matches": [
+              "Inorganic Chemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "spectroscopy",
+            "name": "Spectroscopy",
+            "icon": "📘",
+            "matches": [
+              "Spectroscopy"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics",
+            "name": "Thermodynamics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "chemical-kinetics",
+            "name": "Chemical Kinetics",
+            "icon": "📘",
+            "matches": [
+              "Chemical Kinetics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE CY preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "CY"
+      },
+      {
+        "id": "da",
+        "name": "Data Science and Artificial Intelligence",
+        "subtitle": "GATE DA",
+        "branchCodes": [
+          "DA"
+        ],
+        "subjects": [
+          {
+            "id": "probability-and-statistics",
+            "name": "Probability and Statistics",
+            "icon": "📘",
+            "matches": [
+              "Probability and Statistics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "linear-algebra",
+            "name": "Linear Algebra",
+            "icon": "📘",
+            "matches": [
+              "Linear Algebra"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "programming-and-data-structures",
+            "name": "Programming and Data Structures",
+            "icon": "📘",
+            "matches": [
+              "Programming and Data Structures"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "algorithms",
+            "name": "Algorithms",
+            "icon": "📘",
+            "matches": [
+              "Algorithms"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "database-management",
+            "name": "Database Management",
+            "icon": "📘",
+            "matches": [
+              "Database Management"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "machine-learning",
+            "name": "Machine Learning",
+            "icon": "📘",
+            "matches": [
+              "Machine Learning"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "artificial-intelligence",
+            "name": "Artificial Intelligence",
+            "icon": "📘",
+            "matches": [
+              "Artificial Intelligence"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE DA preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "DA"
+      },
+      {
+        "id": "ec",
+        "name": "Electronics and Communication Engineering",
+        "subtitle": "GATE EC",
+        "branchCodes": [
+          "EC",
+          "ECE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "network-theory",
+            "name": "Network Theory",
+            "icon": "📘",
+            "matches": [
+              "Network Theory"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "signals-and-systems",
+            "name": "Signals and Systems",
+            "icon": "📘",
+            "matches": [
+              "Signals and Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "electronic-devices",
+            "name": "Electronic Devices",
+            "icon": "📘",
+            "matches": [
+              "Electronic Devices"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "analog-circuits",
+            "name": "Analog Circuits",
+            "icon": "📘",
+            "matches": [
+              "Analog Circuits"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "digital-circuits",
+            "name": "Digital Circuits",
+            "icon": "📘",
+            "matches": [
+              "Digital Circuits"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "control-systems",
+            "name": "Control Systems",
+            "icon": "📘",
+            "matches": [
+              "Control Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "communications",
+            "name": "Communications",
+            "icon": "📘",
+            "matches": [
+              "Communications"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "electromagnetics",
+            "name": "Electromagnetics",
+            "icon": "📘",
+            "matches": [
+              "Electromagnetics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE EC preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "EC"
+      },
+      {
+        "id": "ee",
+        "name": "Electrical Engineering",
+        "subtitle": "GATE EE",
+        "branchCodes": [
+          "EE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "electric-circuits-and-fields",
+            "name": "Electric Circuits and Fields",
+            "icon": "📘",
+            "matches": [
+              "Electric Circuits and Fields"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "signals-and-systems",
+            "name": "Signals and Systems",
+            "icon": "📘",
+            "matches": [
+              "Signals and Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "electrical-machines",
+            "name": "Electrical Machines",
+            "icon": "📘",
+            "matches": [
+              "Electrical Machines"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "power-systems",
+            "name": "Power Systems",
+            "icon": "📘",
+            "matches": [
+              "Power Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "control-systems",
+            "name": "Control Systems",
+            "icon": "📘",
+            "matches": [
+              "Control Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "power-electronics",
+            "name": "Power Electronics",
+            "icon": "📘",
+            "matches": [
+              "Power Electronics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "measurements",
+            "name": "Measurements",
+            "icon": "📘",
+            "matches": [
+              "Measurements"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "analog-and-digital-electronics",
+            "name": "Analog and Digital Electronics",
+            "icon": "📘",
+            "matches": [
+              "Analog and Digital Electronics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE EE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "EE"
+      },
+      {
+        "id": "es",
+        "name": "Environmental Science and Engineering",
+        "subtitle": "GATE ES",
+        "branchCodes": [
+          "ES"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "environmental-chemistry",
+            "name": "Environmental Chemistry",
+            "icon": "📘",
+            "matches": [
+              "Environmental Chemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "ecology",
+            "name": "Ecology",
+            "icon": "📘",
+            "matches": [
+              "Ecology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "environmental-pollution",
+            "name": "Environmental Pollution",
+            "icon": "📘",
+            "matches": [
+              "Environmental Pollution"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "water-and-wastewater",
+            "name": "Water and Wastewater",
+            "icon": "📘",
+            "matches": [
+              "Water and Wastewater"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "environmental-management",
+            "name": "Environmental Management",
+            "icon": "📘",
+            "matches": [
+              "Environmental Management"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE ES preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "ES"
+      },
+      {
+        "id": "ey",
+        "name": "Ecology and Evolution",
+        "subtitle": "GATE EY",
+        "branchCodes": [
+          "EY"
+        ],
+        "subjects": [
+          {
+            "id": "ecology",
+            "name": "Ecology",
+            "icon": "📘",
+            "matches": [
+              "Ecology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "evolution",
+            "name": "Evolution",
+            "icon": "📘",
+            "matches": [
+              "Evolution"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "genetics",
+            "name": "Genetics",
+            "icon": "📘",
+            "matches": [
+              "Genetics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "population-biology",
+            "name": "Population Biology",
+            "icon": "📘",
+            "matches": [
+              "Population Biology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "animal-behaviour",
+            "name": "Animal Behaviour",
+            "icon": "📘",
+            "matches": [
+              "Animal Behaviour"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "physiology",
+            "name": "Physiology",
+            "icon": "📘",
+            "matches": [
+              "Physiology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE EY preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "EY"
+      },
+      {
+        "id": "ge",
+        "name": "Geomatics Engineering",
+        "subtitle": "GATE GE",
+        "branchCodes": [
+          "GE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "geomatics",
+            "name": "Geomatics",
+            "icon": "📘",
+            "matches": [
+              "Geomatics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "remote-sensing",
+            "name": "Remote Sensing",
+            "icon": "📘",
+            "matches": [
+              "Remote Sensing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geographic-information-systems",
+            "name": "Geographic Information Systems",
+            "icon": "📘",
+            "matches": [
+              "Geographic Information Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "surveying",
+            "name": "Surveying",
+            "icon": "📘",
+            "matches": [
+              "Surveying"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "gnss-and-positioning",
+            "name": "GNSS and Positioning",
+            "icon": "📘",
+            "matches": [
+              "GNSS and Positioning"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE GE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "GE"
+      },
+      {
+        "id": "gg",
+        "name": "Geology and Geophysics",
+        "subtitle": "GATE GG",
+        "branchCodes": [
+          "GG"
+        ],
+        "subjects": [
+          {
+            "id": "geology",
+            "name": "Geology",
+            "icon": "📘",
+            "matches": [
+              "Geology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geophysics",
+            "name": "Geophysics",
+            "icon": "📘",
+            "matches": [
+              "Geophysics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "earth-materials",
+            "name": "Earth Materials",
+            "icon": "📘",
+            "matches": [
+              "Earth Materials"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "structural-geology",
+            "name": "Structural Geology",
+            "icon": "📘",
+            "matches": [
+              "Structural Geology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geomorphology",
+            "name": "Geomorphology",
+            "icon": "📘",
+            "matches": [
+              "Geomorphology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "geophysical-methods",
+            "name": "Geophysical Methods",
+            "icon": "📘",
+            "matches": [
+              "Geophysical Methods"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE GG preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "GG"
+      },
+      {
+        "id": "in",
+        "name": "Instrumentation Engineering",
+        "subtitle": "GATE IN",
+        "branchCodes": [
+          "IN"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "electrical-circuits",
+            "name": "Electrical Circuits",
+            "icon": "📘",
+            "matches": [
+              "Electrical Circuits"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "signals-and-systems",
+            "name": "Signals and Systems",
+            "icon": "📘",
+            "matches": [
+              "Signals and Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "control-systems",
+            "name": "Control Systems",
+            "icon": "📘",
+            "matches": [
+              "Control Systems"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "sensors-and-transducers",
+            "name": "Sensors and Transducers",
+            "icon": "📘",
+            "matches": [
+              "Sensors and Transducers"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "industrial-instrumentation",
+            "name": "Industrial Instrumentation",
+            "icon": "📘",
+            "matches": [
+              "Industrial Instrumentation"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "process-control",
+            "name": "Process Control",
+            "icon": "📘",
+            "matches": [
+              "Process Control"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "analog-and-digital-electronics",
+            "name": "Analog and Digital Electronics",
+            "icon": "📘",
+            "matches": [
+              "Analog and Digital Electronics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE IN preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "IN"
+      },
+      {
+        "id": "ma",
+        "name": "Mathematics",
+        "subtitle": "GATE MA",
+        "branchCodes": [
+          "MA"
+        ],
+        "subjects": [
+          {
+            "id": "real-analysis",
+            "name": "Real Analysis",
+            "icon": "📘",
+            "matches": [
+              "Real Analysis"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "complex-analysis",
+            "name": "Complex Analysis",
+            "icon": "📘",
+            "matches": [
+              "Complex Analysis"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "linear-algebra",
+            "name": "Linear Algebra",
+            "icon": "📘",
+            "matches": [
+              "Linear Algebra"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "algebra",
+            "name": "Algebra",
+            "icon": "📘",
+            "matches": [
+              "Algebra"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "numerical-analysis",
+            "name": "Numerical Analysis",
+            "icon": "📘",
+            "matches": [
+              "Numerical Analysis"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "differential-equations",
+            "name": "Differential Equations",
+            "icon": "📘",
+            "matches": [
+              "Differential Equations"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "probability-and-statistics",
+            "name": "Probability and Statistics",
+            "icon": "📘",
+            "matches": [
+              "Probability and Statistics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "topology",
+            "name": "Topology",
+            "icon": "📘",
+            "matches": [
+              "Topology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE MA preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "MA"
+      },
+      {
+        "id": "me",
+        "name": "Mechanical Engineering",
+        "subtitle": "GATE ME",
+        "branchCodes": [
+          "ME"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "engineering-mechanics",
+            "name": "Engineering Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Engineering Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "strength-of-materials",
+            "name": "Strength of Materials",
+            "icon": "📘",
+            "matches": [
+              "Strength of Materials"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "theory-of-machines",
+            "name": "Theory of Machines",
+            "icon": "📘",
+            "matches": [
+              "Theory of Machines"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics",
+            "name": "Thermodynamics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "fluid-mechanics",
+            "name": "Fluid Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Fluid Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "heat-transfer",
+            "name": "Heat Transfer",
+            "icon": "📘",
+            "matches": [
+              "Heat Transfer"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "manufacturing",
+            "name": "Manufacturing",
+            "icon": "📘",
+            "matches": [
+              "Manufacturing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "machine-design",
+            "name": "Machine Design",
+            "icon": "📘",
+            "matches": [
+              "Machine Design"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "industrial-engineering",
+            "name": "Industrial Engineering",
+            "icon": "📘",
+            "matches": [
+              "Industrial Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE ME preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "ME"
+      },
+      {
+        "id": "mn",
+        "name": "Mining Engineering",
+        "subtitle": "GATE MN",
+        "branchCodes": [
+          "MN"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "mine-development-and-surveying",
+            "name": "Mine Development and Surveying",
+            "icon": "📘",
+            "matches": [
+              "Mine Development and Surveying"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "mining-geology",
+            "name": "Mining Geology",
+            "icon": "📘",
+            "matches": [
+              "Mining Geology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "rock-mechanics",
+            "name": "Rock Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Rock Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "mine-ventilation",
+            "name": "Mine Ventilation",
+            "icon": "📘",
+            "matches": [
+              "Mine Ventilation"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "mine-economics",
+            "name": "Mine Economics",
+            "icon": "📘",
+            "matches": [
+              "Mine Economics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE MN preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "MN"
+      },
+      {
+        "id": "mt",
+        "name": "Metallurgical Engineering",
+        "subtitle": "GATE MT",
+        "branchCodes": [
+          "MT"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "extractive-metallurgy",
+            "name": "Extractive Metallurgy",
+            "icon": "📘",
+            "matches": [
+              "Extractive Metallurgy"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "physical-metallurgy",
+            "name": "Physical Metallurgy",
+            "icon": "📘",
+            "matches": [
+              "Physical Metallurgy"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "mechanical-metallurgy",
+            "name": "Mechanical Metallurgy",
+            "icon": "📘",
+            "matches": [
+              "Mechanical Metallurgy"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics-and-kinetics",
+            "name": "Thermodynamics and Kinetics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics and Kinetics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "materials-characterization",
+            "name": "Materials Characterization",
+            "icon": "📘",
+            "matches": [
+              "Materials Characterization"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE MT preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "MT"
+      },
+      {
+        "id": "nm",
+        "name": "Naval Architecture and Marine Engineering",
+        "subtitle": "GATE NM",
+        "branchCodes": [
+          "NM"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "ship-hydrodynamics",
+            "name": "Ship Hydrodynamics",
+            "icon": "📘",
+            "matches": [
+              "Ship Hydrodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "marine-structures",
+            "name": "Marine Structures",
+            "icon": "📘",
+            "matches": [
+              "Marine Structures"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "marine-engineering",
+            "name": "Marine Engineering",
+            "icon": "📘",
+            "matches": [
+              "Marine Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "ship-design",
+            "name": "Ship Design",
+            "icon": "📘",
+            "matches": [
+              "Ship Design"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "offshore-engineering",
+            "name": "Offshore Engineering",
+            "icon": "📘",
+            "matches": [
+              "Offshore Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE NM preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "NM"
+      },
+      {
+        "id": "pe",
+        "name": "Petroleum Engineering",
+        "subtitle": "GATE PE",
+        "branchCodes": [
+          "PE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "petroleum-exploration",
+            "name": "Petroleum Exploration",
+            "icon": "📘",
+            "matches": [
+              "Petroleum Exploration"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "drilling-technology",
+            "name": "Drilling Technology",
+            "icon": "📘",
+            "matches": [
+              "Drilling Technology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "reservoir-engineering",
+            "name": "Reservoir Engineering",
+            "icon": "📘",
+            "matches": [
+              "Reservoir Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "production-engineering",
+            "name": "Production Engineering",
+            "icon": "📘",
+            "matches": [
+              "Production Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "well-testing",
+            "name": "Well Testing",
+            "icon": "📘",
+            "matches": [
+              "Well Testing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE PE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "PE"
+      },
+      {
+        "id": "ph",
+        "name": "Physics",
+        "subtitle": "GATE PH",
+        "branchCodes": [
+          "PH"
+        ],
+        "subjects": [
+          {
+            "id": "mathematical-physics",
+            "name": "Mathematical Physics",
+            "icon": "📘",
+            "matches": [
+              "Mathematical Physics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "classical-mechanics",
+            "name": "Classical Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Classical Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "electromagnetic-theory",
+            "name": "Electromagnetic Theory",
+            "icon": "📘",
+            "matches": [
+              "Electromagnetic Theory"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "quantum-mechanics",
+            "name": "Quantum Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Quantum Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics-and-statistical-physics",
+            "name": "Thermodynamics and Statistical Physics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics and Statistical Physics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "atomic-and-molecular-physics",
+            "name": "Atomic and Molecular Physics",
+            "icon": "📘",
+            "matches": [
+              "Atomic and Molecular Physics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "solid-state-physics",
+            "name": "Solid State Physics",
+            "icon": "📘",
+            "matches": [
+              "Solid State Physics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "nuclear-physics",
+            "name": "Nuclear Physics",
+            "icon": "📘",
+            "matches": [
+              "Nuclear Physics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE PH preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "PH"
+      },
+      {
+        "id": "pi",
+        "name": "Production and Industrial Engineering",
+        "subtitle": "GATE PI",
+        "branchCodes": [
+          "PI"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "engineering-materials",
+            "name": "Engineering Materials",
+            "icon": "📘",
+            "matches": [
+              "Engineering Materials"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "manufacturing-processes",
+            "name": "Manufacturing Processes",
+            "icon": "📘",
+            "matches": [
+              "Manufacturing Processes"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "operations-research",
+            "name": "Operations Research",
+            "icon": "📘",
+            "matches": [
+              "Operations Research"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "quality-and-reliability",
+            "name": "Quality and Reliability",
+            "icon": "📘",
+            "matches": [
+              "Quality and Reliability"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "industrial-engineering",
+            "name": "Industrial Engineering",
+            "icon": "📘",
+            "matches": [
+              "Industrial Engineering"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "production-planning",
+            "name": "Production Planning",
+            "icon": "📘",
+            "matches": [
+              "Production Planning"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE PI preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "PI"
+      },
+      {
+        "id": "st",
+        "name": "Statistics",
+        "subtitle": "GATE ST",
+        "branchCodes": [
+          "ST"
+        ],
+        "subjects": [
+          {
+            "id": "probability-and-statistics",
+            "name": "Probability and Statistics",
+            "icon": "📘",
+            "matches": [
+              "Probability and Statistics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "linear-models",
+            "name": "Linear Models",
+            "icon": "📘",
+            "matches": [
+              "Linear Models"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "statistical-inference",
+            "name": "Statistical Inference",
+            "icon": "📘",
+            "matches": [
+              "Statistical Inference"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "regression-analysis",
+            "name": "Regression Analysis",
+            "icon": "📘",
+            "matches": [
+              "Regression Analysis"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "time-series",
+            "name": "Time Series",
+            "icon": "📘",
+            "matches": [
+              "Time Series"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "multivariate-analysis",
+            "name": "Multivariate Analysis",
+            "icon": "📘",
+            "matches": [
+              "Multivariate Analysis"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "stochastic-processes",
+            "name": "Stochastic Processes",
+            "icon": "📘",
+            "matches": [
+              "Stochastic Processes"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE ST preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "ST"
+      },
+      {
+        "id": "tf",
+        "name": "Textile Engineering and Fibre Science",
+        "subtitle": "GATE TF",
+        "branchCodes": [
+          "TF"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "textile-fibres",
+            "name": "Textile Fibres",
+            "icon": "📘",
+            "matches": [
+              "Textile Fibres"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "yarn-manufacturing",
+            "name": "Yarn Manufacturing",
+            "icon": "📘",
+            "matches": [
+              "Yarn Manufacturing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "fabric-manufacturing",
+            "name": "Fabric Manufacturing",
+            "icon": "📘",
+            "matches": [
+              "Fabric Manufacturing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "textile-chemical-processing",
+            "name": "Textile Chemical Processing",
+            "icon": "📘",
+            "matches": [
+              "Textile Chemical Processing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "textile-testing",
+            "name": "Textile Testing",
+            "icon": "📘",
+            "matches": [
+              "Textile Testing"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE TF preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "TF"
+      },
+      {
+        "id": "xe",
+        "name": "Engineering Sciences",
+        "subtitle": "GATE XE",
+        "branchCodes": [
+          "XE"
+        ],
+        "subjects": [
+          {
+            "id": "engineering-mathematics",
+            "name": "Engineering Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Engineering Mathematics"
+            ],
+            "topics": "",
+            "shared": true
+          },
+          {
+            "id": "fluid-mechanics",
+            "name": "Fluid Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Fluid Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "materials-science",
+            "name": "Materials Science",
+            "icon": "📘",
+            "matches": [
+              "Materials Science"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "solid-mechanics",
+            "name": "Solid Mechanics",
+            "icon": "📘",
+            "matches": [
+              "Solid Mechanics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "thermodynamics",
+            "name": "Thermodynamics",
+            "icon": "📘",
+            "matches": [
+              "Thermodynamics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "polymer-science",
+            "name": "Polymer Science",
+            "icon": "📘",
+            "matches": [
+              "Polymer Science"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "food-technology",
+            "name": "Food Technology",
+            "icon": "📘",
+            "matches": [
+              "Food Technology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "energy-science",
+            "name": "Energy Science",
+            "icon": "📘",
+            "matches": [
+              "Energy Science"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "atmospheric-and-oceanic-sciences",
+            "name": "Atmospheric and Oceanic Sciences",
+            "icon": "📘",
+            "matches": [
+              "Atmospheric and Oceanic Sciences"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE XE preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "XE"
+      },
+      {
+        "id": "xh",
+        "name": "Humanities and Social Sciences",
+        "subtitle": "GATE XH",
+        "branchCodes": [
+          "XH"
+        ],
+        "subjects": [
+          {
+            "id": "reasoning-and-comprehension",
+            "name": "Reasoning and Comprehension",
+            "icon": "📘",
+            "matches": [
+              "Reasoning and Comprehension"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "economics",
+            "name": "Economics",
+            "icon": "📘",
+            "matches": [
+              "Economics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "📘",
+            "matches": [
+              "English"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "linguistics",
+            "name": "Linguistics",
+            "icon": "📘",
+            "matches": [
+              "Linguistics"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "philosophy",
+            "name": "Philosophy",
+            "icon": "📘",
+            "matches": [
+              "Philosophy"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "psychology",
+            "name": "Psychology",
+            "icon": "📘",
+            "matches": [
+              "Psychology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "sociology",
+            "name": "Sociology",
+            "icon": "📘",
+            "matches": [
+              "Sociology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE XH preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "XH"
+      },
+      {
+        "id": "xl",
+        "name": "Life Sciences",
+        "subtitle": "GATE XL",
+        "branchCodes": [
+          "XL"
+        ],
+        "subjects": [
+          {
+            "id": "chemistry",
+            "name": "Chemistry",
+            "icon": "📘",
+            "matches": [
+              "Chemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "biochemistry",
+            "name": "Biochemistry",
+            "icon": "📘",
+            "matches": [
+              "Biochemistry"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "botany",
+            "name": "Botany",
+            "icon": "📘",
+            "matches": [
+              "Botany"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "microbiology",
+            "name": "Microbiology",
+            "icon": "📘",
+            "matches": [
+              "Microbiology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "zoology",
+            "name": "Zoology",
+            "icon": "📘",
+            "matches": [
+              "Zoology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "food-technology",
+            "name": "Food Technology",
+            "icon": "📘",
+            "matches": [
+              "Food Technology"
+            ],
+            "topics": "",
+            "shared": false
+          },
+          {
+            "id": "general-aptitude",
+            "name": "General Aptitude",
+            "icon": "🧩",
+            "matches": [
+              "General Aptitude"
+            ],
+            "topics": "",
+            "shared": true
+          }
+        ],
+        "overview": "Explore GATE XL preparation, from the main subject areas to chapter-wise practice. Open any subject to see its available tests.",
+        "code": "XL"
+      }
+    ]
+  },
+  {
+    "id": "jee",
+    "label": "JEE / IIT",
+    "icon": "🚀",
+    "description": "A clear path for your engineering ambitions.",
+    "source": "https://jeemain.nta.nic.in/",
+    "exams": [
+      {
+        "id": "main",
+        "name": "JEE Main",
+        "subtitle": "Engineering · Paper 1 (B.E. / B.Tech.)",
+        "branchCodes": [
+          "JEE_MAIN"
+        ],
+        "subjects": [
+          {
+            "id": "physics",
+            "name": "Physics",
+            "icon": "⚛️",
+            "matches": [
+              "Physics"
+            ],
+            "topics": "Mechanics, electricity, optics and modern physics"
+          },
+          {
+            "id": "chemistry",
+            "name": "Chemistry",
+            "icon": "🧪",
+            "matches": [
+              "Chemistry"
+            ],
+            "topics": "Physical, organic and inorganic chemistry"
+          },
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics"
+            ],
+            "topics": "Algebra, calculus, coordinate geometry and vectors"
+          }
+        ],
+        "overview": "Explore Physics, Chemistry and Mathematics for JEE Main engineering preparation. Subject tests will appear here as they are published."
+      },
+      {
+        "id": "advanced",
+        "name": "JEE Advanced",
+        "subtitle": "IIT entrance preparation",
+        "branchCodes": [
+          "JEE_ADVANCED"
+        ],
+        "subjects": [
+          {
+            "id": "physics",
+            "name": "Physics",
+            "icon": "⚛️",
+            "matches": [
+              "Physics"
+            ],
+            "topics": "Mechanics, electricity, optics and modern physics"
+          },
+          {
+            "id": "chemistry",
+            "name": "Chemistry",
+            "icon": "🧪",
+            "matches": [
+              "Chemistry"
+            ],
+            "topics": "Physical, organic and inorganic chemistry"
+          },
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics"
+            ],
+            "topics": "Algebra, calculus, coordinate geometry and vectors"
+          }
+        ],
+        "overview": "Explore the three core subjects for JEE Advanced. Build your concepts and return for published practice tests.",
+        "source": "https://jeeadv.ac.in/"
+      }
+    ]
+  },
+  {
+    "id": "neet",
+    "label": "NEET",
+    "icon": "🩺",
+    "description": "Small steps towards a future in medicine.",
+    "source": "https://neet.nta.nic.in/document/syllabus-for-neet-ug-2026-examination/",
+    "exams": [
+      {
+        "id": "ug",
+        "name": "NEET UG",
+        "subtitle": "Physics · Chemistry · Biology",
+        "branchCodes": [
+          "NEET",
+          "NEET_UG"
+        ],
+        "subjects": [
+          {
+            "id": "physics",
+            "name": "Physics",
+            "icon": "⚛️",
+            "matches": [
+              "Physics"
+            ],
+            "topics": "Mechanics, electricity, optics and modern physics"
+          },
+          {
+            "id": "chemistry",
+            "name": "Chemistry",
+            "icon": "🧪",
+            "matches": [
+              "Chemistry"
+            ],
+            "topics": "Physical, organic and inorganic chemistry"
+          },
+          {
+            "id": "biology",
+            "name": "Biology",
+            "icon": "🌿",
+            "matches": [
+              "Biology",
+              "Botany",
+              "Zoology"
+            ],
+            "topics": "Botany, zoology, genetics, ecology and human physiology"
+          }
+        ],
+        "overview": "Explore the core subjects for NEET UG. Choose a subject to see its study focus and available practice."
+      }
+    ]
+  },
+  {
+    "id": "banking",
+    "label": "Banking",
+    "icon": "🏦",
+    "description": "Build speed and confidence for banking exams.",
+    "source": "https://www.ibps.in/",
+    "exams": [
+      {
+        "id": "practice",
+        "name": "Banking practice",
+        "subtitle": "Quantitative aptitude and core study areas",
+        "branchCodes": [
+          "BANKING"
+        ],
+        "subjects": [
+          {
+            "id": "mathematics",
+            "name": "Mathematics",
+            "icon": "🔢",
+            "matches": [
+              "Mathematics",
+              "Quantitative Aptitude",
+              "Quantitative Abilities",
+              "Numerical Ability"
+            ],
+            "topics": "Arithmetic, algebra, geometry and data interpretation"
+          },
+          {
+            "id": "reasoning",
+            "name": "Reasoning",
+            "icon": "🧩",
+            "matches": [
+              "Reasoning",
+              "General Intelligence and Reasoning"
+            ],
+            "topics": "Patterns, logic, verbal and non-verbal reasoning"
+          },
+          {
+            "id": "english",
+            "name": "English",
+            "icon": "🔤",
+            "matches": [
+              "English",
+              "English Language",
+              "English Comprehension"
+            ],
+            "topics": "Vocabulary, grammar and reading comprehension"
+          },
+          {
+            "id": "general-awareness",
+            "name": "General Awareness",
+            "icon": "🌏",
+            "matches": [
+              "General Awareness",
+              "General Knowledge"
+            ],
+            "topics": "History, geography, polity, science and current affairs"
+          },
+          {
+            "id": "computer-knowledge",
+            "name": "Computer Knowledge",
+            "icon": "💻",
+            "matches": [
+              "Computer Knowledge",
+              "Computer Awareness"
+            ],
+            "topics": "Computer basics and digital literacy"
+          }
+        ],
+        "overview": "Explore the available mathematics practice and the other key areas of banking preparation."
+      }
+    ]
+  }
+]
